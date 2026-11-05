@@ -563,7 +563,7 @@ async function shareText(text, okMsg){
 }
 function labels(){
   if(!window.QRCode){ toast("No cargó el generador de QR. Revisa la señal y recarga."); return; }
-  $("#print").innerHTML=visible().map(t=>`<div class="lb"><img src="${qrDataUrl(t.id,300)}" alt=""><div class="tx"><div class="cd">${esc(t.id)}</div><div class="nm">${esc(t.nombre)}</div><img class="lgo" src="${LOGO}" alt=""><div class="ft">${esc((S.config.nombre||"PAÑOL").toUpperCase())} · DEVOLVER AL TÉRMINO DEL TURNO</div></div></div>`).join("");
+  $("#print").innerHTML=visible().map(t=>`<div class="lb"><img src="${qrDataUrl(t.id,300)}" alt=""><div class="tx"><div class="cd">${esc(t.id)}</div><div class="nm">${esc(t.nombre)}</div><img class="lgo" src="${LOGO}" alt=""></div></div>`).join("");
   setTimeout(()=>window.print(),150);
 }
 async function csv(){
