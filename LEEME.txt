@@ -1,0 +1,45 @@
+PAÑOL DIGITAL — CÓMO PUBLICAR LA APP
+=====================================
+
+Archivos:
+  index.html            La app completa
+  config.js             Aquí va la configuración de Firebase (paso 5)
+  firestore.rules       Reglas de seguridad para pegar en Firebase (paso 4)
+  sw.js / manifest      Para que se instale y funcione sin señal
+  icon-*.png            Íconos de la app
+
+PARTE 1 — FIREBASE (base de datos gratuita de Google)
+1. Entra a console.firebase.google.com con tu cuenta de Google.
+   "Crear proyecto" → nombre: panol-digital → desactiva Google Analytics → Crear.
+2. Menú izquierdo → Compilación (Build) → Authentication → Comenzar.
+   Pestaña "Método de acceso" → Anónimo → Habilitar → Guardar.
+3. Compilación → Firestore Database → Crear base de datos.
+   Ubicación: southamerica-east1 (São Paulo) → Modo producción → Crear.
+4. En Firestore, pestaña "Reglas": borra todo, pega el contenido de
+   firestore.rules y toca "Publicar".
+5. Engranaje (arriba a la izquierda) → Configuración del proyecto → abajo en
+   "Tus apps" toca el ícono web </> → apodo: Pañol → Registrar app.
+   Copia el bloque firebaseConfig y pégalo en config.js
+   (o mándaselo a Claude y te devuelve el config.js listo).
+
+PARTE 2 — PUBLICAR GRATIS EN GITHUB PAGES
+6. Crea una cuenta en github.com.
+   "New repository" → nombre: panol → Public → Create repository.
+7. Toca "uploading an existing file", arrastra TODOS los archivos de esta
+   carpeta (no la carpeta, los archivos) → "Commit changes".
+8. Settings → Pages → Source: "Deploy from a branch" → Branch: main / (root)
+   → Save. En 1 a 2 minutos la app queda en:
+   https://TU-USUARIO.github.io/panol/
+9. En Firebase → Authentication → Configuración → Dominios autorizados →
+   Agregar dominio: TU-USUARIO.github.io
+
+PARTE 3 — EMPEZAR A USARLA
+10. Abre el enlace en tu celular → "Crea un pañol nuevo" → se genera la clave.
+    Guárdala.
+11. Ajustes (engranaje) → "Enviar enlace de acceso" por WhatsApp al pañolero.
+    Él lo abre, queda dentro del pañol y toca "Instalar".
+12. Carga las herramientas reales, imprime las etiquetas desde Inventario
+    y pégalas.
+
+Para actualizar la app más adelante: sube el index.html nuevo al mismo
+repositorio (Add file → Upload files). Los datos no se pierden.

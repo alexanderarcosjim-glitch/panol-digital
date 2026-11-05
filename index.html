@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pañol Digital</title>
+<meta name="theme-color" content="#16191B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Pañol">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#ECEEED; --surface:#FFFFFF; --sunk:#E2E5E4; --ink:#16191B; --muted:#5B6467; --line:#CFD5D4;
+  --accent:#D9520B; --accent-ink:#FFFFFF; --accent-soft:#FBE7DA;
+  --ok:#23763A; --ok-soft:#DDF0E1; --warn:#9A6400; --warn-soft:#FBEFD2; --bad:#B42323; --bad-soft:#F8DEDE;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:10px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#111415; --surface:#1A1E20; --sunk:#232829; --ink:#ECEFEF; --muted:#9AA4A6; --line:#2E3537;
+  --accent:#FF7A33; --accent-ink:#1A0E06; --accent-soft:#3A2416;
+  --ok:#5BD07A; --ok-soft:#163324; --warn:#F5C04A; --warn-soft:#352A12; --bad:#FF7272; --bad-soft:#3A1A1A;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:#16191B}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+p{margin:0}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:#16191B;color:#ECEFEF;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
+.top-in{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.brand{white-space:nowrap;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.brand b{color:#FF7A33}
+.brand small{display:block;font-family:var(--f-body);font-size:11px;font-weight:500;letter-spacing:.04em;opacity:.7;text-transform:none;margin-top:2px}
+.clock{margin-left:auto;white-space:nowrap;font-family:var(--f-mono);font-size:12px;opacity:.85;text-align:right;line-height:1.3}
+.gear{background:none;border:0;color:#ECEFEF;padding:6px;cursor:pointer;border-radius:8px}
+.gear svg{width:24px;height:24px;display:block}
+.sync{display:inline-block;width:8px;height:8px;border-radius:50%;background:#F5C04A;margin-right:6px;vertical-align:1px}
+.sync.on{background:#5BD07A}.sync.off{background:#FF7272}
+
+main{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:16px calc(96px + env(safe-area-inset-bottom,0px));display:grid;gap:18px}
+h2{font-family:var(--f-display);font-weight:700;font-size:22px;text-transform:uppercase;letter-spacing:.03em;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sec{display:grid;gap:10px}
+.muted{color:var(--muted)} .small{font-size:13px} .mono{font-family:var(--f-mono)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:grid;gap:2px;text-align:left;cursor:pointer}
+.stat .n{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.stat.ok .n{color:var(--ok)} .stat.warn .n{color:var(--warn)} .stat.bad .n{color:var(--bad)}
+
+.btn{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 14px;font-weight:600;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:var(--ink)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.okb{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.btn.badb{color:var(--bad);border-color:var(--bad)}
+.btn.badb.armed{background:var(--bad);color:var(--surface)}
+.btn.big{min-height:58px;font-size:17px;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em;width:100%}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn svg{width:20px;height:20px;flex:none}
+
+.codeform{display:flex;gap:8px}.codeform input{flex:1;min-width:0}
+input[type=text],input[type=search],select,textarea{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:44px}
+textarea{min-height:64px;resize:vertical}
+label.f{display:grid;gap:4px;font-size:13px;color:var(--muted);font-weight:500}
+.mono-in{font-family:var(--f-mono);text-transform:uppercase}
+.mono-in::placeholder{text-transform:none;font-family:var(--f-body)}
+
+.list{display:grid;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:0;border-top:1px solid var(--line);cursor:pointer;text-align:left;background:none;width:100%}
+.item:first-child{border-top:0}
+.item:hover{background:var(--sunk)}
+.item .main{min-width:0}
+.item .name{font-weight:600;overflow-wrap:anywhere}
+.item .sub{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.code{font-family:var(--f-mono);font-weight:700;font-size:13px;background:var(--sunk);border:1px solid var(--line);border-radius:5px;padding:3px 7px;white-space:nowrap}
+.pill{font-size:12px;font-weight:600;border-radius:999px;padding:3px 9px;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em}
+.pill.disponible{background:var(--ok-soft);color:var(--ok)}
+.pill.prestada{background:var(--warn-soft);color:var(--warn)}
+.pill.mantencion{background:var(--bad-soft);color:var(--bad)}
+.pill.ej{background:var(--sunk);color:var(--muted)}
+.time{font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.time.late{color:var(--bad);font-weight:700}
+.late-tag{display:block;font-family:var(--f-body);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.empty{border:1.5px dashed var(--line);border-radius:var(--r);padding:20px;text-align:center;color:var(--muted);display:grid;gap:10px;justify-items:center}
+
+.tag{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 18px 64px;display:grid;gap:12px}
+.tag::before{content:"";position:absolute;left:22px;top:22px;width:20px;height:20px;border-radius:50%;background:var(--bg);border:2px solid var(--line);box-shadow:inset 0 1px 2px rgba(0,0,0,.15)}
+.tag::after{content:"";position:absolute;left:52px;top:0;bottom:0;border-left:2px dashed var(--line)}
+.tag .plate{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tag .plate .code{font-size:20px;padding:5px 10px;background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tag .tname{font-family:var(--f-display);font-weight:700;font-size:28px;line-height:1.05;text-transform:uppercase;text-wrap:balance;overflow-wrap:anywhere}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin:0}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+.holder{background:var(--warn-soft);border-radius:8px;padding:12px;display:grid;gap:2px}
+.holder .who{font-family:var(--f-display);font-weight:700;font-size:24px;text-transform:uppercase;line-height:1.1}
+.holder.bad{background:var(--bad-soft)}
+.qrbox{display:flex;gap:14px;align-items:center}
+.qrbox .qr{background:#fff;padding:6px;border-radius:6px;flex:none}
+.qrbox .qr img,.qrbox .qr canvas{display:block}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg label{border:1.5px solid var(--line);border-radius:8px;padding:10px;display:flex;gap:8px;align-items:center;cursor:pointer;font-weight:600}
+.seg input{accent-color:var(--accent);width:18px;height:18px}
+.seg label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.log{display:grid;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.logi{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:10px 14px;border-top:1px solid var(--line);font-size:14px}
+.logi:first-child{border-top:0}
+.logi .t{font-family:var(--f-mono);font-size:12px;color:var(--muted);line-height:1.35}
+.logi .what{font-weight:600}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.dot.retiro{background:var(--warn)}.dot.devolucion,.dot.habilitada{background:var(--ok)}.dot.mantencion{background:var(--bad)}.dot.alta{background:var(--muted)}
+.daysep{padding:6px 14px;background:var(--sunk);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-top:1px solid var(--line)}
+.daysep:first-child{border-top:0}
+.banner{background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--r);padding:12px 14px;display:grid;gap:8px}
+.keybox{font-family:var(--f-mono);font-weight:700;font-size:22px;letter-spacing:.06em;background:var(--sunk);border-radius:8px;padding:10px 12px;text-align:center;user-select:all;overflow-wrap:anywhere}
+
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav.tabs button{background:none;border:0;padding:8px 4px 10px;display:grid;justify-items:center;gap:2px;cursor:pointer;color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-top:3px solid transparent}
+nav.tabs button svg{width:24px;height:24px}
+nav.tabs button[aria-current=page]{color:var(--accent);border-top-color:var(--accent)}
+
+/* Escáner en vivo */
+.scan{position:fixed;inset:0;z-index:30;background:#000;display:grid;grid-template-rows:auto 1fr auto}
+.scan video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scan .bar{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));color:#fff;background:linear-gradient(#000a,#0000)}
+.scan .bar strong{font-family:var(--f-display);font-size:20px;text-transform:uppercase;letter-spacing:.04em}
+.scan .frame{position:relative;z-index:2;align-self:center;justify-self:center;width:min(70vw,300px);aspect-ratio:1;max-width:100%;border-radius:18px;box-shadow:0 0 0 100vmax rgba(0,0,0,.45)}
+.scan .frame::before{content:"";position:absolute;inset:0;border:4px solid #FF7A33;border-radius:18px;
+  -webkit-mask:linear-gradient(#000 0 0) top left/32px 32px no-repeat,linear-gradient(#000 0 0) top right/32px 32px no-repeat,linear-gradient(#000 0 0) bottom left/32px 32px no-repeat,linear-gradient(#000 0 0) bottom right/32px 32px no-repeat;
+  mask:linear-gradient(#000 0 0) top left/32px 32px no-repeat,linear-gradient(#000 0 0) top right/32px 32px no-repeat,linear-gradient(#000 0 0) bottom left/32px 32px no-repeat,linear-gradient(#000 0 0) bottom right/32px 32px no-repeat}
+.scan .frame::after{content:"";position:absolute;left:8%;right:8%;top:50%;height:2px;background:#FF7A33;box-shadow:0 0 12px #FF7A33}
+@media (prefers-reduced-motion:no-preference){.scan .frame::after{animation:sweep 1.8s ease-in-out infinite alternate}@keyframes sweep{from{top:10%}to{top:90%}}}
+.scan .foot{position:relative;z-index:2;padding:14px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));color:#fff;text-align:center;display:grid;gap:10px;background:linear-gradient(#0000,#000a)}
+.scan .ibtn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:10px 16px;font-weight:600;cursor:pointer;min-height:44px}
+.scan .ibtn[aria-pressed=true]{background:#FF7A33;border-color:#FF7A33;color:#1A0E06}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:10px;font-weight:500;max-width:calc(100% - 32px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:no-preference){.toast{animation:up .18s ease-out}@keyframes up{from{transform:translate(-50%,8px);opacity:0}}}
+@media (max-width:380px){.stat .n{font-size:28px}.tag{padding-left:52px}.tag::before{left:16px}.tag::after{left:44px}}
+
+/* Hoja de etiquetas: solo al imprimir */
+#print{display:none}
+@media print{
+  @page{size:auto;margin:10mm}
+  body{background:#fff;padding:0}
+  body::before,.top,main,nav.tabs,.toast,.scan{display:none!important}
+  #print{display:grid;grid-template-columns:repeat(3,62mm);gap:4mm;color:#000}
+  .lb{width:62mm;height:30mm;border:1.2px dashed #777;border-radius:3mm;display:flex;align-items:center;gap:2.5mm;padding:2mm;break-inside:avoid;page-break-inside:avoid;font-family:Arial,Helvetica,sans-serif}
+  .lb img{width:25mm;height:25mm;flex:none}
+  .lb .tx{min-width:0;display:flex;flex-direction:column;gap:1mm}
+  .lb .cd{font:700 6.5mm/1 "Courier New",monospace;background:#000;color:#fff;padding:1mm 1.5mm;border-radius:1mm;align-self:flex-start;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .lb .nm{font-size:3.2mm;font-weight:700;line-height:1.15;text-transform:uppercase;overflow:hidden;max-height:7.4mm}
+  .lb .ft{font-size:2.1mm;color:#333}
+}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="top-in">
+  <div class="brand">Pañol <b>Digital</b><small id="pname"></small></div>
+  <div class="clock"><span id="sync" class="sync" title="Conectando"></span><span id="clock"></span><br><span id="turno"></span></div>
+  <button class="gear" data-act="nav" data-v="ajustes" aria-label="Ajustes" id="gearBtn" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg></button>
+</div></header>
+
+<main id="main" aria-live="polite"></main>
+
+<nav class="tabs" aria-label="Secciones" id="tabs" hidden><div class="in">
+  <button data-act="nav" data-v="panol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><path d="M9 21v-7h6v7"/></svg>Pañol</button>
+  <button data-act="nav" data-v="mover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3"/><path d="M8 8h3v3H8zM13 13h3v3h-3zM13 8h3M8 16h3"/></svg>Escanear</button>
+  <button data-act="nav" data-v="inventario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>Inventario</button>
+  <button data-act="nav" data-v="historial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Historial</button>
+</div></nav>
+
+<div class="scan" id="scan" hidden>
+  <video id="video" playsinline muted autoplay></video>
+  <div class="bar"><strong>Apunta al QR</strong><button class="ibtn" data-act="scan-close">Cerrar</button></div>
+  <div class="frame" aria-hidden="true"></div>
+  <div class="foot"><span id="scanMsg">Se lee solo. Mantén el código dentro del recuadro.</span>
+    <div class="row" style="justify-content:center"><button class="ibtn" id="torchBtn" data-act="torch" aria-pressed="false" hidden>Linterna</button></div></div>
+</div>
+
+<div id="print" aria-hidden="true"></div>
+<div id="hidden-qr" class="vh" aria-hidden="true"></div>
+
+<script src="config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+(function(){
+const SHIFT_H = 12; // horas prestada antes de marcar "pasó el turno"
+const CATS = ["Eléctrica","Manual","Izaje","Medición","Corte y soldadura","Neumática","Otra"];
+const LS_KEY = "panol.clave";
+const BASE = location.origin + location.pathname;
+const S = { tools:[], movs:[], config:{}, view:"panol", sel:null, filter:"todos", q:"", loaded:false, status:"loading",
+  pending:null, addOpen:false, addCode:"", editOpen:false, armed:null, noReset:false, phase:"boot", pendingWrites:false, err:"" };
+let fs=null, K=null, unsubs=[], toastT=null, armT=null, installEvt=null;
+
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const normCode = v => String(v||"").trim().toUpperCase().replace(/\s+/g,"-").replace(/[^A-Z0-9-]/g,"").slice(0,24);
+const normKey = v => String(v||"").trim().toUpperCase().replace(/[^A-Z0-9-]/g,"");
+const ESTADO = {disponible:"Disponible", prestada:"Prestada", mantencion:"Mantención"};
+const TIPO = {retiro:"Retiro", devolucion:"Devolución", mantencion:"A mantención", habilitada:"Habilitada", alta:"Alta en inventario"};
+const fmtT = ts => new Date(ts).toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit",hourCycle:"h23"});
+const fmtD = ts => new Date(ts).toLocaleDateString("es-CL",{weekday:"short",day:"2-digit",month:"2-digit"});
+const fmtDur = ms => { const m=Math.max(0,Math.floor(ms/60000)); const h=Math.floor(m/60); return h?`${h} h ${String(m%60).padStart(2,"0")} min`:`${m} min`; };
+const toolBy = code => S.tools.find(t=>t.id===code);
+const lsGet = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
+const lsSet = (k,v) => { try{ v==null?localStorage.removeItem(k):localStorage.setItem(k,v); }catch(e){} };
+
+function toast(msg){ const o=$(".toast"); if(o) o.remove(); clearTimeout(toastT);
+  const el=document.createElement("div"); el.className="toast"; el.setAttribute("role","status"); el.textContent=msg; document.body.appendChild(el); toastT=setTimeout(()=>el.remove(),3400); }
+function tick(){ const n=new Date(); $("#clock").textContent=n.toLocaleDateString("es-CL",{day:"2-digit",month:"2-digit"})+" "+fmtT(n);
+  const h=n.getHours(); $("#turno").textContent=(h>=8&&h<20)?"TURNO DÍA":"TURNO NOCHE"; }
+function setSync(){ const el=$("#sync"); const off=!navigator.onLine;
+  el.className="sync"+(off?" off":(S.pendingWrites||!S.loaded)?"":" on");
+  el.title= off?"Sin señal: los cambios se guardan en el celular y se suben al volver la señal": S.pendingWrites?"Subiendo cambios…":"Sincronizado"; }
+
+/* ---------- pantallas de inicio ---------- */
+function vSetup(){
+  return `<div class="panel"><h2>Falta conectar la base de datos</h2>
+    <p>Esta app guarda los datos en Firebase. Abre el archivo <span class="mono">config.js</span> y pega ahí la configuración de tu proyecto de Firebase (o mándasela a Claude para que la pegue).</p>
+    <p class="small muted">Firebase → Configuración del proyecto → Tus apps → App web → firebaseConfig.</p></div>`;
+}
+function vLogin(){
+  return `<div class="sec"><h2>Entrar al pañol</h2><p class="muted">Escribe la clave del pañol que te pasó el encargado, o escanea el QR de acceso con la cámara del celular.</p></div>
+    <form class="panel" id="f-key" autocomplete="off"><label class="f">Clave del pañol<input type="text" id="k-in" class="mono-in" placeholder="ej. PV2-7K3M-Q9TX" autocapitalize="characters"></label>
+    <button class="btn pri big" type="submit">Entrar</button></form>
+    ${S.err?`<p class="small" style="color:var(--bad)">${esc(S.err)}</p>`:""}
+    <form class="panel" id="f-new" autocomplete="off"><h2>¿Eres el encargado? Crea un pañol nuevo</h2>
+    <label class="f">Nombre del pañol<input type="text" id="n-name" placeholder="ej. Pañol Acopio Fino"></label>
+    <button class="btn" type="submit">Crear pañol y generar clave</button>
+    <p class="small muted">Se genera una clave única. Guárdala: con ella entran los demás celulares.</p></form>`;
+}
+
+/* ---------- vistas ---------- */
+const icoCam='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+function counts(){ const c={disponible:0,prestada:0,mantencion:0}; S.tools.forEach(t=>c[t.estado||"disponible"]++); return c; }
+function scanBlock(){
+  return `<div class="sec"><button class="btn pri big" data-act="scan">${icoCam} Escanear QR</button>
+    <form class="codeform" id="f-code" autocomplete="off"><label class="vh" for="m-code">Código</label>
+    <input type="text" id="m-code" class="mono-in" placeholder="o escribe el código, ej. H-004" enterkeyhint="go"><button class="btn" type="submit">Buscar</button></form></div>`;
+}
+function loadingBlock(){ return `<div class="empty"><strong>Cargando el pañol…</strong><span class="small">${navigator.onLine?"Conectando con la base de datos.":"Sin señal. Si ya abriste la app antes en este celular, los datos aparecerán desde la memoria."}</span></div>`; }
+function emptyInv(){
+  return `<div class="empty"><strong>El pañol está vacío.</strong><span>Agrega tu primera herramienta con su código (ej. H-001) o carga un set de ejemplo para probar. Los ejemplos se borran con un botón.</span>
+    <div class="row" style="justify-content:center"><button class="btn pri" data-act="add-open">+ Agregar herramienta</button><button class="btn" data-act="seed">Cargar ejemplo</button></div></div>`;
+}
+function installBanner(){
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  if(standalone || lsGet("panol.noInstall")) return "";
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(!installEvt && !ios) return "";
+  return `<div class="banner"><strong>Instala la app en este celular</strong>
+    <span class="small">${installEvt?"Queda con su ícono en la pantalla de inicio y abre más rápido.":"En iPhone: toca Compartir y luego \"Agregar a inicio\"."}</span>
+    <div class="row">${installEvt?`<button class="btn pri" data-act="install">Instalar</button>`:""}<button class="btn ghost" data-act="no-install">Ahora no</button></div></div>`;
+}
+
+function vPanol(){
+  if(!S.loaded) return scanBlock()+loadingBlock();
+  const c=counts(), now=Date.now();
+  const prest=S.tools.filter(t=>t.estado==="prestada").sort((a,b)=>(a.desde||0)-(b.desde||0));
+  const late=prest.filter(t=>now-(t.desde||now)>SHIFT_H*3600e3).length;
+  let h=installBanner()+`<div class="stats">
+    <button class="stat ok" data-act="goinv" data-f="disponible"><span class="n">${c.disponible}</span><span class="l">Disponibles</span></button>
+    <button class="stat warn" data-act="goinv" data-f="prestada"><span class="n">${c.prestada}</span><span class="l">Prestadas</span></button>
+    <button class="stat bad" data-act="goinv" data-f="mantencion"><span class="n">${c.mantencion}</span><span class="l">Mantención</span></button></div>`+scanBlock();
+  if(!S.tools.length) return h+emptyInv();
+  h+=`<div class="sec"><h3>Prestadas ahora${late?` · <span style="color:var(--bad)">${late} pasaron el turno</span>`:""}</h3>`;
+  h+= !prest.length ? `<div class="empty"><strong>Todo devuelto.</strong><span class="small">No hay herramientas fuera del pañol.</span></div>`
+    : `<div class="list">${prest.map(t=>{ const d=now-(t.desde||now), L=d>SHIFT_H*3600e3;
+      return `<button class="item" data-act="open" data-code="${esc(t.id)}"><span class="code">${esc(t.id)}</span>
+      <span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${esc(t.persona||"—")}${t.area?" · "+esc(t.area):""}</span></span>
+      <span class="time${L?" late":""}">${fmtDur(d)}<span class="late-tag">${L?"Pasó el turno":"desde "+fmtT(t.desde)}</span></span></button>`; }).join("")}</div>`;
+  h+=`</div><button class="btn" data-act="summary">Enviar resumen de entrega de turno</button>`;
+  const mant=S.tools.filter(t=>t.estado==="mantencion");
+  if(mant.length) h+=`<div class="sec"><h3>En mantención</h3><div class="list">${mant.map(t=>`<button class="item" data-act="open" data-code="${esc(t.id)}"><span class="code">${esc(t.id)}</span><span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${esc(t.nota||"Sin detalle del daño")}</span></span><span class="pill mantencion">Revisar</span></button>`).join("")}</div></div>`;
+  return h;
+}
+function datalists(){
+  const seen=new Set(), ps=[]; for(const m of S.movs){ if(m.persona&&!seen.has(m.persona.toLowerCase())){ seen.add(m.persona.toLowerCase()); ps.push(m.persona);} if(ps.length>60) break; }
+  const ar=[...new Set(S.movs.map(m=>m.area).filter(Boolean))].slice(0,30);
+  return `<datalist id="dl-p">${ps.map(p=>`<option value="${esc(p)}">`).join("")}</datalist><datalist id="dl-a">${ar.map(a=>`<option value="${esc(a)}">`).join("")}</datalist>`;
+}
+function vMover(){
+  if(!S.loaded) return scanBlock()+loadingBlock();
+  const t=S.sel&&toolBy(S.sel);
+  if(!t) return `<div class="sec"><h2>Retiro y devolución</h2><p class="muted">Escanea el QR de la herramienta. Si está disponible registras el retiro; si está prestada, la devolución.</p></div>`+scanBlock()+(S.tools.length?"":emptyInv());
+  const est=t.estado||"disponible", now=Date.now();
+  let h=`<div class="tag"><div class="plate"><span class="code">${esc(t.id)}</span><span class="pill ${est}">${ESTADO[est]}</span>${t.ejemplo?'<span class="pill ej">Ejemplo</span>':""}</div>
+    <div class="tname">${esc(t.nombre)}</div><dl class="kv"><dt>Categoría</dt><dd>${esc(t.categoria||"—")}</dd>${t.serie?`<dt>N° serie</dt><dd class="mono">${esc(t.serie)}</dd>`:""}</dl>`;
+  if(est==="prestada"){ const d=now-(t.desde||now), L=d>SHIFT_H*3600e3;
+    h+=`<div class="holder${L?" bad":""}"><span class="small muted">La tiene</span><span class="who">${esc(t.persona||"—")}</span><span class="small">${t.area?esc(t.area)+" · ":""}desde ${fmtD(t.desde)} ${fmtT(t.desde)} · <strong>${fmtDur(d)}</strong>${L?" · pasó el turno":""}</span></div>`; }
+  if(est==="mantencion") h+=`<div class="holder bad"><span class="small muted">Motivo</span><span>${esc(t.nota||"Sin detalle")}</span></div>`;
+  h+=`</div>`;
+  if(est==="disponible") h+=`<form class="panel" id="f-retiro" autocomplete="off">${datalists()}<h2>Registrar retiro</h2>
+    <label class="f">¿Quién la retira? *<input type="text" id="r-persona" list="dl-p" placeholder="Nombre y apellido" required></label>
+    <label class="f">Frente o área de trabajo<input type="text" id="r-area" list="dl-a" placeholder="ej. CV-1332"></label>
+    <button class="btn pri big" type="submit">Entregar herramienta</button></form>`;
+  else if(est==="prestada") h+=`<form class="panel" id="f-devol" autocomplete="off"><h2>Registrar devolución</h2>
+    <div class="seg" role="radiogroup" aria-label="Condición"><label><input type="radio" name="cond" id="d-ok" checked> Buena</label><label><input type="radio" name="cond" id="d-dano"> Con daño</label></div>
+    <label class="f">Observación<textarea id="d-nota" placeholder="Si viene con daño, describe qué tiene (va a mantención)"></textarea></label>
+    <button class="btn okb big" type="submit">Recibir en pañol</button></form>`;
+  else h+=`<div class="panel"><h2>Mantención</h2><p class="small muted">Cuando esté reparada o revisada, déjala disponible otra vez.</p><button class="btn okb big" data-act="habilitar">Dejar disponible</button></div>`;
+  h+=`<div class="panel"><div class="qrbox"><div class="qr" id="qr-one"></div><div class="sec" style="gap:6px;min-width:0"><strong>QR de esta herramienta</strong><span class="small muted">Imprímelo desde Inventario → Imprimir etiquetas.</span></div></div>
+    <div class="row"><button class="btn" data-act="edit-toggle">${S.editOpen?"Cerrar edición":"Editar datos"}</button>
+    <button class="btn badb${S.armed==="del:"+t.id?" armed":""}" data-act="del" data-code="${esc(t.id)}">${S.armed==="del:"+t.id?"Toca otra vez para eliminar":"Eliminar del inventario"}</button></div>`;
+  if(S.editOpen) h+=`<form class="sec" id="f-edit" autocomplete="off"><label class="f">Nombre<input type="text" id="e-nombre" value="${esc(t.nombre)}" required></label>
+    <label class="f">Categoría<select id="e-cat">${CATS.map(c=>`<option${c===t.categoria?" selected":""}>${c}</option>`).join("")}</select></label>
+    <label class="f">N° de serie (opcional)<input type="text" id="e-serie" value="${esc(t.serie||"")}"></label><button class="btn pri" type="submit">Guardar cambios</button></form>`;
+  h+=`</div>`;
+  const ms=S.movs.filter(m=>m.code===t.id).slice(0,12);
+  h+=`<div class="sec"><h3>Últimos movimientos</h3>${ms.length?`<div class="log">${ms.map(logItem).join("")}</div>`:`<p class="muted small">Sin movimientos todavía.</p>`}</div>
+    <button class="btn ghost" data-act="close-sel">← Escanear otra herramienta</button>`;
+  return h;
+}
+function logItem(m){ const t=toolBy(m.code);
+  return `<div class="logi"><span class="t">${fmtT(m.ts)}</span><span><span class="what"><span class="dot ${esc(m.tipo)}"></span>${TIPO[m.tipo]||esc(m.tipo)} · <span class="mono">${esc(m.code)}</span></span>
+    <br><span class="small">${esc(m.nombre||t?.nombre||"")}${m.persona?" — "+esc(m.persona):""}${m.area?" · "+esc(m.area):""}${m.dur?` · ${fmtDur(m.dur)} fuera`:""}</span>${m.nota?`<br><span class="small muted">${esc(m.nota)}</span>`:""}</span></div>`; }
+function nextCode(){ let max=0; S.tools.forEach(t=>{ const m=/^H-(\d+)$/.exec(t.id); if(m) max=Math.max(max,+m[1]); }); return "H-"+String(max+1).padStart(3,"0"); }
+function visible(){ const q=S.q.trim().toLowerCase();
+  return S.tools.filter(t=>(S.filter==="todos"||(t.estado||"disponible")===S.filter)&&(!q||[t.id,t.nombre,t.categoria,t.persona,t.serie].join(" ").toLowerCase().includes(q))).sort((a,b)=>a.id.localeCompare(b.id,"es",{numeric:true})); }
+function vInventario(){
+  if(!S.loaded) return `<h2>Inventario</h2>`+loadingBlock();
+  const c=counts(); let h=`<div class="row" style="justify-content:space-between"><h2>Inventario · ${S.tools.length}</h2><button class="btn pri" data-act="add-open">+ Agregar</button></div>`;
+  if(S.addOpen) h+=`<form class="panel" id="f-add" autocomplete="off"><h2>Nueva herramienta</h2>
+    <label class="f">Código *<input type="text" id="a-code" class="mono-in" value="${esc(S.addCode||nextCode())}" required></label>
+    <label class="f">Nombre *<input type="text" id="a-nombre" placeholder='ej. Esmeril angular 7"' required></label>
+    <label class="f">Categoría<select id="a-cat">${CATS.map(x=>`<option>${x}</option>`).join("")}</select></label>
+    <label class="f">N° de serie (opcional)<input type="text" id="a-serie"></label>
+    <div class="row"><button class="btn pri" type="submit">Guardar</button><button class="btn ghost" type="button" data-act="add-close">Cancelar</button></div></form>`;
+  if(!S.tools.length) return h+(S.addOpen?"":emptyInv());
+  h+=`<div class="sec"><label class="vh" for="i-q">Buscar</label><input type="search" id="i-q" placeholder="Buscar por código, nombre, persona…" value="${esc(S.q)}">
+    <div class="chips" role="group" aria-label="Filtrar">${[["todos","Todas",S.tools.length],["disponible","Disponibles",c.disponible],["prestada","Prestadas",c.prestada],["mantencion","Mantención",c.mantencion]]
+    .map(([k,l,n])=>`<button class="chip" data-act="filter" data-f="${k}" aria-pressed="${S.filter===k}">${l} ${n}</button>`).join("")}</div></div>`;
+  const list=visible();
+  h+= list.length?`<div class="list">${list.map(t=>{ const e=t.estado||"disponible"; return `<button class="item" data-act="open" data-code="${esc(t.id)}"><span class="code">${esc(t.id)}</span>
+    <span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${esc(t.categoria||"")}${e==="prestada"?" · "+esc(t.persona||""):""}${t.ejemplo?" · ejemplo":""}</span></span><span class="pill ${e}">${ESTADO[e]}</span></button>`; }).join("")}</div>`
+    :`<div class="empty">Nada coincide con la búsqueda.</div>`;
+  h+=`<div class="panel"><h2>Etiquetas QR</h2><p class="small muted">Imprime ${list.length} etiqueta${list.length===1?"":"s"} (las de la lista) en hoja carta o A4, escala 100 %. Recorta, protégelas con cinta transparente y pégalas.</p>
+    <button class="btn pri" data-act="labels" ${list.length?"":"disabled"}>Imprimir etiquetas</button></div>`;
+  if(S.tools.some(t=>t.ejemplo)) h+=`<button class="btn badb${S.armed==="ej"?" armed":""}" data-act="del-ej">${S.armed==="ej"?"Toca otra vez para borrar los ejemplos":"Borrar herramientas de ejemplo"}</button>`;
+  return h;
+}
+function vHistorial(){
+  if(!S.loaded) return `<h2>Historial</h2>`+loadingBlock();
+  let h=`<div class="row" style="justify-content:space-between"><h2>Historial</h2><button class="btn" data-act="csv" ${S.movs.length?"":"disabled"}>Exportar a Excel</button></div>`;
+  if(!S.movs.length) return h+`<div class="empty"><strong>Sin movimientos todavía.</strong><span class="small">Cada retiro, devolución y paso a mantención queda aquí con fecha y hora.</span></div>`;
+  let last="", rows=""; S.movs.forEach(m=>{ const d=new Date(m.ts).toDateString(); if(d!==last){ rows+=`<div class="daysep">${fmtD(m.ts)}</div>`; last=d; } rows+=logItem(m); });
+  return h+`<div class="log">${rows}</div><p class="small muted">Últimos ${S.movs.length} movimientos.</p>`;
+}
+function vAjustes(){
+  const link=BASE+"?k="+encodeURIComponent(K);
+  return `<div class="row" style="justify-content:space-between"><h2>Ajustes</h2><button class="btn ghost" data-act="nav" data-v="panol">← Volver</button></div>
+  <div class="panel"><h2>Dar acceso a otro celular</h2>
+    <p class="small muted">El pañolero escanea este QR con la cámara normal de su celular, abre el enlace y queda dentro del pañol. Después toca "Instalar" para dejar el ícono en su pantalla.</p>
+    <div class="qrbox"><div class="qr" id="qr-key"></div><div class="sec" style="gap:6px;min-width:0"><span class="small muted">Clave del pañol</span><div class="keybox">${esc(K)}</div></div></div>
+    <div class="row"><button class="btn pri" data-act="share-link">Enviar enlace de acceso</button><button class="btn" data-act="copy-link">Copiar enlace</button></div>
+    <p class="small muted">Comparte la clave solo con quien maneje el pañol. Quien la tenga puede ver y registrar movimientos.</p></div>
+  <form class="panel" id="f-name" autocomplete="off"><h2>Nombre del pañol</h2><label class="f">Aparece bajo el título<input type="text" id="s-name" value="${esc(S.config.nombre||"")}" placeholder="ej. Pañol Acopio Fino"></label><button class="btn" type="submit">Guardar nombre</button></form>
+  ${installEvt?`<button class="btn" data-act="install">Instalar app en este celular</button>`:""}
+  <div class="panel"><h2>Salir de este pañol</h2><p class="small muted">Este celular olvida la clave. Los datos no se borran; para volver a entrar necesitas la clave.</p>
+    <button class="btn badb${S.armed==="logout"?" armed":""}" data-act="logout">${S.armed==="logout"?"Toca otra vez para salir":"Salir del pañol"}</button></div>`;
+}
+const VIEWS={panol:vPanol,mover:vMover,inventario:vInventario,historial:vHistorial,ajustes:vAjustes};
+
+function render(){
+  const main=$("#main"), drafts={};
+  if(!S.noReset) main.querySelectorAll("input,select,textarea").forEach(el=>{ if(el.id) drafts[el.id]=(el.type==="radio")?el.checked:el.value; });
+  S.noReset=false; const act=document.activeElement&&document.activeElement.id;
+  const inApp=S.phase==="app";
+  $("#tabs").hidden=!inApp; $("#gearBtn").hidden=!inApp; $("#pname").textContent=inApp?(S.config.nombre||""):"";
+  main.innerHTML = S.phase==="setup"?vSetup() : S.phase==="login"?vLogin() : S.phase==="app"?VIEWS[S.view]() : `<div class="empty">Abriendo…</div>`;
+  for(const id in drafts){ const el=document.getElementById(id); if(!el) continue; if(el.type==="radio") el.checked=drafts[id]; else el.value=drafts[id]; }
+  if(act){ const a=document.getElementById(act); if(a&&a.tagName!=="BUTTON"){ a.focus(); try{ const L=a.value.length; a.setSelectionRange&&a.setSelectionRange(L,L);}catch(e){} } }
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.v===S.view?"page":"false"));
+  if(window.QRCode){ const q1=$("#qr-one"); if(q1&&S.sel) new QRCode(q1,{text:qrText(S.sel),width:84,height:84,correctLevel:QRCode.CorrectLevel.M});
+    const q2=$("#qr-key"); if(q2) new QRCode(q2,{text:BASE+"?k="+encodeURIComponent(K),width:120,height:120,correctLevel:QRCode.CorrectLevel.M}); }
+  setSync();
+}
+function go(v){ if(S.view!==v){ S.view=v; S.armed=null; window.scrollTo(0,0); } render(); }
+
+/* ---------- QR ---------- */
+const qrText = code => BASE+"?h="+encodeURIComponent(code);
+function qrDataUrl(code,size){ const box=$("#hidden-qr"); box.innerHTML=""; new QRCode(box,{text:qrText(code),width:size,height:size,correctLevel:QRCode.CorrectLevel.M});
+  const c=box.querySelector("canvas"); return c?c.toDataURL("image/png"):(box.querySelector("img")||{}).src; }
+function parseScan(txt){
+  let s=String(txt||"").trim();
+  try{ const u=new URL(s); const k=u.searchParams.get("k"); if(k) return {key:normKey(k)}; const h=u.searchParams.get("h"); if(h) return {code:normCode(h)}; if(u.hash) return {code:normCode(decodeURIComponent(u.hash.slice(1)))}; }catch(e){}
+  if(s.includes("#")) s=s.slice(s.lastIndexOf("#")+1);
+  return {code:normCode(s)};
+}
+
+/* ---------- escáner en vivo ---------- */
+let stream=null, scanning=false, detector=null, cv=null, torchOn=false;
+async function startScan(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ toast("Este navegador no permite usar la cámara. Escribe el código a mano."); return; }
+  $("#scan").hidden=false; $("#scanMsg").textContent="Se lee solo. Mantén el código dentro del recuadro.";
+  try{ stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"},width:{ideal:1280},height:{ideal:720}},audio:false}); }
+  catch(e){ stopScan(); toast(e&&e.name==="NotAllowedError"?"Diste permiso denegado a la cámara. Actívalo en los ajustes del navegador.":"No se pudo abrir la cámara."); return; }
+  const v=$("#video"); v.srcObject=stream; try{ await v.play(); }catch(e){}
+  const track=stream.getVideoTracks()[0]; const caps=track.getCapabilities?track.getCapabilities():{};
+  $("#torchBtn").hidden=!caps.torch; torchOn=false; $("#torchBtn").setAttribute("aria-pressed","false");
+  detector=null;
+  if("BarcodeDetector" in window){ try{ const f=await BarcodeDetector.getSupportedFormats(); if(f.includes("qr_code")) detector=new BarcodeDetector({formats:["qr_code"]}); }catch(e){} }
+  scanning=true; loop();
+}
+function stopScan(){ scanning=false; if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } $("#video").srcObject=null; $("#scan").hidden=true; }
+async function loop(){
+  if(!scanning) return; const v=$("#video"); let txt=null;
+  if(v.readyState>=2 && v.videoWidth){
+    if(detector){ try{ const r=await detector.detect(v); if(r&&r.length) txt=r[0].rawValue; }catch(e){ detector=null; } }
+    else if(window.jsQR){ cv=cv||document.createElement("canvas"); const sc=Math.min(1,720/Math.max(v.videoWidth,v.videoHeight));
+      const w=cv.width=Math.round(v.videoWidth*sc), h=cv.height=Math.round(v.videoHeight*sc); const ctx=cv.getContext("2d",{willReadFrequently:true}); ctx.drawImage(v,0,0,w,h);
+      const r=jsQR(ctx.getImageData(0,0,w,h).data,w,h,{inversionAttempts:"dontInvert"}); if(r&&r.data) txt=r.data; }
+  }
+  if(txt){ if(navigator.vibrate) navigator.vibrate(80); stopScan(); handleScan(txt); return; }
+  setTimeout(loop,140);
+}
+async function toggleTorch(){ if(!stream) return; const track=stream.getVideoTracks()[0]; torchOn=!torchOn;
+  try{ await track.applyConstraints({advanced:[{torch:torchOn}]}); $("#torchBtn").setAttribute("aria-pressed",String(torchOn)); }catch(e){ torchOn=false; toast("La linterna no está disponible."); } }
+function handleScan(txt){ const r=parseScan(txt);
+  if(r.key){ if(r.key!==K){ toast("Ese es un QR de acceso a un pañol."); } return; }
+  openCode(r.code); }
+
+function openCode(raw){
+  const code=normCode(raw); if(!code){ toast("Escribe un código."); return; }
+  if(!S.loaded){ S.pending=code; toast("Cargando… abriendo "+code+" apenas conecte."); return; }
+  if(toolBy(code)){ S.sel=code; S.editOpen=false; S.armed=null; S.noReset=true; go("mover"); }
+  else { toast(code+" no está en el inventario. Puedes agregarla ahora."); S.addOpen=true; S.addCode=code; S.noReset=true; go("inventario"); }
+}
+
+/* ---------- datos ---------- */
+const col = n => fs.collection(`panoles/${K}/${n}`);
+function commit(fill, okMsg){
+  const b=fs.batch(); fill(b);
+  b.commit().catch(e=>{ console.error(e); toast(e&&e.code==="permission-denied"?"Sin permiso para guardar. Revisa la clave del pañol.":"No se pudo guardar: "+(e&&e.message||"error")); });
+  if(okMsg) toast(okMsg + (navigator.onLine?"":" (se subirá al volver la señal)"));
+}
+function doRetiro(){
+  const t=toolBy(S.sel); const persona=$("#r-persona").value.trim().replace(/\s+/g," "), area=$("#r-area").value.trim();
+  if(!persona){ toast("Indica quién retira la herramienta."); $("#r-persona").focus(); return; }
+  const ts=Date.now();
+  commit(b=>{ b.update(col("tools").doc(t.id),{estado:"prestada",persona,area,desde:ts}); b.set(col("movs").doc(),{ts,tipo:"retiro",code:t.id,nombre:t.nombre,persona,area}); }, `${t.id} entregada a ${persona}.`);
+  S.sel=null; S.noReset=true; go("panol");
+}
+function doDevol(){
+  const t=toolBy(S.sel); const dano=$("#d-dano").checked, nota=$("#d-nota").value.trim();
+  if(dano&&!nota){ toast("Describe el daño para dejarlo registrado."); $("#d-nota").focus(); return; }
+  const ts=Date.now(), dur=t.desde?ts-t.desde:null;
+  commit(b=>{ b.update(col("tools").doc(t.id),{estado:dano?"mantencion":"disponible",persona:null,area:null,desde:null,nota:dano?nota:null});
+    b.set(col("movs").doc(),{ts,tipo:"devolucion",code:t.id,nombre:t.nombre,persona:t.persona||"",area:t.area||"",dur,cond:dano?"con daño":"buena",nota});
+    if(dano) b.set(col("movs").doc(),{ts:ts+1,tipo:"mantencion",code:t.id,nombre:t.nombre,nota}); }, dano?`${t.id} recibida y enviada a mantención.`:`${t.id} recibida en pañol.`);
+  S.sel=null; S.noReset=true; go("panol");
+}
+function doHabilitar(){ const t=toolBy(S.sel);
+  commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",nota:null}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"habilitada",code:t.id,nombre:t.nombre}); }, `${t.id} disponible otra vez.`); }
+function doAdd(){
+  const code=normCode($("#a-code").value), nombre=$("#a-nombre").value.trim(), categoria=$("#a-cat").value, serie=$("#a-serie").value.trim();
+  if(!code||!nombre){ toast("Completa código y nombre."); return; }
+  if(toolBy(code)){ toast(code+" ya existe. Usa otro código."); return; }
+  commit(b=>{ b.set(col("tools").doc(code),{nombre,categoria,serie,estado:"disponible",creado:Date.now()}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"alta",code,nombre}); }, `${code} agregada.`);
+  S.addOpen=false; S.addCode=""; S.noReset=true; render();
+}
+function doEdit(){ const nombre=$("#e-nombre").value.trim(); if(!nombre){ toast("El nombre no puede quedar vacío."); return; }
+  commit(b=>b.update(col("tools").doc(S.sel),{nombre,categoria:$("#e-cat").value,serie:$("#e-serie").value.trim()}),"Cambios guardados."); S.editOpen=false; S.noReset=true; render(); }
+function doDelete(code){ commit(b=>b.delete(col("tools").doc(code)), code+" eliminada."); S.sel=null; S.armed=null; S.noReset=true; go("inventario"); }
+const EJEMPLO=[["H-001","Esmeril angular 7\"","Eléctrica"],["H-002","Esmeril angular 4½\"","Eléctrica"],["H-003","Taladro percutor","Eléctrica"],["H-004","Llave de torque 1/2\"","Manual"],
+  ["H-005","Llave de impacto neumática 1\"","Neumática"],["H-006","Tecle de palanca 1,5 t","Izaje"],["H-007","Tecle de cadena 3 t","Izaje"],["H-008","Nivel digital 60 cm","Medición"],
+  ["H-009","Huincha de medir 8 m","Medición"],["H-010","Equipo oxicorte","Corte y soldadura"],["H-011","Juego de llaves combinadas","Manual"],["H-012","Galletera inalámbrica","Eléctrica"]];
+function doSeed(){ commit(b=>{ for(const [code,nombre,categoria] of EJEMPLO) if(!toolBy(code)) b.set(col("tools").doc(code),{nombre,categoria,serie:"",estado:"disponible",ejemplo:true,creado:Date.now()}); },"Ejemplo cargado: 12 herramientas."); }
+function doDelEj(){ commit(b=>{ S.tools.filter(t=>t.ejemplo).forEach(t=>b.delete(col("tools").doc(t.id))); },"Ejemplos borrados."); S.armed=null; render(); }
+
+/* ---------- salidas ---------- */
+function summaryText(){
+  const now=Date.now(), c=counts(), n=new Date();
+  const prest=S.tools.filter(t=>t.estado==="prestada").sort((a,b)=>(a.desde||0)-(b.desde||0)), mant=S.tools.filter(t=>t.estado==="mantencion");
+  let s=`*${(S.config.nombre||"PAÑOL").toUpperCase()} — ENTREGA DE TURNO*\n${n.toLocaleDateString("es-CL")} ${fmtT(n)}\n\nDisponibles: ${c.disponible} · Prestadas: ${c.prestada} · Mantención: ${c.mantencion}\n`;
+  s+= prest.length?`\n*PRESTADAS (${prest.length}):*\n`+prest.map(t=>`• ${t.id} ${t.nombre} — ${t.persona||"?"}${t.area?" ("+t.area+")":""}, desde ${fmtT(t.desde)}, ${fmtDur(now-t.desde)}${now-t.desde>SHIFT_H*3600e3?" ⚠ PASÓ EL TURNO":""}`).join("\n")+"\n":"\nNo hay herramientas prestadas.\n";
+  if(mant.length) s+=`\n*EN MANTENCIÓN (${mant.length}):*\n`+mant.map(t=>`• ${t.id} ${t.nombre}${t.nota?" — "+t.nota:""}`).join("\n")+"\n";
+  return s;
+}
+async function shareText(text, okMsg){
+  if(navigator.share){ try{ await navigator.share({text}); return; }catch(e){ if(e&&e.name==="AbortError") return; } }
+  try{ await navigator.clipboard.writeText(text); toast(okMsg); }catch(e){ toast("No se pudo copiar."); }
+}
+function labels(){
+  if(!window.QRCode){ toast("No cargó el generador de QR. Revisa la señal y recarga."); return; }
+  $("#print").innerHTML=visible().map(t=>`<div class="lb"><img src="${qrDataUrl(t.id,300)}" alt=""><div class="tx"><div class="cd">${esc(t.id)}</div><div class="nm">${esc(t.nombre)}</div><div class="ft">${esc((S.config.nombre||"PAÑOL").toUpperCase())} · DEVOLVER AL TÉRMINO DEL TURNO</div></div></div>`).join("");
+  setTimeout(()=>window.print(),150);
+}
+async function csv(){
+  const cell=v=>{ const s=String(v??""); return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+  const rows=[["Fecha","Hora","Movimiento","Código","Herramienta","Persona","Área","Condición","Observación","Horas fuera"]];
+  S.movs.forEach(m=>rows.push([new Date(m.ts).toLocaleDateString("es-CL"),fmtT(m.ts),TIPO[m.tipo]||m.tipo,m.code,m.nombre||"",m.persona||"",m.area||"",m.cond||"",m.nota||"",m.dur?(m.dur/3600e3).toFixed(1).replace(".",","):""]));
+  const name=`historial-panol-${new Date().toISOString().slice(0,10)}.csv`;
+  const file=new File(["﻿"+rows.map(r=>r.map(cell).join(";")).join("\r\n")],name,{type:"text/csv"});
+  if(navigator.canShare&&navigator.canShare({files:[file]})&&/android|iphone|ipad/i.test(navigator.userAgent)){ try{ await navigator.share({files:[file],title:name}); return; }catch(e){ if(e&&e.name==="AbortError") return; } }
+  const a=document.createElement("a"); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1000);
+}
+
+/* ---------- eventos ---------- */
+function arm(k){ S.armed=k; render(); clearTimeout(armT); armT=setTimeout(()=>{ if(S.armed===k){ S.armed=null; render(); } },5000); }
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]"); if(!b) return; const a=b.dataset.act;
+  if(!["del","del-ej","logout"].includes(a)&&S.armed) S.armed=null;
+  switch(a){
+    case "nav": if(b.dataset.v==="mover"&&S.view==="mover") S.sel=null; S.noReset=true; go(b.dataset.v); break;
+    case "scan": startScan(); break;
+    case "scan-close": stopScan(); break;
+    case "torch": toggleTorch(); break;
+    case "open": openCode(b.dataset.code); break;
+    case "close-sel": S.sel=null; S.noReset=true; render(); break;
+    case "goinv": S.filter=b.dataset.f; S.noReset=true; go("inventario"); break;
+    case "filter": S.filter=b.dataset.f; render(); break;
+    case "add-open": S.addOpen=true; S.addCode=""; S.noReset=true; go("inventario"); setTimeout(()=>{ const n=$("#a-nombre"); n&&n.focus(); },30); break;
+    case "add-close": S.addOpen=false; S.noReset=true; render(); break;
+    case "edit-toggle": S.editOpen=!S.editOpen; S.noReset=true; render(); break;
+    case "habilitar": doHabilitar(); break;
+    case "seed": doSeed(); break;
+    case "del": { const k="del:"+b.dataset.code; if(S.armed===k) doDelete(b.dataset.code); else arm(k); break; }
+    case "del-ej": if(S.armed==="ej") doDelEj(); else arm("ej"); break;
+    case "summary": shareText(summaryText(),"Resumen copiado. Pégalo en WhatsApp."); break;
+    case "labels": labels(); break;
+    case "csv": csv(); break;
+    case "share-link": shareText(`Acceso al ${S.config.nombre||"Pañol Digital"}: ${BASE}?k=${encodeURIComponent(K)}`,"Enlace copiado."); break;
+    case "copy-link": navigator.clipboard.writeText(BASE+"?k="+encodeURIComponent(K)).then(()=>toast("Enlace copiado."),()=>toast("No se pudo copiar.")); break;
+    case "install": if(installEvt){ installEvt.prompt(); installEvt.userChoice.finally(()=>{ installEvt=null; render(); }); } break;
+    case "no-install": lsSet("panol.noInstall","1"); render(); break;
+    case "logout": if(S.armed==="logout"){ lsSet(LS_KEY,null); location.href=BASE; } else arm("logout"); break;
+  }
+});
+document.addEventListener("submit",e=>{ e.preventDefault(); const id=e.target.id;
+  if(id==="f-code") openCode($("#m-code").value);
+  else if(id==="f-retiro") doRetiro(); else if(id==="f-devol") doDevol(); else if(id==="f-add") doAdd(); else if(id==="f-edit") doEdit();
+  else if(id==="f-key") enterKey($("#k-in").value);
+  else if(id==="f-new") createPanol($("#n-name").value);
+  else if(id==="f-name"){ const nombre=$("#s-name").value.trim(); commit(b=>b.set(col("config").doc("app"),{nombre},{merge:true}),"Nombre guardado."); }
+});
+document.addEventListener("input",e=>{ if(e.target.id==="i-q"){ S.q=e.target.value; render(); } });
+window.addEventListener("online",setSync); window.addEventListener("offline",setSync);
+window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); installEvt=e; if(S.phase==="app") render(); });
+
+/* ---------- arranque ---------- */
+function makeKey(){ const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789"; const r=crypto.getRandomValues(new Uint32Array(8)); let s=""; for(let i=0;i<8;i++){ s+=A[r[i]%A.length]; if(i===3) s+="-"; } return "PV2-"+s; }
+function createPanol(nombre){
+  const k=makeKey(); K=k; lsSet(LS_KEY,k);
+  fs.collection(`panoles/${k}/config`).doc("app").set({nombre:(nombre||"").trim()||"Pañol",creado:Date.now()}).catch(()=>{});
+  startApp(); S.view="ajustes"; toast("Pañol creado. Guarda la clave que aparece aquí."); render();
+}
+function enterKey(raw){ const k=normKey(raw); if(k.length<12){ S.err="Revisa la clave: tiene el formato PV2-XXXX-XXXX."; render(); return; } S.err=""; K=k; lsSet(LS_KEY,k); startApp(); }
+function startApp(){
+  unsubs.forEach(u=>u()); unsubs=[]; S.phase="app"; S.loaded=false; S.view=S.view==="ajustes"?"ajustes":"panol"; render();
+  unsubs.push(col("tools").onSnapshot({includeMetadataChanges:true},snap=>{
+    S.tools=snap.docs.map(d=>Object.assign({id:d.id},d.data())); S.pendingWrites=snap.metadata.hasPendingWrites;
+    const first=!S.loaded; S.loaded=true; if(S.sel&&!toolBy(S.sel)) S.sel=null;
+    if(first&&S.pending){ const p=S.pending; S.pending=null; openCode(p); } else render();
+  },err=>{ console.error(err); toast(err.code==="permission-denied"?"Sin permiso. Revisa las reglas de Firestore.":"Error de conexión con la base de datos."); }));
+  unsubs.push(col("movs").orderBy("ts","desc").limit(300).onSnapshot(snap=>{ S.movs=snap.docs.map(d=>d.data()); if(S.loaded) render(); },()=>{}));
+  unsubs.push(col("config").doc("app").onSnapshot(s=>{ S.config=s.exists?s.data():{}; render(); },()=>{}));
+}
+
+tick(); setInterval(()=>{ tick(); if(S.phase==="app"&&S.loaded&&(S.view==="panol"||S.view==="mover")&&!document.activeElement?.matches("input,textarea,select")&&$("#scan").hidden) render(); },60000);
+render();
+
+(async()=>{
+  const params=new URLSearchParams(location.search);
+  const pk=params.get("k"), ph=params.get("h");
+  if(pk) lsSet(LS_KEY,normKey(pk));
+  if(ph) S.pending=normCode(ph);
+  if(pk||ph) history.replaceState(null,"",BASE);
+  else if(location.hash.length>1) S.pending=normCode(decodeURIComponent(location.hash.slice(1)));
+
+  const cfg=window.FIREBASE_CONFIG||{};
+  if(!window.firebase||!cfg.apiKey||cfg.apiKey==="PEGAR_AQUI"){ S.phase=window.firebase?"setup":"setup"; if(!window.firebase) toast("No cargó Firebase. Revisa la señal."); render(); return; }
+  firebase.initializeApp(cfg);
+  fs=firebase.firestore();
+  try{ await fs.enablePersistence({synchronizeTabs:true}); }catch(e){}
+  firebase.auth().onAuthStateChanged(user=>{
+    if(!user){ firebase.auth().signInAnonymously().catch(e=>{ S.phase="login"; S.err=navigator.onLine?"No se pudo iniciar sesión: activa el acceso Anónimo en Firebase → Authentication.":"Necesitas señal la primera vez que abres la app."; render(); }); return; }
+    if(S.phase==="app") return;
+    const k=lsGet(LS_KEY);
+    if(k){ K=k; startApp(); } else { S.phase="login"; render(); }
+  });
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+})();
+})();
+</script>
+</body>
+</html>
