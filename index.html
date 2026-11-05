@@ -356,6 +356,10 @@ input[type=number],input[type=date]{width:100%;background:var(--surface);border:
 .qb:first-child svg{color:#fff}
 @media (max-width:380px){.kc .kn{font-size:36px}.kc{padding:12px}}
 
+/* Inicio de sesión y roles */
+input[type=email],input[type=password]{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;min-height:48px}
+body:not(.admin) .adm{display:none!important}
+
 </style>
 </head>
 <body>
@@ -400,12 +404,12 @@ input[type=number],input[type=date]{width:100%;background:var(--surface);border:
 /* ================= Configuración ================= */
 const SHIFT_H = 12;            // horas prestada antes de marcar "pasó el turno"
 const AVISO_DIAS = 30;         // días de aviso antes de vencer calibración / certificado
-const LS_KEY = "panol.clave", LS_ROL = "panol.rol";
+const LS_KEY = "panol.clave";
 const BASE = location.origin + location.pathname;
 const LOGO = document.getElementById("logoImg").src;
 const S = { tools:[], movs:[], workers:[], cons:[], cmovs:[], iz:[], izi:[], config:{}, izcfg:{},
   view:"panol", sel:null, wsel:null, csel:null, zsel:null, filter:"todos", q:"", wq:"", cq:"", zq:"", zfilter:"todos",
-  loaded:false, phase:"boot", pendingWrites:false, err:"", ro:false, pending:null,
+  loaded:false, phase:"boot", pendingWrites:false, err:"", ro:false, pending:null, user:null, me:null, members:[], invs:[], authMode:"login", lastMail:"", claimKey:"",
   addOpen:false, addCode:"", editOpen:false, armed:null, noReset:false,
   cart:{worker:"", items:[], area:""}, sig:{}, photo:{}, imp:{tipo:"tools", rows:null, name:""},
   wAdd:false, wEdit:false, cAdd:false, cEdit:false, zAdd:false, zEdit:false, zInsp:false, zFuera:false, cfgIz:false,
@@ -522,16 +526,62 @@ function compressPhoto(file){ return new Promise((res,rej)=>{ const u=URL.create
 /* ================= Pantallas de inicio ================= */
 function vSetup(){ return `<div class="panel"><h2>Falta conectar la base de datos</h2><p>Abre el archivo <span class="mono">config.js</span> y pega la configuración de tu proyecto de Firebase.</p></div>`; }
 function vLogin(){
-  return `<div class="hero-login"><span class="lg"><img src="${LOGO}" alt="Fluor-Salfa"></span><span class="ttl">Pañol <b>Digital</b></span></div>
-    <div class="sec"><h2>Entrar al pañol</h2><p class="muted">Escribe la clave del pañol que te pasó el encargado, o escanea el QR de acceso con la cámara del celular.</p></div>
-    <form class="panel" id="f-key" autocomplete="off"><label class="f">Clave del pañol<input type="text" id="k-in" class="mono-in" placeholder="ej. PV2-7K3M-Q9TX" autocapitalize="characters"></label>
-    <button class="btn pri big" type="submit">Entrar</button></form>
-    ${S.err?`<p class="small" style="color:var(--bad)">${esc(S.err)}</p>`:""}
-    <form class="panel" id="f-new" autocomplete="off"><h2>¿Eres el encargado? Crea un pañol nuevo</h2>
-    <label class="f">Nombre del pañol<input type="text" id="n-name" placeholder="ej. Pañol Acopio Fino"></label>
-    <button class="btn" type="submit">Crear pañol y generar clave</button>
-    <p class="small muted">Se genera una clave única. Guárdala: con ella entran los demás celulares.</p></form>`;
+  const m=S.authMode;
+  const hero=`<div class="hero-login"><span class="lg"><img src="${LOGO}" alt="Fluor-Salfa"></span><span class="ttl">Pañol <b>Digital</b></span></div>`;
+  const err=S.err?`<p class="small" style="color:var(--bad);font-weight:600">${esc(S.err)}</p>`:"";
+  if(m==="reset") return hero+`<form class="panel" id="f-reset" autocomplete="on"><h2>Recuperar contraseña</h2><p class="small muted">Te enviaremos un correo con un enlace para crear una contraseña nueva.</p>
+    <label class="f">Correo<input type="email" id="l-mail" autocomplete="email" inputmode="email" value="${esc(S.lastMail||"")}" required></label>${err}
+    <button class="btn pri big" type="submit">Enviar correo</button><button class="btn ghost" type="button" data-act="auth-mode" data-m="login">← Volver a ingresar</button></form>`;
+  if(m==="registro") return hero+`<form class="panel" id="f-reg" autocomplete="on"><h2>Crear cuenta</h2><p class="small muted">Usa el mismo correo con el que te invitó el encargado del pañol.</p>
+    <label class="f">Nombre y apellido<input type="text" id="l-nombre" autocomplete="name" required></label>
+    <label class="f">Correo<input type="email" id="l-mail" autocomplete="email" inputmode="email" value="${esc(S.lastMail||"")}" required></label>
+    <label class="f">Contraseña (mínimo 6 caracteres)<input type="password" id="l-pass" autocomplete="new-password" minlength="6" required></label>${err}
+    <button class="btn pri big" type="submit">Crear cuenta</button><button class="btn ghost" type="button" data-act="auth-mode" data-m="login">Ya tengo cuenta: ingresar</button></form>`;
+  return hero+`<form class="panel" id="f-login" autocomplete="on"><h2>Ingresar</h2>
+    <label class="f">Correo<input type="email" id="l-mail" autocomplete="username" inputmode="email" value="${esc(S.lastMail||"")}" required></label>
+    <label class="f">Contraseña<input type="password" id="l-pass" autocomplete="current-password" required></label>${err}
+    <button class="btn pri big" type="submit">Entrar</button>
+    <div class="row" style="justify-content:space-between"><button class="btn ghost" type="button" data-act="auth-mode" data-m="registro">Crear cuenta</button><button class="btn ghost" type="button" data-act="auth-mode" data-m="reset">Olvidé mi contraseña</button></div></form>
+    <p class="small muted" style="text-align:center">¿Te invitaron al pañol? Toca "Crear cuenta" y usa el correo de la invitación.</p>`;
 }
+function vNoAccess(){
+  const err=S.err?`<p class="small" style="color:var(--bad);font-weight:600">${esc(S.err)}</p>`:"";
+  return `<div class="hero-login"><span class="lg"><img src="${LOGO}" alt="Fluor-Salfa"></span><span class="ttl">Pañol <b>Digital</b></span></div>
+    <div class="panel"><h2>Aún no tienes acceso</h2><p>Ingresaste como <strong>${esc(S.user?.email||"")}</strong>, pero este correo no está invitado a ningún pañol.</p>
+      <p class="small muted">Pide al encargado que te invite con este correo desde Ajustes → Usuarios. Después toca "Revisar de nuevo".</p>
+      <div class="row"><button class="btn pri" data-act="retry-inv">Revisar de nuevo</button><button class="btn ghost" data-act="signout">Cerrar sesión</button></div></div>
+    <form class="panel" id="f-claim" autocomplete="off"><h2>¿Eres el encargado?</h2>
+      <p class="small muted">Si ya usabas la app con una clave (PV2-XXXX-XXXX), escríbela para activar ese pañol con tu cuenta. Quedarás como administrador y tus datos se mantienen. Deja la clave vacía para crear un pañol nuevo.</p>
+      <label class="f">Clave del pañol existente<input type="text" id="cl-key" class="mono-in" placeholder="ej. PV2-7K3M-Q9TX" value="${esc(S.claimKey||"")}"></label>
+      <label class="f">Nombre del pañol<input type="text" id="cl-name" placeholder="ej. Pañol Acopio Fino"></label>${err}
+      <button class="btn" type="submit">Activar como administrador</button></form>`;
+}
+const ROL_LBL={admin:"Administrador",panolero:"Pañolero",supervisor:"Supervisor"};
+function vAjustes(){
+  const me=S.me||{}, adm=me.rol==="admin";
+  const memEmails=new Set(S.members.map(m=>(m.email||"").toLowerCase()));
+  const invs=S.invs.filter(i=>!memEmails.has(i.id));
+  let h=backBar("Ajustes","mas")+`<div class="panel"><h2>Mi cuenta</h2><dl class="kv"><dt>Nombre</dt><dd>${esc(me.nombre||S.user?.displayName||"—")}</dd><dt>Correo</dt><dd>${esc(S.user?.email||"")}</dd><dt>Rol</dt><dd>${esc(ROL_LBL[me.rol]||"—")}</dd></dl>
+    <button class="btn badb${S.armed==="logout"?" armed":""}" data-act="logout">${S.armed==="logout"?"Toca otra vez para cerrar sesión":"Cerrar sesión"}</button></div>`;
+  if(adm){
+    h+=`<form class="panel" id="f-inv" autocomplete="off"><h2>Invitar usuario</h2><p class="small muted">La persona crea su cuenta con este correo y entra directo al pañol con el rol que elijas.</p>
+      <label class="f">Correo *<input type="email" id="iv-mail" inputmode="email" required></label>
+      <div class="grid2"><label class="f">Nombre<input type="text" id="iv-nombre"></label>
+      <label class="f">Rol<select id="iv-rol"><option value="panolero">Pañolero (registra)</option><option value="supervisor">Supervisor (solo ve)</option><option value="admin">Administrador (todo)</option></select></label></div>
+      <button class="btn pri" type="submit">Invitar</button></form>`;
+    h+=`<div class="sec"><h3>Usuarios con acceso · ${S.members.length}</h3><div class="list">${S.members.slice().sort((a,b)=>(a.nombre||a.email||"").localeCompare(b.nombre||b.email||"","es")).map(m=>{ const yo=m.id===S.user?.uid;
+      return `<div class="item" style="cursor:default"><span class="code">${esc(((m.nombre||m.email||"?").match(/\b\p{L}/gu)||["?"]).slice(0,2).join("").toUpperCase())}</span><span class="main"><span class="name">${esc(m.nombre||m.email)}${yo?" (tú)":""}</span><br><span class="sub">${esc(m.email||"")}</span></span>
+      ${yo?`<span class="pill disponible">${ROL_LBL[m.rol]||m.rol}</span>`:`<span class="row" style="gap:6px;flex-wrap:nowrap"><select class="m-rol" data-uid="${esc(m.id)}" aria-label="Rol de ${esc(m.nombre||m.email)}" style="min-height:38px;padding:6px 8px;width:auto">${Object.entries(ROL_LBL).map(([k,l])=>`<option value="${k}"${m.rol===k?" selected":""}>${l}</option>`).join("")}</select><button class="btn badb${S.armed==="mdel:"+m.id?" armed":""}" style="min-height:38px;padding:6px 10px" data-act="m-del" data-uid="${esc(m.id)}">${S.armed==="mdel:"+m.id?"¿Quitar?":"Quitar"}</button></span>`}</div>`; }).join("")}</div></div>`;
+    if(invs.length) h+=`<div class="sec"><h3>Invitaciones pendientes · ${invs.length}</h3><div class="list">${invs.map(i=>`<div class="item" style="cursor:default"><span class="code">✉</span><span class="main"><span class="name">${esc(i.nombre||i.id)}</span><br><span class="sub">${esc(i.id)} · ${esc(ROL_LBL[i.rol]||i.rol)}</span></span>
+      <span class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn" style="min-height:38px;padding:6px 10px" data-act="inv-share" data-mail="${esc(i.id)}">Avisar</button><button class="btn badb" style="min-height:38px;padding:6px 10px" data-act="inv-del" data-mail="${esc(i.id)}">Anular</button></span></div>`).join("")}</div></div>`;
+    h+=`<form class="panel" id="f-name" autocomplete="off"><h2>Pañol</h2><label class="f">Nombre (aparece bajo el título)<input type="text" id="s-name" value="${esc(S.config.nombre||"")}" placeholder="ej. Pañol Acopio Fino"></label>
+      <label class="switch"><input type="checkbox" id="s-firma" ${S.config.firmaObligatoria?"checked":""}> Firma obligatoria al retirar</label>
+      <button class="btn" type="submit">Guardar</button><span class="small muted">Identificador interno del pañol: <span class="mono">${esc(K)}</span></span></form>`;
+  }
+  if(installEvt) h+=`<button class="btn" data-act="install">Instalar app en este celular</button>`;
+  return h;
+}
+
 
 /* ================= Vistas comunes ================= */
 const icoCam='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
@@ -556,7 +606,7 @@ function installBanner(){
     <div class="row">${installEvt?`<button class="btn pri" data-act="install">Instalar</button>`:""}<button class="btn ghost" data-act="no-install">Ahora no</button></div></div>`;
 }
 const backBar = (title, to) => `<div class="backbar"><h2>${title}</h2><button class="btn ghost" data-act="go" data-v="${to}">← Volver</button></div>`;
-const roBanner = () => S.ro?`<div class="ro-banner">Modo supervisor: solo lectura. Puedes ver todo, pero no registrar movimientos.</div>`:"";
+const roBanner = () => S.ro?`<div class="ro-banner">Ingresaste como supervisor: puedes ver todo, pero no registrar movimientos.</div>`:"";
 
 /* ================= Pañol ================= */
 function alerts(){
@@ -830,7 +880,7 @@ function vIzaje(){
   const f=S.zfilter, list=all.filter(({e})=>f==="todos"||(f==="apto"&&e.code==="apto")||(f==="pend"&&(e.code==="sin"||e.code==="vencida"))||(f==="cert"&&(e.warn||e.code==="cert"))||(f==="fuera"&&e.code==="fuera"))
     .filter(({it})=>!q||[it.id,it.tipo,it.desc,it.serie,it.cert].join(" ").toLowerCase().includes(q)).sort((a,b)=>a.it.id.localeCompare(b.it.id,"es",{numeric:true}));
   const n=k=>all.filter(({e})=>k==="apto"?e.code==="apto":k==="pend"?(e.code==="sin"||e.code==="vencida"):k==="cert"?(e.warn||e.code==="cert"):k==="fuera"?e.code==="fuera":true).length;
-  let h=roBanner()+backBar("Control de izaje","mas")+`<div class="colorcall"><span class="sw" style="background:${hex(P.color)}"></span><span><span class="small muted">Período ${esc(P.label)} · color vigente</span><br><strong>${esc(P.color)}</strong></span><button class="btn ghost w" style="margin-left:auto" data-act="z-cfg">Cambiar colores</button></div>`;
+  let h=roBanner()+backBar("Control de izaje","mas")+`<div class="colorcall"><span class="sw" style="background:${hex(P.color)}"></span><span><span class="small muted">Período ${esc(P.label)} · color vigente</span><br><strong>${esc(P.color)}</strong></span><button class="btn ghost w adm" style="margin-left:auto" data-act="z-cfg">Cambiar colores</button></div>`;
   if(!S.izcfg.coloresOk&&!S.cfgIz) h+=`<div class="banner"><strong>Confirma el código de colores de tu faena</strong><span class="small">Por ahora uso ${izCols().join(", ").toLowerCase()} por trimestre como ejemplo.</span></div>`;
   if(S.cfgIz) h+=izCfgPanel();
   h+=`<div class="row w"><button class="btn pri" data-act="z-add">+ Registrar elemento</button>${S.iz.length?"":`<button class="btn" data-act="z-seed">Cargar ejemplo</button>`}</div>`;
@@ -973,24 +1023,6 @@ function doImport(){
   S.imp.rows=null; S.noReset=true; go(t==="tools"?"inventario":t==="workers"?"trabajadores":"consumibles");
 }
 
-/* ================= Ajustes ================= */
-function vAjustes(){
-  const link=BASE+"?k="+encodeURIComponent(K), linkSup=link+"&r=sup";
-  return backBar("Ajustes","mas")+roBanner()+`<div class="panel w"><h2>Dar acceso al pañolero</h2>
-    <p class="small muted">Escanea este QR con la cámara normal del celular, abre el enlace y queda dentro del pañol con acceso completo. Después toca "Instalar" para dejar el ícono.</p>
-    <div class="qrbox"><div class="qr" id="qr-key"></div><div class="sec" style="gap:6px;min-width:0"><span class="small muted">Clave del pañol</span><div class="keybox">${esc(K)}</div></div></div>
-    <div class="row"><button class="btn pri" data-act="share-link" data-l="full">Enviar enlace de acceso</button><button class="btn" data-act="copy-link" data-l="full">Copiar enlace</button></div></div>
-  <div class="panel w"><h2>Acceso para supervisores</h2>
-    <p class="small muted">Con este enlace pueden ver el pañol, el historial y las estadísticas, pero sin botones para registrar. Es una comodidad, no una barrera de seguridad: quien tenga la clave puede volver a entrar con acceso completo.</p>
-    <div class="qrbox"><div class="qr" id="qr-sup"></div><div class="row"><button class="btn" data-act="share-link" data-l="sup">Enviar enlace de supervisor</button></div></div></div>
-  <form class="panel w" id="f-name" autocomplete="off"><h2>Nombre del pañol</h2><label class="f">Aparece bajo el título<input type="text" id="s-name" value="${esc(S.config.nombre||"")}" placeholder="ej. Pañol Acopio Fino"></label>
-    <label class="switch"><input type="checkbox" id="s-firma" ${S.config.firmaObligatoria?"checked":""}> Firma obligatoria al retirar</label>
-    <button class="btn" type="submit">Guardar</button></form>
-  ${installEvt?`<button class="btn" data-act="install">Instalar app en este celular</button>`:""}
-  <div class="panel"><h2>Salir de este pañol</h2><p class="small muted">Este equipo olvida la clave. Los datos no se borran; para volver a entrar necesitas la clave.</p>
-    <button class="btn badb${S.armed==="logout"?" armed":""}" data-act="logout">${S.armed==="logout"?"Toca otra vez para salir":"Salir del pañol"}</button></div>`;
-}
-
 /* ================= Render ================= */
 const VIEWS={panol:vPanol,mover:vMover,inventario:vInventario,historial:vHistorial,mas:vMas,trabajadores:vTrabajadores,trabajador:vTrabajador,
   consumibles:vConsumibles,consumible:vConsumible,izaje:vIzaje,izitem:vIzItem,stats:vStats,importar:vImportar,ajustes:vAjustes};
@@ -1000,9 +1032,9 @@ function render(){
   if(!S.noReset) main.querySelectorAll("input,select,textarea").forEach(el=>{ if(el.id&&el.type!=="file") drafts[el.id]=(el.type==="radio"||el.type==="checkbox")?el.checked:el.value; });
   S.noReset=false; const act=document.activeElement&&document.activeElement.id;
   const inApp=S.phase==="app";
-  document.body.classList.toggle("ro",S.ro&&inApp);
+  document.body.classList.toggle("ro",S.ro&&inApp); document.body.classList.toggle("admin",inApp&&S.me?.rol==="admin");
   $("#tabs").hidden=!inApp; $("#gearBtn").hidden=!inApp; $("#pname").textContent=inApp?(S.config.nombre||""):"";
-  main.innerHTML = S.phase==="setup"?vSetup() : S.phase==="login"?vLogin() : inApp?VIEWS[S.view]() : `<div class="empty">Abriendo…</div>`;
+  main.innerHTML = S.phase==="setup"?vSetup() : S.phase==="login"?vLogin() : S.phase==="noaccess"?vNoAccess() : inApp?VIEWS[S.view]() : `<div class="empty">Abriendo…</div>`;
   for(const id in drafts){ const el=document.getElementById(id); if(!el) continue; if(el.type==="radio"||el.type==="checkbox") el.checked=drafts[id]; else el.value=drafts[id]; }
   if(act){ const a=document.getElementById(act); if(a&&a.tagName!=="BUTTON"&&a.type!=="checkbox"&&a.type!=="radio"){ a.focus(); try{ const L=a.value.length; a.setSelectionRange&&a.setSelectionRange(L,L);}catch(e){} } }
   document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.v===TAB_OF(S.view)?"page":"false"));
@@ -1010,7 +1042,6 @@ function render(){
   if(window.QRCode){
     const q=(id,text,s)=>{ const el=document.getElementById(id); if(el) new QRCode(el,{text,width:s,height:s,correctLevel:QRCode.CorrectLevel.M}); };
     if(S.sel) q("qr-one",qrText(S.sel),84); if(S.wsel) q("qr-w",BASE+"?w="+encodeURIComponent(S.wsel),96); if(S.zsel) q("qr-z",BASE+"?z="+encodeURIComponent(S.zsel),84);
-    q("qr-key",BASE+"?k="+encodeURIComponent(K),120); q("qr-sup",BASE+"?k="+encodeURIComponent(K)+"&r=sup",96);
   }
   syncInspBtn(); setSync();
 }
@@ -1088,9 +1119,10 @@ function openCode(raw){
 
 /* ================= Escrituras ================= */
 const col = n => fs.collection(`panoles/${K}/${n}`);
+const ME = () => S.me?.nombre||S.user?.displayName||S.user?.email||"";
 const inc = n => firebase.firestore.FieldValue.increment(n);
 function commit(fill, okMsg){
-  if(S.ro){ toast("Modo supervisor: solo lectura."); return false; }
+  if(S.ro){ toast("Tu rol es supervisor: solo puedes ver."); return false; }
   const b=fs.batch(); fill(b);
   b.commit().catch(e=>{ console.error(e); toast(e&&e.code==="permission-denied"?"Sin permiso para guardar. Revisa la clave del pañol.":"No se pudo guardar: "+(e&&e.message||"error")); });
   if(okMsg) toast(okMsg+(navigator.onLine?"":" (se subirá al volver la señal)"));
@@ -1103,7 +1135,7 @@ async function retirar(codes, whoTxt, area, sigId){
   if(!tools.length){ toast("No hay herramientas disponibles para entregar."); return false; }
   const ok=commit(b=>{ if(firma) b.set(col("firmas").doc(lote),{ts,persona:who.persona,workerId:who.workerId,codes:tools.map(t=>t.id),data:firma});
     tools.forEach((t,i)=>{ b.update(col("tools").doc(t.id),{estado:"prestada",persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,area,desde:ts});
-      b.set(col("movs").doc(),{ts:ts+i,tipo:"retiro",code:t.id,nombre:t.nombre,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,area,lote,firma:!!firma}); }); },
+      b.set(col("movs").doc(),{por:ME(),ts:ts+i,tipo:"retiro",code:t.id,nombre:t.nombre,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,area,lote,firma:!!firma}); }); },
     tools.length===1?`${tools[0].id} entregada a ${who.persona}.`:`${tools.length} herramientas entregadas a ${who.persona}.`);
   if(ok) delete S.sig[sigId]; return ok;
 }
@@ -1115,22 +1147,22 @@ function devolver(tools,dano,nota,foto){
   const ts=Date.now(); const fotoId=foto?"F"+uid():null;
   return commit(b=>{ if(foto) b.set(col("fotos").doc(fotoId),{ts,code:tools[0].id,data:foto});
     tools.forEach((t,i)=>{ b.update(col("tools").doc(t.id),{estado:dano?"mantencion":"disponible",persona:null,workerId:null,cuadrilla:null,area:null,desde:null,nota:dano?nota:null});
-      b.set(col("movs").doc(),{ts:ts+i,tipo:"devolucion",code:t.id,nombre:t.nombre,persona:t.persona||"",workerId:t.workerId||null,cuadrilla:t.cuadrilla||"",area:t.area||"",dur:t.desde?ts-t.desde:null,cond:dano?"con daño":"buena",nota:nota||"",fotoId});
-      if(dano) b.set(col("movs").doc(),{ts:ts+i+1,tipo:"mantencion",code:t.id,nombre:t.nombre,nota}); }); },
+      b.set(col("movs").doc(),{por:ME(),ts:ts+i,tipo:"devolucion",code:t.id,nombre:t.nombre,persona:t.persona||"",workerId:t.workerId||null,cuadrilla:t.cuadrilla||"",area:t.area||"",dur:t.desde?ts-t.desde:null,cond:dano?"con daño":"buena",nota:nota||"",fotoId});
+      if(dano) b.set(col("movs").doc(),{por:ME(),ts:ts+i+1,tipo:"mantencion",code:t.id,nombre:t.nombre,nota}); }); },
     tools.length>1?`${tools.length} herramientas recibidas.`:dano?`${tools[0].id} recibida y enviada a mantención.`:`${tools[0].id} recibida en pañol.`);
 }
 function doDevol(){ const t=toolBy(S.sel); const dano=$("#d-dano").checked, nota=clean($("#d-nota").value);
   if(dano&&!nota){ toast("Describe el daño para dejarlo registrado."); $("#d-nota").focus(); return; }
   if(devolver([t],dano,nota,S.photo["ph-devol"])){ delete S.photo["ph-devol"]; S.sel=null; S.noReset=true; go("panol"); } }
-function doHabilitar(){ const t=toolBy(S.sel); commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",nota:null}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"habilitada",code:t.id,nombre:t.nombre}); }, `${t.id} disponible otra vez.`); }
+function doHabilitar(){ const t=toolBy(S.sel); commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",nota:null}); b.set(col("movs").doc(),{por:ME(),ts:Date.now(),tipo:"habilitada",code:t.id,nombre:t.nombre}); }, `${t.id} disponible otra vez.`); }
 function doExt(){ const t=toolBy(S.sel); const who=resolveWorker($("#x-resp").value)||{persona:"",workerId:null,cuadrilla:""}; const nota=clean($("#x-nota").value);
   if(commit(b=>{ b.update(col("tools").doc(t.id),{estado:"extraviada",persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,area:null,desde:Date.now(),nota});
-    b.set(col("movs").doc(),{ts:Date.now(),tipo:"extraviada",code:t.id,nombre:t.nombre,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,nota}); }, `${t.id} marcada como extraviada.`)){ S.extOpen=false; S.noReset=true; render(); } }
-function doRecup(){ const t=toolBy(S.sel); commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",persona:null,workerId:null,cuadrilla:null,desde:null,nota:null}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"recuperada",code:t.id,nombre:t.nombre}); }, `${t.id} recuperada.`); }
+    b.set(col("movs").doc(),{por:ME(),ts:Date.now(),tipo:"extraviada",code:t.id,nombre:t.nombre,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,nota}); }, `${t.id} marcada como extraviada.`)){ S.extOpen=false; S.noReset=true; render(); } }
+function doRecup(){ const t=toolBy(S.sel); commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",persona:null,workerId:null,cuadrilla:null,desde:null,nota:null}); b.set(col("movs").doc(),{por:ME(),ts:Date.now(),tipo:"recuperada",code:t.id,nombre:t.nombre}); }, `${t.id} recuperada.`); }
 function readTool(p){ return {nombre:clean($("#"+p+"-nombre").value),categoria:clean($("#"+p+"-cat").value),ubicacion:clean($("#"+p+"-ubi").value),serie:clean($("#"+p+"-serie").value),calibVence:$("#"+p+"-cal").value||null}; }
 function doAdd(){ const code=normCode($("#a-code").value), d=readTool("a");
   if(!code||!d.nombre){ toast("Completa código y nombre."); return; } if(toolBy(code)){ toast(code+" ya existe. Usa otro código."); return; }
-  if(commit(b=>{ b.set(col("tools").doc(code),Object.assign(d,{estado:"disponible",creado:Date.now()})); b.set(col("movs").doc(),{ts:Date.now(),tipo:"alta",code,nombre:d.nombre}); }, `${code} agregada.`)){ S.addOpen=false; S.addCode=""; S.noReset=true; render(); } }
+  if(commit(b=>{ b.set(col("tools").doc(code),Object.assign(d,{estado:"disponible",creado:Date.now()})); b.set(col("movs").doc(),{por:ME(),ts:Date.now(),tipo:"alta",code,nombre:d.nombre}); }, `${code} agregada.`)){ S.addOpen=false; S.addCode=""; S.noReset=true; render(); } }
 function doEdit(){ const d=readTool("e"); if(!d.nombre){ toast("El nombre no puede quedar vacío."); return; }
   if(commit(b=>b.update(col("tools").doc(S.sel),d),"Cambios guardados.")){ S.editOpen=false; S.noReset=true; render(); } }
 function doDelete(code){ if(commit(b=>b.delete(col("tools").doc(code)), code+" eliminada.")){ S.sel=null; S.armed=null; S.noReset=true; go("inventario"); } }
@@ -1160,7 +1192,7 @@ function doCMov(tipo){ const c=consBy(S.csel); const cant=num($(tipo==="salida"?
   let who={persona:"",workerId:null,cuadrilla:""}, det="";
   if(tipo==="salida"){ who=resolveWorker($("#cs-w").value); if(!who){ toast("Indica a quién se entrega."); return; } if(cant>num(c.stock)){ toast(`Solo hay ${fmtN(c.stock)} ${c.unidad||""} en stock.`); return; } }
   else det=clean($("#ce-det").value);
-  if(commit(b=>{ b.update(col("cons").doc(c.id),{stock:inc(tipo==="salida"?-cant:cant)}); b.set(col("cmovs").doc(),{ts:Date.now(),tipo,cid:c.id,nombre:c.nombre,unidad:c.unidad||"",cant,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,detalle:det}); },
+  if(commit(b=>{ b.update(col("cons").doc(c.id),{stock:inc(tipo==="salida"?-cant:cant)}); b.set(col("cmovs").doc(),{por:ME(),ts:Date.now(),tipo,cid:c.id,nombre:c.nombre,unidad:c.unidad||"",cant,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,detalle:det}); },
     tipo==="salida"?`Entregado: ${fmtN(cant)} ${c.unidad||""} a ${who.persona}.`:`Ingreso de ${fmtN(cant)} ${c.unidad||""} registrado.`)){ S.noReset=true; render(); } }
 
 function readIz(p){ const n=id=>{ const v=$("#"+id).value; return v===""?null:num(v); };
@@ -1171,11 +1203,11 @@ function doZEdit(){ const d=readIz("ze"); if(d.wll==null){ toast("La capacidad W
 function doZInsp(){ const it=izBy(S.zsel), P=periodo(); const inspector=clean($("#zi-insp").value); if(!inspector){ toast("Indica quién inspecciona."); return; }
   const fallas=[...document.querySelectorAll("#f-zinsp .zf:checked")].map(x=>x.value), nota=clean($("#zi-nota").value), apto=!fallas.length, ts=Date.now();
   if(commit(b=>{ b.update(col("izaje").doc(it.id),apto?{insp:{ts,periodo:P.key,color:P.color,inspector,resultado:"apto"}}:{insp:null,fuera:true,motivo:fallas.join(", ")});
-    b.set(col("izinsps").doc(),{ts,code:it.id,tipo:it.tipo,desc:it.desc||"",periodo:P.key,color:P.color,inspector,resultado:apto?"apto":"no_apto",fallas,nota}); },
+    b.set(col("izinsps").doc(),{por:ME(),ts,code:it.id,tipo:it.tipo,desc:it.desc||"",periodo:P.key,color:P.color,inspector,resultado:apto?"apto":"no_apto",fallas,nota}); },
     apto?`${it.id} apto. Márcalo con cinta ${P.color.toLowerCase()}.`:`${it.id} fuera de servicio. Segrégalo y rotúlalo.`)){ S.zInsp=false; S.noReset=true; render(); window.scrollTo(0,0); } }
 function doZFuera(){ const it=izBy(S.zsel), m=clean($("#zo-mot").value); if(!m){ toast("Escribe el motivo."); return; }
-  if(commit(b=>{ b.update(col("izaje").doc(it.id),{fuera:true,motivo:m,insp:null}); b.set(col("izinsps").doc(),{ts:Date.now(),code:it.id,tipo:it.tipo,desc:it.desc||"",color:"Gris",resultado:"fuera",nota:m}); },`${it.id} fuera de servicio.`)){ S.zFuera=false; S.noReset=true; render(); } }
-function doZReint(){ const it=izBy(S.zsel); commit(b=>{ b.update(col("izaje").doc(it.id),{fuera:false,motivo:null,insp:null}); b.set(col("izinsps").doc(),{ts:Date.now(),code:it.id,tipo:it.tipo,desc:it.desc||"",color:"Gris",resultado:"reintegro",nota:"Reintegrado, pendiente de inspección"}); },`${it.id} reintegrado. Falta inspeccionarlo.`); }
+  if(commit(b=>{ b.update(col("izaje").doc(it.id),{fuera:true,motivo:m,insp:null}); b.set(col("izinsps").doc(),{por:ME(),ts:Date.now(),code:it.id,tipo:it.tipo,desc:it.desc||"",color:"Gris",resultado:"fuera",nota:m}); },`${it.id} fuera de servicio.`)){ S.zFuera=false; S.noReset=true; render(); } }
+function doZReint(){ const it=izBy(S.zsel); commit(b=>{ b.update(col("izaje").doc(it.id),{fuera:false,motivo:null,insp:null}); b.set(col("izinsps").doc(),{por:ME(),ts:Date.now(),code:it.id,tipo:it.tipo,desc:it.desc||"",color:"Gris",resultado:"reintegro",nota:"Reintegrado, pendiente de inspección"}); },`${it.id} reintegrado. Falta inspeccionarlo.`); }
 function doZCfg(){ const f=$("#zc-freq").value, n=f==="mensual"?12:4, cols=[]; for(let i=0;i<n;i++){ const el=$("#zc-col-"+i); cols.push(el?el.value:(f==="mensual"?DEF_MES:DEF_TRIM)[i]); }
   if(commit(b=>b.set(col("config").doc("izaje"),{freq:f,colores:cols,coloresOk:true},{merge:true}),"Código de colores guardado.")){ S.cfgIz=false; S.noReset=true; render(); } }
 const EJ_IZ=[["IZ-001","Eslinga sintética","Eslinga plana 2 capas 3 m",3,3,60],["IZ-002","Eslinga sintética","Eslinga tubular 6 m",5,6,20],["IZ-003","Estrobo de cable","Estrobo 1/2\" ojo-ojo 4 m",1.8,4,200],
@@ -1225,7 +1257,7 @@ async function showDoc(colName,id,title){
 function arm(k){ S.armed=k; render(); clearTimeout(armT); armT=setTimeout(()=>{ if(S.armed===k){ S.armed=null; render(); } },5000); }
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]"); if(!b) return; const a=b.dataset.act;
-  if(!["del","del-ej","logout","w-del","c-del","z-del","z-delej"].includes(a)&&S.armed) S.armed=null;
+  if(!["del","del-ej","logout","m-del","w-del","c-del","z-del","z-delej"].includes(a)&&S.armed) S.armed=null;
   const V=b.dataset.v;
   switch(a){
     case "nav": if(V==="mover"&&S.view==="mover") S.sel=null; S.noReset=true; go(V); break;
@@ -1295,17 +1327,21 @@ document.addEventListener("click",e=>{
     case "imp-go": doImport(); break;
     case "imp-plantilla": { const d=IMP[S.imp.tipo]; saveFile(`plantilla-${d.label.toLowerCase()}.csv`,toCsv([d.cols]),"text/csv"); break; }
     /* ajustes */
-    case "share-link": { const sup=b.dataset.l==="sup"; const l=BASE+"?k="+encodeURIComponent(K)+(sup?"&r=sup":""); shareText(`${sup?"Acceso de supervisor (solo lectura) al":"Acceso al"} ${S.config.nombre||"Pañol Digital"}: ${l}`,"Enlace copiado."); break; }
-    case "copy-link": navigator.clipboard.writeText(BASE+"?k="+encodeURIComponent(K)).then(()=>toast("Enlace copiado."),()=>toast("No se pudo copiar.")); break;
+    case "auth-mode": S.lastMail=($("#l-mail")||{}).value||S.lastMail; S.authMode=b.dataset.m; S.err=""; S.noReset=true; render(); break;
+    case "retry-inv": S.err=""; afterLogin(S.user); break;
+    case "signout": firebase.auth().signOut(); break;
+    case "m-del": { const k="mdel:"+b.dataset.uid; if(S.armed===k){ adminWrite(bb=>bb.delete(col("miembros").doc(b.dataset.uid)),"Usuario quitado. Ya no puede entrar al pañol."); S.armed=null; } else arm(k); break; }
+    case "inv-del": { const m=b.dataset.mail; adminWrite(bb=>{ bb.delete(fs.collection("invitaciones").doc(m)); bb.delete(col("invitaciones").doc(m)); },"Invitación anulada."); break; }
+    case "inv-share": { const i=S.invs.find(x=>x.id===b.dataset.mail); shareText(inviteText(i.id,i.rol),"Mensaje copiado. Pégalo en WhatsApp o correo."); break; }
     case "install": if(installEvt){ installEvt.prompt(); installEvt.userChoice.finally(()=>{ installEvt=null; render(); }); } break;
     case "no-install": lsSet("panol.noInstall","1"); render(); break;
-    case "logout": if(S.armed==="logout"){ lsSet(LS_KEY,null); lsSet(LS_ROL,null); location.href=BASE; } else arm("logout"); break;
+    case "logout": if(S.armed==="logout"){ lsSet(LS_KEY,null); firebase.auth().signOut().then(()=>location.href=BASE); } else arm("logout"); break;
   }
 });
 document.addEventListener("submit",e=>{ e.preventDefault(); const id=e.target.id;
   const F={"f-code":()=>openCode($("#m-code").value),"f-retiro":doRetiro,"f-cart":doCart,"f-devol":doDevol,"f-add":doAdd,"f-edit":doEdit,"f-ext":doExt,
-    "f-key":()=>enterKey($("#k-in").value),"f-new":()=>createPanol($("#n-name").value),
-    "f-name":()=>commit(b=>b.set(col("config").doc("app"),{nombre:clean($("#s-name").value),firmaObligatoria:$("#s-firma").checked},{merge:true}),"Ajustes guardados."),
+    "f-login":doLogin,"f-reg":doRegister,"f-reset":doReset,"f-claim":doClaim,"f-inv":doInvite,
+    "f-name":()=>adminWrite(b=>b.set(col("config").doc("app"),{nombre:clean($("#s-name").value),firmaObligatoria:$("#s-firma").checked},{merge:true}),"Ajustes guardados."),
     "f-wa":doWAdd,"f-we":doWEdit,"f-wret":doWRet,"f-ca":doCAdd,"f-ce2":doCEdit,"f-csal":()=>doCMov("salida"),"f-cent":()=>doCMov("entrada"),
     "f-za":doZAdd,"f-ze":doZEdit,"f-zinsp":doZInsp,"f-zfuera":doZFuera,"f-izcfg":doZCfg};
   (F[id]||(()=>{}))(); });
@@ -1313,6 +1349,7 @@ document.addEventListener("input",e=>{ const id=e.target.id;
   if(id==="i-q"){ S.q=e.target.value; render(); } else if(id==="w-q"){ S.wq=e.target.value; render(); } else if(id==="c-q"){ S.cq=e.target.value; render(); } else if(id==="z-q"){ S.zq=e.target.value; render(); } });
 document.addEventListener("change",async e=>{ const el=e.target;
   if(el.classList&&el.classList.contains("zf")) syncInspBtn();
+  if(el.classList&&el.classList.contains("m-rol")) adminWrite(b=>b.update(col("miembros").doc(el.dataset.uid),{rol:el.value}),"Rol actualizado a "+ROL_LBL[el.value]+".");
   if(el.id==="zc-freq"){ const prev=S.izcfg; S.izcfg=Object.assign({},prev,{freq:el.value,colores:null}); S.noReset=true; render(); S.izcfg=prev; $("#zc-freq").value=el.value; }
   if(el.id==="imp-file"&&el.files&&el.files[0]){ const f=el.files[0]; try{ const aoa=await readImportFile(f); if(!aoa) return; S.imp.rows=mapRows(aoa,S.imp.tipo); S.imp.name=f.name; render(); }catch(err){ toast("No se pudo leer el archivo."); } }
   if(el.type==="file"&&el.id&&el.id.startsWith("ph-")&&el.files&&el.files[0]){ try{ S.photo[el.id]=await compressPhoto(el.files[0]); render(); }catch(err){ toast("No se pudo leer la foto."); } }
@@ -1320,20 +1357,82 @@ document.addEventListener("change",async e=>{ const el=e.target;
 window.addEventListener("online",setSync); window.addEventListener("offline",setSync);
 window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); installEvt=e; if(S.phase==="app") render(); });
 
-/* ================= Arranque ================= */
+/* ================= Sesión y acceso ================= */
+const AUTH_ERR = {"auth/invalid-credential":"Correo o contraseña incorrectos.","auth/wrong-password":"Correo o contraseña incorrectos.","auth/user-not-found":"No hay una cuenta con ese correo. Toca \"Crear cuenta\".",
+  "auth/email-already-in-use":"Ese correo ya tiene cuenta. Ingresa con tu contraseña o recupérala.","auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/invalid-email":"El correo no es válido.",
+  "auth/too-many-requests":"Demasiados intentos. Espera unos minutos y vuelve a intentar.","auth/network-request-failed":"Sin conexión. Necesitas señal para ingresar.","auth/operation-not-allowed":"Falta activar Correo/contraseña en Firebase → Authentication."};
+const authErr = e => AUTH_ERR[e&&e.code] || "No se pudo completar: "+(e&&e.message||"error");
+const mailOf = u => String(u?.email||"").trim().toLowerCase();
+function busy(form,on){ const b=form&&form.querySelector('button[type=submit]'); if(b){ b.disabled=on; } }
+async function doLogin(e){ const f=$("#f-login"); const mail=clean($("#l-mail").value), pass=$("#l-pass").value; S.lastMail=mail; S.err=""; busy(f,true);
+  try{ await firebase.auth().signInWithEmailAndPassword(mail,pass); }catch(err){ S.err=authErr(err); render(); } }
+async function doRegister(){ const f=$("#f-reg"); const nombre=clean($("#l-nombre").value), mail=clean($("#l-mail").value), pass=$("#l-pass").value; S.lastMail=mail; S.err=""; busy(f,true);
+  try{ S.pendingName=nombre; const cr=await firebase.auth().createUserWithEmailAndPassword(mail,pass); try{ await cr.user.updateProfile({displayName:nombre}); }catch(x){} }catch(err){ S.err=authErr(err); render(); } }
+async function doReset(){ const mail=clean($("#l-mail").value); S.lastMail=mail;
+  try{ await firebase.auth().sendPasswordResetEmail(mail); S.authMode="login"; S.err=""; render(); toast("Te enviamos un correo para crear una contraseña nueva. Revisa también spam."); }catch(err){ S.err=authErr(err); render(); } }
+function inviteText(mail,rol){ return `Te invité al ${S.config.nombre||"Pañol Digital"} como ${ROL_LBL[rol]||rol}.\n1. Abre ${BASE}\n2. Toca "Crear cuenta" y usa este correo: ${mail}\n3. Crea tu contraseña y quedas dentro.`; }
+function adminWrite(fill,okMsg){
+  if(S.me?.rol!=="admin"){ toast("Solo el administrador puede hacer esto."); return false; }
+  const b=fs.batch(); fill(b);
+  b.commit().catch(e=>{ console.error(e); toast(e&&e.code==="permission-denied"?"Sin permiso. Revisa que pegaste las reglas nuevas en Firebase.":"No se pudo guardar: "+(e&&e.message||"error")); });
+  if(okMsg) toast(okMsg); return true;
+}
+function doInvite(){
+  const mail=clean($("#iv-mail").value).toLowerCase(), nombre=clean($("#iv-nombre").value), rol=$("#iv-rol").value;
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)){ toast("Escribe un correo válido."); return; }
+  if(S.members.some(m=>(m.email||"").toLowerCase()===mail)){ toast("Ese correo ya tiene acceso."); return; }
+  const d={panol:K,rol,nombre,por:ME(),ts:Date.now()};
+  if(adminWrite(b=>{ b.set(fs.collection("invitaciones").doc(mail),d); b.set(col("invitaciones").doc(mail),d); },"Invitación creada.")){
+    S.noReset=true; render(); shareText(inviteText(mail,rol),"Mensaje de invitación copiado. Pégalo en WhatsApp o correo."); }
+}
+async function doClaim(){
+  const f=$("#f-claim"); const raw=normKey($("#cl-key").value), nombre=clean($("#cl-name").value);
+  let p=raw; if(p&&p.length<12){ S.err="Revisa la clave: tiene el formato PV2-XXXX-XXXX."; render(); return; }
+  if(!p) p=makeKey();
+  const u=S.user, b=fs.batch(); busy(f,true);
+  b.set(fs.doc(`panoles/${p}`),{owner:u.uid,nombre:nombre||"Pañol",creado:Date.now()});
+  b.set(fs.doc(`panoles/${p}/miembros/${u.uid}`),{email:mailOf(u),nombre:u.displayName||S.pendingName||mailOf(u),rol:"admin",ts:Date.now()});
+  b.set(fs.doc(`usuarios/${u.uid}`),{panol:p});
+  try{ await b.commit(); }catch(e){ console.error(e); S.err="No se pudo activar. Ese pañol ya tiene administrador, o faltan las reglas nuevas en Firebase."; render(); return; }
+  if(nombre) fs.doc(`panoles/${p}/config/app`).set({nombre},{merge:true}).catch(()=>{});
+  K=p; lsSet(LS_KEY,p); S.err=""; startApp(); if(!raw){ S.view="ajustes"; render(); toast("Pañol creado. Ahora invita a tu equipo."); } else toast("Pañol activado. Eres el administrador.");
+}
+async function joinInvite(inv,mail){
+  const u=S.user, b=fs.batch();
+  b.set(fs.doc(`panoles/${inv.panol}/miembros/${u.uid}`),{email:mail,nombre:u.displayName||S.pendingName||inv.nombre||mail,rol:inv.rol,ts:Date.now()});
+  b.set(fs.doc(`usuarios/${u.uid}`),{panol:inv.panol});
+  b.delete(fs.doc(`invitaciones/${mail}`));
+  await b.commit();
+}
+async function afterLogin(user){
+  if(!user){ unsubs.forEach(x=>x()); unsubs=[]; S.user=null; S.me=null; S.phase="login"; S.loaded=false; render(); return; }
+  S.user=user; S.phase="boot"; render(); const mail=mailOf(user);
+  let p=null;
+  try{ const u=await fs.doc(`usuarios/${user.uid}`).get(); if(u.exists&&u.data().panol) p=u.data().panol; }catch(e){}
+  if(!p) p=lsGet(LS_KEY);
+  if(p){ try{ const m=await fs.doc(`panoles/${p}/miembros/${user.uid}`).get(); if(m.exists){ K=p; lsSet(LS_KEY,p); startApp(); return; } }catch(e){ if(!navigator.onLine&&lsGet(LS_KEY)===p){ K=p; startApp(); return; } } }
+  try{ const inv=await fs.doc(`invitaciones/${mail}`).get();
+    if(inv.exists){ const d=inv.data(); await joinInvite(d,mail); K=d.panol; lsSet(LS_KEY,d.panol); startApp(); toast("Bienvenido. Entraste como "+(ROL_LBL[d.rol]||d.rol)+"."); return; } }
+  catch(e){ console.error(e); if(!navigator.onLine){ S.err="Sin señal. Conéctate para revisar tu invitación."; } }
+  S.phase="noaccess"; render();
+}
 function makeKey(){ const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789"; const r=crypto.getRandomValues(new Uint32Array(8)); let s=""; for(let i=0;i<8;i++){ s+=A[r[i]%A.length]; if(i===3) s+="-"; } return "PV2-"+s; }
-function createPanol(nombre){ const k=makeKey(); K=k; lsSet(LS_KEY,k); lsSet(LS_ROL,null); S.ro=false;
-  fs.collection(`panoles/${k}/config`).doc("app").set({nombre:clean(nombre)||"Pañol",creado:Date.now()}).catch(()=>{});
-  startApp(); S.view="ajustes"; toast("Pañol creado. Guarda la clave que aparece aquí."); render(); }
-function enterKey(raw){ const k=normKey(raw); if(k.length<12){ S.err="Revisa la clave: tiene el formato PV2-XXXX-XXXX."; render(); return; } S.err=""; K=k; lsSet(LS_KEY,k); startApp(); }
 function listen(name,fn,q){ unsubs.push((q||col(name)).onSnapshot(fn,err=>console.error(name,err))); }
 function startApp(){
-  unsubs.forEach(u=>u()); unsubs=[]; S.phase="app"; S.loaded=false; S.ro=lsGet(LS_ROL)==="sup"; if(S.view!=="ajustes") S.view="panol"; render();
+  unsubs.forEach(u=>u()); unsubs=[]; S.phase="app"; S.loaded=false; S.err=""; if(S.view!=="ajustes") S.view="panol"; render();
+  unsubs.push(col("miembros").doc(S.user.uid).onSnapshot(s=>{
+    if(!s.exists){ if(!s.metadata.fromCache){ lsSet(LS_KEY,null); unsubs.forEach(u=>u()); unsubs=[]; S.err="Tu acceso a este pañol fue retirado."; S.phase="noaccess"; render(); } return; }
+    S.me=Object.assign({id:s.id},s.data()); S.ro=S.me.rol==="supervisor";
+    if(S.me.rol==="admin"&&!S.adminListening){ S.adminListening=true;
+      listen("invitaciones",x=>{ S.invs=x.docs.map(d=>Object.assign({id:d.id},d.data())); render(); }); }
+    render();
+  },err=>{ console.error(err); S.err="No tienes acceso a este pañol."; S.phase="noaccess"; render(); }));
+  listen("miembros",s=>{ S.members=s.docs.map(d=>Object.assign({id:d.id},d.data())); if(S.loaded) render(); });
   unsubs.push(col("tools").onSnapshot({includeMetadataChanges:true},snap=>{
     S.tools=snap.docs.map(d=>Object.assign({id:d.id},d.data())); S.pendingWrites=snap.metadata.hasPendingWrites;
     const first=!S.loaded; S.loaded=true; if(S.sel&&!toolBy(S.sel)) S.sel=null;
     if(first&&S.pending){ const p=S.pending; S.pending=null; if(p.startsWith("w:")) handleScan(BASE+"?w="+encodeURIComponent(p.slice(2))); else if(p.startsWith("z:")) setTimeout(()=>openIz(p.slice(2)),600); else openCode(p); } else render();
-  },err=>{ console.error(err); toast(err.code==="permission-denied"?"Sin permiso. Revisa las reglas de Firestore.":"Error de conexión con la base de datos."); }));
+  },err=>{ console.error(err); if(err.code==="permission-denied"){ S.err="No tienes acceso a este pañol, o faltan las reglas nuevas en Firebase."; S.phase="noaccess"; render(); } else toast("Error de conexión con la base de datos."); }));
   listen("movs",s=>{ S.movs=s.docs.map(d=>d.data()); if(S.loaded) render(); },col("movs").orderBy("ts","desc").limit(1000));
   listen("workers",s=>{ S.workers=s.docs.map(d=>Object.assign({id:d.id},d.data())); if(S.loaded) render(); });
   listen("cons",s=>{ S.cons=s.docs.map(d=>Object.assign({id:d.id},d.data())); if(S.loaded) render(); });
@@ -1344,13 +1443,13 @@ function startApp(){
   unsubs.push(col("config").doc("izaje").onSnapshot(s=>{ S.izcfg=s.exists?s.data():{}; if(S.loaded) render(); },()=>{}));
 }
 
+/* ================= Arranque ================= */
 tick(); setInterval(()=>{ tick(); if(S.phase==="app"&&S.loaded&&(S.view==="panol"||S.view==="mover")&&!document.activeElement?.matches("input,textarea,select")&&$("#scan").hidden&&!$(".sig canvas")) render(); },60000);
 render();
-
 (async()=>{
   const params=new URLSearchParams(location.search);
-  const pk=params.get("k"), ph=params.get("h"), pw=params.get("w"), pz=params.get("z"), pr=params.get("r");
-  if(pk){ lsSet(LS_KEY,normKey(pk)); lsSet(LS_ROL,pr==="sup"?"sup":null); }
+  const pk=params.get("k"), ph=params.get("h"), pw=params.get("w"), pz=params.get("z");
+  if(pk) S.claimKey=normKey(pk);
   if(ph) S.pending=normCode(ph); if(pw) S.pending="w:"+pw; if(pz) S.pending="z:"+normCode(pz);
   if(pk||ph||pw||pz) history.replaceState(null,"",BASE);
   else if(location.hash.length>1) S.pending=normCode(decodeURIComponent(location.hash.slice(1)));
@@ -1359,9 +1458,9 @@ render();
   firebase.initializeApp(cfg); fs=firebase.firestore();
   try{ await fs.enablePersistence({synchronizeTabs:true}); }catch(e){}
   firebase.auth().onAuthStateChanged(user=>{
-    if(!user){ firebase.auth().signInAnonymously().catch(()=>{ S.phase="login"; S.err=navigator.onLine?"No se pudo iniciar sesión: activa el acceso Anónimo en Firebase → Authentication.":"Necesitas señal la primera vez que abres la app."; render(); }); return; }
-    if(S.phase==="app") return;
-    const k=lsGet(LS_KEY); if(k){ K=k; startApp(); } else { S.phase="login"; render(); }
+    if(user&&user.isAnonymous){ firebase.auth().signOut(); return; }   // sesiones antiguas sin cuenta
+    if(S.user&&user&&S.user.uid===user.uid&&S.phase==="app") return;
+    afterLogin(user);
   });
   if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 })();
