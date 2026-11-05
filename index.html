@@ -222,6 +222,140 @@ nav.tabs button[aria-current=page]{color:var(--navy);background:var(--accent-sof
   .lb .ft{font-size:2mm;color:#333}
   .lb .lgo{height:3.4mm;width:auto;align-self:flex-start;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* ===== Ampliaciones v2 ===== */
+.stats{grid-template-columns:repeat(4,1fr)}
+@media (max-width:440px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(3)::before{display:none}.stat:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}}
+.stat.lost .l::before{background:#C9B6FF}
+nav.tabs .in{grid-template-columns:repeat(5,1fr);max-width:560px}
+nav.tabs button{font-size:9.5px;letter-spacing:.04em}
+.pill.extraviada{background:#ECE6FB;color:#5B3FA6}
+@media (prefers-color-scheme:dark){.pill.extraviada{background:#2A2145;color:#C9B6FF}}
+.pill.calv{background:var(--bad-soft);color:var(--bad)} .pill.calp{background:var(--warn-soft);color:var(--warn)}
+.ro-banner{background:var(--accent-soft);color:var(--navy);border-radius:12px;padding:10px 14px;font-weight:600;font-size:14px}
+body.ro .w{display:none!important}
+
+/* Alertas */
+.alerts{display:grid;gap:8px}
+.alert{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:12px;padding:11px 14px;cursor:pointer;text-align:left;width:100%;box-shadow:var(--shadow)}
+.alert.bad{border-left-color:var(--bad)} .alert.info{border-left-color:var(--navy-2)}
+.alert .ic{font-family:var(--f-display);font-weight:700;font-size:24px;min-width:28px;text-align:center;color:var(--warn)}
+.alert.bad .ic{color:var(--bad)} .alert.info .ic{color:var(--navy-2)}
+.alert .tx{font-weight:600;font-size:14px;min-width:0}
+.alert .tx small{display:block;font-weight:500;color:var(--muted);font-size:12.5px}
+
+/* Más */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:6px;text-align:left;cursor:pointer;box-shadow:var(--shadow);color:var(--ink)}
+.tile svg{width:28px;height:28px;color:var(--navy)}
+.tile strong{font-family:var(--f-display);font-size:20px;text-transform:uppercase;letter-spacing:.03em;line-height:1.05}
+.tile span{font-size:12.5px;color:var(--muted)}
+.tile .badge{justify-self:start;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;background:var(--bad-soft);color:var(--bad)}
+
+/* Carrito de retiro múltiple */
+.cart{display:grid;gap:6px}
+.cart .ci{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--sunk);border-radius:10px;padding:8px 10px}
+.cart .ci .name{font-weight:600;min-width:0;overflow-wrap:anywhere}
+.cart .ci button{background:none;border:0;color:var(--bad);font-weight:700;cursor:pointer;padding:6px 8px;border-radius:8px}
+.count-badge{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:999px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;padding:0 7px}
+
+/* Firma */
+.sig{display:grid;gap:6px}
+.sig canvas{width:100%;height:140px;background:#fff;border:1.5px dashed var(--line);border-radius:12px;touch-action:none;cursor:crosshair;display:block}
+.sig .row{justify-content:space-between}
+.sigimg{background:#fff;border-radius:8px;border:1px solid var(--line);max-width:220px;height:auto;display:block}
+
+/* Foto */
+.photo{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.thumb{width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}
+.fullphoto{width:100%;max-width:100%;border-radius:12px;border:1px solid var(--line);display:block}
+
+/* Barras de estadísticas */
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(0,40%) 1fr auto;gap:10px;align-items:center;font-size:13px}
+.bar .lb2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.bar .tr{height:10px;background:var(--sunk);border-radius:999px;overflow:hidden}
+.bar .fl{height:100%;background:linear-gradient(90deg,var(--navy-2),var(--accent));border-radius:999px}
+.bar.mar .fl{background:linear-gradient(90deg,#C23A55,var(--maroon))}
+.bar .vl{font-family:var(--f-mono);font-weight:700;font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+.kpi .n{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1;color:var(--navy)}
+.kpi .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+
+/* Stock */
+.stock{font-family:var(--f-display);font-weight:700;font-size:22px;text-align:right;line-height:1}
+.stock small{display:block;font-family:var(--f-body);font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.stock.low{color:var(--bad)}
+.bigstock{font-family:var(--f-display);font-weight:700;font-size:48px;line-height:1;color:var(--navy)}
+.bigstock.low{color:var(--bad)}
+
+/* Importar */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.tbl table{border-collapse:collapse;width:100%;font-size:12.5px}
+.tbl th,.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.tbl th{background:var(--sunk);font-weight:700;color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.05em}
+.tbl td.err{color:var(--bad);font-weight:600}
+.seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+
+/* Izaje */
+.verdict{border-radius:16px;padding:18px;display:grid;gap:4px;color:#fff;box-shadow:var(--shadow-lg)}
+.verdict.apto{background:linear-gradient(140deg,#1C7A45,#125630)}
+.verdict.no{background:linear-gradient(140deg,#B0203A,#7A1024)}
+.verdict .big2{font-family:var(--f-display);font-weight:700;font-size:42px;line-height:1;text-transform:uppercase}
+.verdict .why{font-weight:600}
+.verdict .warnline{background:rgba(0,0,0,.22);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;margin-top:6px}
+.wll{display:inline-flex;align-items:baseline;gap:6px;border:2px solid var(--ink);border-radius:10px;padding:6px 12px;width:max-content;max-width:100%}
+.wll .v{font-family:var(--f-display);font-weight:700;font-size:38px;line-height:1}
+.wll .u{font-family:var(--f-display);font-weight:600;font-size:18px}
+.wll .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);display:block}
+.colorcall{display:flex;align-items:center;gap:12px;background:var(--sunk);border-radius:12px;padding:10px 12px}
+.colorcall .sw{width:40px;height:40px;border-radius:10px;border:2px solid rgba(0,0,0,.2);flex:none}
+.colorcall strong{font-family:var(--f-display);font-size:22px;text-transform:uppercase;line-height:1}
+.swatch{display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.25);vertical-align:-2px;margin-right:6px}
+.checks{display:grid;gap:6px}
+.checks label{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;font-weight:500}
+.checks input{width:20px;height:20px;accent-color:var(--bad);flex:none}
+.checks label:has(input:checked){border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.btn.badf{background:var(--bad);border-color:var(--bad);color:#fff}
+.colors{display:grid;gap:8px}.colors .cr{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:380px){.grid2{grid-template-columns:1fr}}
+input[type=number],input[type=date]{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;min-height:48px}
+.backbar{display:flex;align-items:center;justify-content:space-between;gap:10px}.backbar .btn{flex:none;white-space:nowrap}.backbar h2{min-width:0}
+.switch{display:flex;align-items:center;gap:10px;font-weight:600;cursor:pointer}
+.switch input{width:20px;height:20px;accent-color:var(--accent)}
+@media print{
+  .lb .wl{font-size:4.4mm;font-weight:700}
+  .lb .cq{font-size:2.6mm;color:#333}
+}
+
+/* Panel de control (pantalla principal) */
+.dash{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.dash::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,var(--navy) 0 68%,var(--maroon) 68% 100%)}
+.dash-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dash-t{font-family:var(--f-body);font-size:19px;font-weight:700;text-transform:none;letter-spacing:0;color:var(--ink)}
+.dash-hd .small{display:block;margin-top:2px}
+.dash-ic{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--navy);display:grid;place-items:center;flex:none}
+.dash-ic svg{width:26px;height:26px}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kc{background:var(--sunk);border:1px solid transparent;border-radius:16px;padding:14px;display:grid;gap:4px;text-align:left;cursor:pointer;color:var(--ink);min-width:0;transition:border-color .15s ease,transform .08s ease}
+.kc:hover{border-color:var(--line)} .kc:active{transform:translateY(1px)}
+.kc .kl{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.kc .kl svg{width:20px;height:20px;flex:none;color:var(--navy)}
+.kc.ok .kl svg{color:var(--ok)} .kc.warn .kl svg{color:var(--warn)} .kc.bad .kl svg{color:var(--bad)}
+.kc .kn{font-family:var(--f-display);font-weight:700;font-size:44px;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink);margin-top:4px}
+.kc.bad .kn{color:var(--bad)}
+.kc .ks{font-size:11.5px;color:var(--muted);line-height:1.3}
+.qa-t{font-family:var(--f-body);font-size:15px;font-weight:700;text-transform:none;letter-spacing:0;color:var(--ink);margin-top:2px}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qb{display:grid;justify-items:center;gap:8px;padding:16px 10px;border-radius:16px;border:1px solid var(--line);background:var(--surface);cursor:pointer;color:var(--ink);font-weight:700;font-size:14px;box-shadow:0 1px 2px rgba(15,30,46,.05);transition:background .15s ease,transform .08s ease,border-color .15s ease}
+.qb svg{width:28px;height:28px;color:var(--navy)}
+.qb:hover{background:var(--accent-soft);border-color:color-mix(in srgb,var(--navy) 35%,transparent)} .qb:active{transform:translateY(1px)}
+.qb:first-child{background:linear-gradient(160deg,var(--navy-2),var(--accent));color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(0,68,120,.28)}
+.qb:first-child svg{color:#fff}
+@media (max-width:380px){.kc .kn{font-size:36px}.kc{padding:12px}}
+
 </style>
 </head>
 <body>
@@ -236,15 +370,16 @@ nav.tabs button[aria-current=page]{color:var(--navy);background:var(--accent-sof
 <main id="main" aria-live="polite"></main>
 
 <nav class="tabs" aria-label="Secciones" id="tabs" hidden><div class="in">
-  <button data-act="nav" data-v="panol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><path d="M9 21v-7h6v7"/></svg>Pañol</button>
-  <button data-act="nav" data-v="mover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3"/><path d="M8 8h3v3H8zM13 13h3v3h-3zM13 8h3M8 16h3"/></svg>Escanear</button>
+  <button data-act="nav" data-v="panol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 01-1 1H4a1 1 0 01-1-1z"/><path d="M9 21v-7h6v7"/></svg>Inicio</button>
+  <button data-act="nav" data-v="mover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3"/><path d="M8 8h3v3H8zM13 13h3v3h-3zM13 8h3M8 16h3"/></svg>Entregar</button>
   <button data-act="nav" data-v="inventario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>Inventario</button>
   <button data-act="nav" data-v="historial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Historial</button>
+  <button data-act="nav" data-v="mas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>Más</button>
 </div></nav>
 
 <div class="scan" id="scan" hidden>
   <video id="video" playsinline muted autoplay></video>
-  <div class="bar"><strong>Apunta al QR</strong><button class="ibtn" data-act="scan-close">Cerrar</button></div>
+  <div class="bar"><strong>Apunta al QR</strong><button class="ibtn" id="scanClose" data-act="scan-close">Cerrar</button></div>
   <div class="frame" aria-hidden="true"></div>
   <div class="foot"><span id="scanMsg">Se lee solo. Mantén el código dentro del recuadro.</span>
     <div class="row" style="justify-content:center"><button class="ibtn" id="torchBtn" data-act="torch" aria-pressed="false" hidden>Linterna</button></div></div>
@@ -259,48 +394,136 @@ nav.tabs button[aria-current=page]{color:var(--navy);background:var(--accent-sof
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 (function(){
-const SHIFT_H = 12; // horas prestada antes de marcar "pasó el turno"
-// Categorías ya usadas en el inventario: se sugieren al escribir, pero se puede poner cualquiera
-const catsUsadas = () => [...new Set(S.tools.map(t=>(t.categoria||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"es"));
-const catList = () => `<datalist id="dl-cat">${catsUsadas().map(c=>`<option value="${esc(c)}">`).join("")}</datalist>`;
-const LS_KEY = "panol.clave";
-const LOGO = document.getElementById("logoImg").src;
+/* ================= Configuración ================= */
+const SHIFT_H = 12;            // horas prestada antes de marcar "pasó el turno"
+const AVISO_DIAS = 30;         // días de aviso antes de vencer calibración / certificado
+const LS_KEY = "panol.clave", LS_ROL = "panol.rol";
 const BASE = location.origin + location.pathname;
-const S = { tools:[], movs:[], config:{}, view:"panol", sel:null, filter:"todos", q:"", loaded:false, status:"loading",
-  pending:null, addOpen:false, addCode:"", editOpen:false, armed:null, noReset:false, phase:"boot", pendingWrites:false, err:"" };
+const LOGO = document.getElementById("logoImg").src;
+const S = { tools:[], movs:[], workers:[], cons:[], cmovs:[], iz:[], izi:[], config:{}, izcfg:{},
+  view:"panol", sel:null, wsel:null, csel:null, zsel:null, filter:"todos", q:"", wq:"", cq:"", zq:"", zfilter:"todos",
+  loaded:false, phase:"boot", pendingWrites:false, err:"", ro:false, pending:null,
+  addOpen:false, addCode:"", editOpen:false, armed:null, noReset:false,
+  cart:{worker:"", items:[], area:""}, sig:{}, photo:{}, imp:{tipo:"tools", rows:null, name:""},
+  wAdd:false, wEdit:false, cAdd:false, cEdit:false, zAdd:false, zEdit:false, zInsp:false, zFuera:false, cfgIz:false,
+  extOpen:false, retOpen:false, scanMode:"single" };
 let fs=null, K=null, unsubs=[], toastT=null, armT=null, installEvt=null;
 
 const $ = s => document.querySelector(s);
 const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const normCode = v => String(v||"").trim().toUpperCase().replace(/\s+/g,"-").replace(/[^A-Z0-9-]/g,"").slice(0,24);
 const normKey = v => String(v||"").trim().toUpperCase().replace(/[^A-Z0-9-]/g,"");
-const ESTADO = {disponible:"Disponible", prestada:"Prestada", mantencion:"Mantención"};
-const TIPO = {retiro:"Retiro", devolucion:"Devolución", mantencion:"A mantención", habilitada:"Habilitada", alta:"Alta en inventario"};
+const clean = v => String(v||"").trim().replace(/\s+/g," ");
+const ESTADO = {disponible:"Disponible", prestada:"Prestada", mantencion:"Mantención", extraviada:"Extraviada"};
+const TIPO = {retiro:"Retiro", devolucion:"Devolución", mantencion:"A mantención", habilitada:"Habilitada", alta:"Alta en inventario", extraviada:"Extraviada", recuperada:"Recuperada"};
 const fmtT = ts => new Date(ts).toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit",hourCycle:"h23"});
 const fmtD = ts => new Date(ts).toLocaleDateString("es-CL",{weekday:"short",day:"2-digit",month:"2-digit"});
+const fmtF = iso => { if(!iso) return "—"; const [y,m,d]=String(iso).split("-"); return `${d}-${m}-${y}`; };
 const fmtDur = ms => { const m=Math.max(0,Math.floor(ms/60000)); const h=Math.floor(m/60); return h?`${h} h ${String(m%60).padStart(2,"0")} min`:`${m} min`; };
-const toolBy = code => S.tools.find(t=>t.id===code);
+const isoOf = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const todayISO = () => isoOf(new Date());
+const daysTo = iso => Math.round((new Date(iso+"T12:00:00") - new Date(todayISO()+"T12:00:00"))/864e5);
+const num = v => { const n=Number(String(v??"").replace(",",".")); return isFinite(n)?n:0; };
+const fmtN = v => String(Math.round(num(v)*100)/100).replace(".",",");
+const toolBy = c => S.tools.find(t=>t.id===c);
+const workerBy = id => S.workers.find(w=>w.id===id);
+const consBy = id => S.cons.find(c=>c.id===id);
+const izBy = c => S.iz.find(t=>t.id===c);
 const lsGet = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
 const lsSet = (k,v) => { try{ v==null?localStorage.removeItem(k):localStorage.setItem(k,v); }catch(e){} };
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const catsUsadas = () => [...new Set(S.tools.map(t=>clean(t.categoria)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"es"));
+const ubisUsadas = () => [...new Set([...S.tools,...S.cons].map(t=>clean(t.ubicacion)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"es",{numeric:true}));
+const cuadrillas = () => [...new Set(S.workers.map(w=>clean(w.cuadrilla)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"es"));
+const dl = (id,arr) => `<datalist id="${id}">${arr.map(x=>`<option value="${esc(x)}">`).join("")}</datalist>`;
 
 function toast(msg){ const o=$(".toast"); if(o) o.remove(); clearTimeout(toastT);
-  const el=document.createElement("div"); el.className="toast"; el.setAttribute("role","status"); el.textContent=msg; document.body.appendChild(el); toastT=setTimeout(()=>el.remove(),3400); }
+  const el=document.createElement("div"); el.className="toast"; el.setAttribute("role","status"); el.textContent=msg; document.body.appendChild(el); toastT=setTimeout(()=>el.remove(),3600); }
 function tick(){ const n=new Date(); $("#clock").textContent=n.toLocaleDateString("es-CL",{day:"2-digit",month:"2-digit"})+" "+fmtT(n);
   const h=n.getHours(); $("#turno").textContent=(h>=8&&h<20)?"TURNO DÍA":"TURNO NOCHE"; }
 function setSync(){ const el=$("#sync"); const off=!navigator.onLine;
   el.className="sync"+(off?" off":(S.pendingWrites||!S.loaded)?"":" on");
-  el.title= off?"Sin señal: los cambios se guardan en el celular y se suben al volver la señal": S.pendingWrites?"Subiendo cambios…":"Sincronizado"; }
+  el.title= off?"Sin señal: los cambios se guardan y se suben al volver la señal": S.pendingWrites?"Subiendo cambios…":"Sincronizado"; }
 
-/* ---------- pantallas de inicio ---------- */
-function vSetup(){
-  return `<div class="panel"><h2>Falta conectar la base de datos</h2>
-    <p>Esta app guarda los datos en Firebase. Abre el archivo <span class="mono">config.js</span> y pega ahí la configuración de tu proyecto de Firebase (o mándasela a Claude para que la pegue).</p>
-    <p class="small muted">Firebase → Configuración del proyecto → Tus apps → App web → firebaseConfig.</p></div>`;
+/* ================= Trabajadores ================= */
+const wLabel = w => w.nombre + (w.cuadrilla?` · ${w.cuadrilla}`:"");
+function resolveWorker(txt){
+  const t=clean(txt); if(!t) return null; const low=t.toLowerCase();
+  const w=S.workers.find(w=>wLabel(w).toLowerCase()===low) || S.workers.find(w=>w.nombre.toLowerCase()===low) || S.workers.find(w=>(w.rut||"").toLowerCase()===low);
+  return w ? {workerId:w.id, persona:w.nombre, cuadrilla:w.cuadrilla||""} : {workerId:null, persona:t, cuadrilla:""};
 }
+const workersDl = () => dl("dl-w", S.workers.filter(w=>w.activo!==false).map(wLabel).sort((a,b)=>a.localeCompare(b,"es")));
+const workerId = (rut,nombre) => { const r=String(rut||"").toUpperCase().replace(/[^0-9K]/g,""); return r.length>=7 ? "R"+r : "W-"+nombre.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,30)+"-"+Math.random().toString(36).slice(2,5); };
+
+/* ================= Calibración ================= */
+function calib(t){ if(!t.calibVence) return null; const d=daysTo(t.calibVence);
+  if(d<0) return {code:"v", txt:`Calibración vencida el ${fmtF(t.calibVence)}`};
+  if(d<=AVISO_DIAS) return {code:"p", txt:`Calibración vence en ${d} día${d===1?"":"s"} (${fmtF(t.calibVence)})`};
+  return {code:"ok", txt:`Calibración vigente hasta ${fmtF(t.calibVence)}`}; }
+
+/* ================= Izaje ================= */
+const COLORES = {Blanco:"#F4F4F2",Amarillo:"#F2C200",Naranjo:"#F07B13",Rojo:"#D2221B",Verde:"#1E9B45",Azul:"#1F5FBF",Morado:"#7B3FB0",Café:"#7A4B24",Negro:"#1A1A1A",Gris:"#8C8F8F"};
+const DEF_TRIM=["Rojo","Verde","Amarillo","Azul"], DEF_MES=["Rojo","Verde","Amarillo","Azul","Rojo","Verde","Amarillo","Azul","Rojo","Verde","Amarillo","Azul"];
+const MESES=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+const TIPOS_IZ = {
+  "Eslinga sintética":["Etiqueta de capacidad ilegible o faltante","Cortes, rasgaduras o perforaciones","Quemaduras, fusión o daño químico","Costuras rotas o gastadas","Abrasión excesiva","Nudos","Hilos de advertencia (alma roja) visibles","Ojales deformados o dañados"],
+  "Estrobo de cable":["Alambres cortados sobre lo permitido","Aplastamiento o deformación","Jaula de pájaro o destrenzado","Coca o doblez permanente","Corrosión","Terminales o casquillos dañados","Daño por calor o arco eléctrico","Identificación de capacidad faltante"],
+  "Cadena":["Eslabones estirados o deformados","Desgaste excesivo en eslabones","Fisuras o cortes","Corrosión","Gancho o anillo maestro dañado","Placa de identificación faltante"],
+  "Grillete":["Cuerpo deformado o abierto","Pasador doblado o hilo dañado","Pasador no original","Desgaste excesivo","Fisuras","Marcas de capacidad ilegibles"],
+  "Gancho":["Abertura de garganta aumentada","Torsión o doblez","Pestillo dañado o faltante","Fisuras","Desgaste en el asiento"],
+  "Tecle de cadena":["Freno no retiene la carga","Cadena estirada, torcida o dañada","Ganchos deformados o sin pestillo","Mecanismo trabado o con ruido","Placa de capacidad ilegible"],
+  "Tecle de palanca":["Freno no retiene la carga","Cadena o cable dañado","Ganchos deformados o sin pestillo","Palanca o trinquete dañado","Placa de capacidad ilegible"],
+  "Otro (cáncamo, tensor, barra)":["Deformación","Fisuras","Desgaste o corrosión","Hilo dañado","Marcas de capacidad ilegibles"]};
+const hex = n => COLORES[n]||"#8C8F8F";
+const izFreq = () => S.izcfg.freq==="mensual"?"mensual":"trimestral";
+const izCols = () => { const c=S.izcfg.colores, d=izFreq()==="mensual"?DEF_MES:DEF_TRIM; return (Array.isArray(c)&&c.length===d.length)?c:d; };
+function periodo(d=new Date()){ const y=d.getFullYear(), m=d.getMonth();
+  if(izFreq()==="mensual") return {key:`${y}-M${m+1}`, label:`${MESES[m]} ${y}`, color:izCols()[m]};
+  const t=Math.floor(m/3); return {key:`${y}-T${t+1}`, label:`${MESES[t*3]}–${MESES[t*3+2]} ${y}`, color:izCols()[t]}; }
+function izEstado(it){ const P=periodo(); let warn=null;
+  if(it.certVence){ const d=daysTo(it.certVence); if(d>=0&&d<=AVISO_DIAS) warn=`Certificado vence en ${d} día${d===1?"":"s"} (${fmtF(it.certVence)})`; }
+  if(it.fuera) return {code:"fuera", why:"Fuera de servicio"+(it.motivo?": "+it.motivo:"")};
+  if(!it.insp) return {code:"sin", why:"Sin inspección registrada", warn};
+  if(it.insp.periodo!==P.key) return {code:"vencida", why:`Falta la inspección de ${P.label} (color ${P.color.toLowerCase()})`, warn};
+  if(it.certVence&&daysTo(it.certVence)<0) return {code:"cert", why:`Certificado vencido el ${fmtF(it.certVence)}`};
+  return {code:"apto", why:"Inspección vigente del período", warn}; }
+const IZ_LBL={apto:"Apto",sin:"Sin inspección",vencida:"Insp. pendiente",cert:"Cert. vencido",fuera:"Fuera de servicio"};
+const izPill = e => e.code==="apto"?(e.warn?"prestada":"disponible"):"mantencion";
+
+/* ================= Firma y foto ================= */
+function sigBox(id){ return `<div class="sig"><span class="small muted" style="font-weight:600">Firma de quien retira</span><canvas id="${id}" aria-label="Recuadro para firmar"></canvas>
+  <div class="row"><span class="small muted">Firma con el dedo dentro del recuadro.</span><button class="btn ghost" type="button" data-act="sig-clear" data-id="${id}">Borrar firma</button></div></div>`; }
+function initSig(id){
+  const c=document.getElementById(id); if(!c) return; const r=c.getBoundingClientRect(); const dpr=window.devicePixelRatio||1;
+  c.width=Math.max(10,Math.round(r.width*dpr)); c.height=Math.round(140*dpr);
+  const ctx=c.getContext("2d"); ctx.scale(dpr,dpr); ctx.lineWidth=2.4; ctx.lineCap="round"; ctx.lineJoin="round"; ctx.strokeStyle="#0F1E2E";
+  if(S.sig[id]){ const im=new Image(); im.onload=()=>ctx.drawImage(im,0,0,r.width,140); im.src=S.sig[id]; }
+  let drawing=false, last=null;
+  const pos=e=>{ const b=c.getBoundingClientRect(); return [e.clientX-b.left,e.clientY-b.top]; };
+  c.onpointerdown=e=>{ drawing=true; last=pos(e); c.setPointerCapture(e.pointerId); ctx.beginPath(); ctx.arc(last[0],last[1],1.1,0,7); ctx.fillStyle="#0F1E2E"; ctx.fill(); };
+  c.onpointermove=e=>{ if(!drawing) return; const p=pos(e); ctx.beginPath(); ctx.moveTo(last[0],last[1]); ctx.lineTo(p[0],p[1]); ctx.stroke(); last=p; };
+  const end=()=>{ if(!drawing) return; drawing=false; S.sig[id]=c.toDataURL("image/png"); };
+  c.onpointerup=end; c.onpointercancel=end; c.onpointerleave=end;
+}
+function sigData(id){ const src=S.sig[id]; if(!src) return Promise.resolve(null);
+  return new Promise(res=>{ const im=new Image(); im.onload=()=>{ const w=360, h=Math.round(w*im.height/im.width); const cv=document.createElement("canvas"); cv.width=w; cv.height=h;
+    const x=cv.getContext("2d"); x.fillStyle="#fff"; x.fillRect(0,0,w,h); x.drawImage(im,0,0,w,h); res(cv.toDataURL("image/jpeg",0.7)); }; im.onerror=()=>res(null); im.src=src; }); }
+function photoBox(id){ const p=S.photo[id];
+  return `<div class="photo"><input type="file" id="${id}" accept="image/*" capture="environment" class="vh">
+    ${p?`<img class="thumb" src="${p}" alt="Foto adjunta">`:""}<button class="btn" type="button" data-act="photo" data-id="${id}">${p?"Cambiar foto":"Agregar foto del daño"}</button>${p?`<button class="btn ghost" type="button" data-act="photo-del" data-id="${id}">Quitar</button>`:""}</div>`; }
+function compressPhoto(file){ return new Promise((res,rej)=>{ const u=URL.createObjectURL(file); const im=new Image();
+  im.onload=()=>{ const max=900, sc=Math.min(1,max/Math.max(im.width,im.height)); const cv=document.createElement("canvas"); cv.width=Math.round(im.width*sc); cv.height=Math.round(im.height*sc);
+    cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height); URL.revokeObjectURL(u); res(cv.toDataURL("image/jpeg",0.62)); };
+  im.onerror=e=>{ URL.revokeObjectURL(u); rej(e); }; im.src=u; }); }
+
+/* ================= Pantallas de inicio ================= */
+function vSetup(){ return `<div class="panel"><h2>Falta conectar la base de datos</h2><p>Abre el archivo <span class="mono">config.js</span> y pega la configuración de tu proyecto de Firebase.</p></div>`; }
 function vLogin(){
-  return `<div class="hero-login"><span class="lg"><img src="${LOGO}" alt="Fluor-Salfa"></span><span class="ttl">Pañol <b>Digital</b></span></div><div class="sec"><h2>Entrar al pañol</h2><p class="muted">Escribe la clave del pañol que te pasó el encargado, o escanea el QR de acceso con la cámara del celular.</p></div>
+  return `<div class="hero-login"><span class="lg"><img src="${LOGO}" alt="Fluor-Salfa"></span><span class="ttl">Pañol <b>Digital</b></span></div>
+    <div class="sec"><h2>Entrar al pañol</h2><p class="muted">Escribe la clave del pañol que te pasó el encargado, o escanea el QR de acceso con la cámara del celular.</p></div>
     <form class="panel" id="f-key" autocomplete="off"><label class="f">Clave del pañol<input type="text" id="k-in" class="mono-in" placeholder="ej. PV2-7K3M-Q9TX" autocapitalize="characters"></label>
     <button class="btn pri big" type="submit">Entrar</button></form>
     ${S.err?`<p class="small" style="color:var(--bad)">${esc(S.err)}</p>`:""}
@@ -310,9 +533,9 @@ function vLogin(){
     <p class="small muted">Se genera una clave única. Guárdala: con ella entran los demás celulares.</p></form>`;
 }
 
-/* ---------- vistas ---------- */
+/* ================= Vistas comunes ================= */
 const icoCam='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
-function counts(){ const c={disponible:0,prestada:0,mantencion:0}; S.tools.forEach(t=>c[t.estado||"disponible"]++); return c; }
+function counts(){ const c={disponible:0,prestada:0,mantencion:0,extraviada:0}; S.tools.forEach(t=>c[t.estado||"disponible"]=(c[t.estado||"disponible"]||0)+1); return c; }
 function scanBlock(){
   return `<div class="sec"><button class="btn pri big" data-act="scan">${icoCam} Escanear QR</button>
     <form class="codeform" id="f-code" autocomplete="off"><label class="vh" for="m-code">Código</label>
@@ -320,8 +543,8 @@ function scanBlock(){
 }
 function loadingBlock(){ return `<div class="empty"><strong>Cargando el pañol…</strong><span class="small">${navigator.onLine?"Conectando con la base de datos.":"Sin señal. Si ya abriste la app antes en este celular, los datos aparecerán desde la memoria."}</span></div>`; }
 function emptyInv(){
-  return `<div class="empty"><strong>El pañol está vacío.</strong><span>Agrega tu primera herramienta con su código (ej. H-001) o carga un set de ejemplo para probar. Los ejemplos se borran con un botón.</span>
-    <div class="row" style="justify-content:center"><button class="btn pri" data-act="add-open">+ Agregar herramienta</button><button class="btn" data-act="seed">Cargar ejemplo</button></div></div>`;
+  return `<div class="empty"><strong>El pañol está vacío.</strong><span>Carga tu inventario desde Excel, agrega herramientas una por una, o carga un set de ejemplo para probar. Los ejemplos se borran con un botón.</span>
+    <div class="row w" style="justify-content:center"><button class="btn pri" data-act="go" data-v="importar">Cargar desde Excel</button><button class="btn" data-act="add-open">+ Agregar</button><button class="btn" data-act="seed">Cargar ejemplo</button></div></div>`;
 }
 function installBanner(){
   const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
@@ -332,149 +555,487 @@ function installBanner(){
     <span class="small">${installEvt?"Queda con su ícono en la pantalla de inicio y abre más rápido.":"En iPhone: toca Compartir y luego \"Agregar a inicio\"."}</span>
     <div class="row">${installEvt?`<button class="btn pri" data-act="install">Instalar</button>`:""}<button class="btn ghost" data-act="no-install">Ahora no</button></div></div>`;
 }
+const backBar = (title, to) => `<div class="backbar"><h2>${title}</h2><button class="btn ghost" data-act="go" data-v="${to}">← Volver</button></div>`;
+const roBanner = () => S.ro?`<div class="ro-banner">Modo supervisor: solo lectura. Puedes ver todo, pero no registrar movimientos.</div>`:"";
 
+/* ================= Pañol ================= */
+function alerts(){
+  const out=[];
+  const now=Date.now(); const late=S.tools.filter(t=>t.estado==="prestada"&&now-(t.desde||now)>SHIFT_H*3600e3).length;
+  if(late) out.push(`<button class="alert bad" data-act="goinv" data-f="prestada"><span class="ic">${late}</span><span class="tx">Pasaron el turno sin devolver<small>Herramientas prestadas hace más de ${SHIFT_H} h</small></span></button>`);
+  const mt=S.tools.filter(t=>t.estado==="mantencion").length, ex=S.tools.filter(t=>t.estado==="extraviada").length;
+  if(mt) out.push(`<button class="alert" data-act="goinv" data-f="mantencion"><span class="ic">${mt}</span><span class="tx">En mantención<small>Revisar y dejar disponibles cuando estén reparadas</small></span></button>`);
+  if(ex) out.push(`<button class="alert bad" data-act="goinv" data-f="extraviada"><span class="ic">${ex}</span><span class="tx">Extraviadas<small>Con responsable asignado</small></span></button>`);
+  const cv=S.tools.filter(t=>calib(t)?.code==="v").length, cp=S.tools.filter(t=>calib(t)?.code==="p").length;
+  if(cv) out.push(`<button class="alert bad" data-act="goinv" data-f="calib"><span class="ic">${cv}</span><span class="tx">Calibración vencida<small>No se pueden entregar hasta recalibrar</small></span></button>`);
+  if(cp) out.push(`<button class="alert" data-act="goinv" data-f="calib"><span class="ic">${cp}</span><span class="tx">Calibración por vencer<small>Vencen en los próximos ${AVISO_DIAS} días</small></span></button>`);
+  const low=S.cons.filter(c=>num(c.stock)<=num(c.minimo)).length;
+  if(low) out.push(`<button class="alert" data-act="go" data-v="consumibles"><span class="ic">${low}</span><span class="tx">Consumibles con stock bajo<small>En o bajo el stock mínimo</small></span></button>`);
+  if(S.iz.length){ const no=S.iz.filter(i=>izEstado(i).code!=="apto").length; if(no) out.push(`<button class="alert info" data-act="go" data-v="izaje"><span class="ic">${no}</span><span class="tx">Elementos de izaje no aptos<small>Inspección pendiente, certificado vencido o fuera de servicio</small></span></button>`); }
+  return out.length?`<div class="alerts">${out.join("")}</div>`:"";
+}
+const I = {
+  casco:'<path d="M2.5 18h19"/><path d="M4.5 18v-2.5a7.5 7.5 0 0115 0V18"/><path d="M9.5 8.5V12M14.5 8.5V12"/><path d="M9.5 8.5a6 6 0 015 0"/>',
+  llave:'<path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>',
+  check:'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+  sale:'<path d="M7 17L17 7"/><path d="M9 7h8v8"/>',
+  alerta:'<circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/>',
+  qr:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h2v2h-2zM18 14h2M14 18h2M18 18h2v2"/>',
+  entrega:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 10h6M9 14h6M9 18h3"/>',
+  devol:'<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
+  reporte:'<path d="M14 3H6a1 1 0 00-1 1v16a1 1 0 001 1h12a1 1 0 001-1V8z"/><path d="M14 3v5h5"/><path d="M9 17v-3M12 17v-6M15 17v-2"/>'};
+const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[k]}</svg>`;
 function vPanol(){
-  if(!S.loaded) return scanBlock()+loadingBlock();
-  const c=counts(), now=Date.now();
-  const prest=S.tools.filter(t=>t.estado==="prestada").sort((a,b)=>(a.desde||0)-(b.desde||0));
-  const late=prest.filter(t=>now-(t.desde||now)>SHIFT_H*3600e3).length;
-  let h=installBanner()+`<div class="stats">
-    <button class="stat ok" data-act="goinv" data-f="disponible"><span class="n">${c.disponible}</span><span class="l">Disponibles</span></button>
-    <button class="stat warn" data-act="goinv" data-f="prestada"><span class="n">${c.prestada}</span><span class="l">Prestadas</span></button>
-    <button class="stat bad" data-act="goinv" data-f="mantencion"><span class="n">${c.mantencion}</span><span class="l">Mantención</span></button></div>`+scanBlock();
+  const c=counts(), now=Date.now(), total=S.tools.length;
+  const late=S.tools.filter(t=>t.estado==="prestada"&&now-(t.desde||now)>SHIFT_H*3600e3).length;
+  const pend=late+(c.mantencion||0)+(c.extraviada||0);
+  let h=roBanner()+installBanner()+`<section class="dash" aria-label="Panel de control">
+    <div class="dash-hd"><div><h2 class="dash-t">${esc(S.config.nombre||"Pañol Digital")}</h2><span class="small muted">Panel de control · ${new Date().toLocaleDateString("es-CL",{weekday:"long",day:"numeric",month:"long"})}</span></div><span class="dash-ic">${svg("casco")}</span></div>
+    <div class="kgrid">
+      <button class="kc" data-act="goinv" data-f="todos"><span class="kl">Herramientas ${svg("llave")}</span><span class="kn">${S.loaded?total:"–"}</span><span class="ks">en inventario</span></button>
+      <button class="kc ok" data-act="goinv" data-f="disponible"><span class="kl">Disponibles ${svg("check")}</span><span class="kn">${S.loaded?c.disponible:"–"}</span><span class="ks">listas para entregar</span></button>
+      <button class="kc warn" data-act="goinv" data-f="prestada"><span class="kl">Prestadas ${svg("sale")}</span><span class="kn">${S.loaded?c.prestada:"–"}</span><span class="ks">fuera del pañol</span></button>
+      <button class="kc bad" data-act="pend"><span class="kl">Pendientes ${svg("alerta")}</span><span class="kn">${S.loaded?pend:"–"}</span><span class="ks">${late} atrasadas · ${c.mantencion||0} mant. · ${c.extraviada||0} extrav.</span></button>
+    </div>
+    <h3 class="qa-t">Accesos rápidos</h3>
+    <div class="qa">
+      <button class="qb" data-act="scan">${svg("qr")}<span>Escanear QR</span></button>
+      <button class="qb w" data-act="nueva">${svg("entrega")}<span>Nueva entrega</span></button>
+      <button class="qb w" data-act="devol-scan">${svg("devol")}<span>Devolución</span></button>
+      <button class="qb" data-act="go" data-v="stats">${svg("reporte")}<span>Reportes</span></button>
+    </div>
+    <form class="codeform" id="f-code" autocomplete="off"><label class="vh" for="m-code">Código</label><input type="text" id="m-code" class="mono-in" placeholder="o busca por código, ej. H-004" enterkeyhint="go"><button class="btn" type="submit">Buscar</button></form>
+  </section>`;
+  if(!S.loaded) return h+loadingBlock();
   if(!S.tools.length) return h+emptyInv();
-  h+=`<div class="sec"><h3>Prestadas ahora${late?` · <span style="color:var(--bad)">${late} pasaron el turno</span>`:""}</h3>`;
+  h+=alerts();
+  const prest=S.tools.filter(t=>t.estado==="prestada").sort((a,b)=>(a.desde||0)-(b.desde||0));
+  h+=`<div class="sec" id="prestadas"><h3>Prestadas ahora</h3>`;
   h+= !prest.length ? `<div class="empty"><strong>Todo devuelto.</strong><span class="small">No hay herramientas fuera del pañol.</span></div>`
     : `<div class="list">${prest.map(t=>{ const d=now-(t.desde||now), L=d>SHIFT_H*3600e3;
       return `<button class="item" data-act="open" data-code="${esc(t.id)}"><span class="code">${esc(t.id)}</span>
-      <span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${esc(t.persona||"—")}${t.area?" · "+esc(t.area):""}</span></span>
+      <span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${esc(t.persona||"—")}${t.cuadrilla?" · "+esc(t.cuadrilla):""}${t.area?" · "+esc(t.area):""}</span></span>
       <span class="time${L?" late":""}">${fmtDur(d)}<span class="late-tag">${L?"Pasó el turno":"desde "+fmtT(t.desde)}</span></span></button>`; }).join("")}</div>`;
   h+=`</div><button class="btn" data-act="summary">Enviar resumen de entrega de turno</button>`;
-  const mant=S.tools.filter(t=>t.estado==="mantencion");
-  if(mant.length) h+=`<div class="sec"><h3>En mantención</h3><div class="list">${mant.map(t=>`<button class="item" data-act="open" data-code="${esc(t.id)}"><span class="code">${esc(t.id)}</span><span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${esc(t.nota||"Sin detalle del daño")}</span></span><span class="pill mantencion">Revisar</span></button>`).join("")}</div></div>`;
   return h;
 }
-function datalists(){
-  const seen=new Set(), ps=[]; for(const m of S.movs){ if(m.persona&&!seen.has(m.persona.toLowerCase())){ seen.add(m.persona.toLowerCase()); ps.push(m.persona);} if(ps.length>60) break; }
-  const ar=[...new Set(S.movs.map(m=>m.area).filter(Boolean))].slice(0,30);
-  return `<datalist id="dl-p">${ps.map(p=>`<option value="${esc(p)}">`).join("")}</datalist><datalist id="dl-a">${ar.map(a=>`<option value="${esc(a)}">`).join("")}</datalist>`;
+
+/* ================= Escanear / mover ================= */
+function cartPanel(){
+  const items=S.cart.items.map(code=>toolBy(code)).filter(Boolean);
+  return `<form class="panel w" id="f-cart" autocomplete="off">${workersDl()}${dl("dl-a",[...new Set(S.movs.map(m=>m.area).filter(Boolean))].slice(0,30))}
+    <div class="row" style="justify-content:space-between"><h2>Retiro múltiple</h2><span class="count-badge">${items.length}</span></div>
+    <label class="f">Trabajador *<input type="text" id="c-worker" list="dl-w" placeholder="Escribe o escanea su credencial" value="${esc(S.cart.worker)}"></label>
+    <button class="btn" type="button" data-act="scan-multi">${icoCam} Escanear herramientas seguidas</button>
+    ${items.length?`<div class="cart">${items.map(t=>`<div class="ci"><span class="code">${esc(t.id)}</span><span class="name">${esc(t.nombre)}</span><button type="button" data-act="cart-del" data-code="${esc(t.id)}" aria-label="Quitar ${esc(t.id)}">Quitar</button></div>`).join("")}</div>`
+      :`<p class="small muted">Escanea las herramientas una tras otra sin cerrar la cámara, o escribe el código abajo. Puedes escanear primero la credencial del trabajador.</p>`}
+    <div class="codeform"><input type="text" id="c-add" class="mono-in" placeholder="Agregar por código, ej. H-003"><button class="btn" type="button" data-act="cart-add">Agregar</button></div>
+    <label class="f">Frente o área de trabajo<input type="text" id="c-area" list="dl-a" placeholder="ej. CV-1332" value="${esc(S.cart.area)}"></label>
+    ${sigBox("sig-cart")}
+    <button class="btn pri big" type="submit" ${items.length?"":"disabled"}>Entregar ${items.length||""} herramienta${items.length===1?"":"s"}</button>
+    ${items.length||S.cart.worker?`<button class="btn ghost" type="button" data-act="cart-clear">Vaciar</button>`:""}</form>`;
 }
 function vMover(){
   if(!S.loaded) return scanBlock()+loadingBlock();
   const t=S.sel&&toolBy(S.sel);
-  if(!t) return `<div class="sec"><h2>Retiro y devolución</h2><p class="muted">Escanea el QR de la herramienta. Si está disponible registras el retiro; si está prestada, la devolución.</p></div>`+scanBlock()+(S.tools.length?"":emptyInv());
-  const est=t.estado||"disponible", now=Date.now();
-  let h=`<div class="tag"><div class="plate"><span class="code">${esc(t.id)}</span><span class="pill ${est}">${ESTADO[est]}</span>${t.ejemplo?'<span class="pill ej">Ejemplo</span>':""}</div>
-    <div class="tname">${esc(t.nombre)}</div><dl class="kv"><dt>Categoría</dt><dd>${esc(t.categoria||"—")}</dd>${t.serie?`<dt>N° serie</dt><dd class="mono">${esc(t.serie)}</dd>`:""}</dl>`;
+  if(!t) return roBanner()+`<div class="sec"><h2>Retiro y devolución</h2><p class="muted">Escanea una herramienta para ver su ficha y registrar el retiro o la devolución. Para entregar varias a la misma persona, usa el retiro múltiple.</p></div>`+scanBlock()+(S.tools.length?cartPanel():emptyInv());
+  const est=t.estado||"disponible", now=Date.now(), cal=calib(t);
+  let h=roBanner()+`<div class="tag"><div class="plate"><span class="code">${esc(t.id)}</span><span class="pill ${est}">${ESTADO[est]}</span>${t.ejemplo?'<span class="pill ej">Ejemplo</span>':""}${cal&&cal.code!=="ok"?`<span class="pill ${cal.code==="v"?"calv":"calp"}">${cal.code==="v"?"Calib. vencida":"Calib. por vencer"}</span>`:""}</div>
+    <div class="tname">${esc(t.nombre)}</div><dl class="kv"><dt>Categoría</dt><dd>${esc(t.categoria||"—")}</dd><dt>Ubicación</dt><dd>${esc(t.ubicacion||"—")}</dd>${t.serie?`<dt>N° serie</dt><dd class="mono">${esc(t.serie)}</dd>`:""}${cal?`<dt>Calibración</dt><dd>${esc(cal.txt)}</dd>`:""}</dl>`;
   if(est==="prestada"){ const d=now-(t.desde||now), L=d>SHIFT_H*3600e3;
-    h+=`<div class="holder${L?" bad":""}"><span class="small muted">La tiene</span><span class="who">${esc(t.persona||"—")}</span><span class="small">${t.area?esc(t.area)+" · ":""}desde ${fmtD(t.desde)} ${fmtT(t.desde)} · <strong>${fmtDur(d)}</strong>${L?" · pasó el turno":""}</span></div>`; }
+    h+=`<div class="holder${L?" bad":""}"><span class="small muted">La tiene</span><span class="who">${esc(t.persona||"—")}</span><span class="small">${t.cuadrilla?esc(t.cuadrilla)+" · ":""}${t.area?esc(t.area)+" · ":""}desde ${fmtD(t.desde)} ${fmtT(t.desde)} · <strong>${fmtDur(d)}</strong>${L?" · pasó el turno":""}</span></div>`; }
   if(est==="mantencion") h+=`<div class="holder bad"><span class="small muted">Motivo</span><span>${esc(t.nota||"Sin detalle")}</span></div>`;
+  if(est==="extraviada") h+=`<div class="holder bad"><span class="small muted">Extraviada · responsable</span><span class="who">${esc(t.persona||"—")}</span><span class="small">${t.desde?"desde "+fmtD(t.desde)+" · ":""}${esc(t.nota||"")}</span></div>`;
   h+=`</div>`;
-  if(est==="disponible") h+=`<form class="panel" id="f-retiro" autocomplete="off">${datalists()}<h2>Registrar retiro</h2>
-    <label class="f">¿Quién la retira? *<input type="text" id="r-persona" list="dl-p" placeholder="Nombre y apellido" required></label>
-    <label class="f">Frente o área de trabajo<input type="text" id="r-area" list="dl-a" placeholder="ej. CV-1332"></label>
-    <button class="btn pri big" type="submit">Entregar herramienta</button></form>`;
-  else if(est==="prestada") h+=`<form class="panel" id="f-devol" autocomplete="off"><h2>Registrar devolución</h2>
+  if(est==="disponible"){
+    if(cal&&cal.code==="v") h+=`<div class="panel"><h2>No se puede entregar</h2><p class="muted">La calibración está vencida. Recalíbrala y actualiza la fecha en "Editar datos".</p></div>`;
+    else h+=`<form class="panel w" id="f-retiro" autocomplete="off">${workersDl()}${dl("dl-a",[...new Set(S.movs.map(m=>m.area).filter(Boolean))].slice(0,30))}<h2>Registrar retiro</h2>
+      <label class="f">¿Quién la retira? *<input type="text" id="r-persona" list="dl-w" placeholder="Nombre o escanea credencial" required></label>
+      <label class="f">Frente o área de trabajo<input type="text" id="r-area" list="dl-a" placeholder="ej. CV-1332"></label>
+      ${sigBox("sig-one")}
+      <button class="btn pri big" type="submit">Entregar herramienta</button></form>`;
+  } else if(est==="prestada") h+=`<form class="panel w" id="f-devol" autocomplete="off"><h2>Registrar devolución</h2>
     <div class="seg" role="radiogroup" aria-label="Condición"><label><input type="radio" name="cond" id="d-ok" checked> Buena</label><label><input type="radio" name="cond" id="d-dano"> Con daño</label></div>
     <label class="f">Observación<textarea id="d-nota" placeholder="Si viene con daño, describe qué tiene (va a mantención)"></textarea></label>
+    ${photoBox("ph-devol")}
     <button class="btn okb big" type="submit">Recibir en pañol</button></form>`;
-  else h+=`<div class="panel"><h2>Mantención</h2><p class="small muted">Cuando esté reparada o revisada, déjala disponible otra vez.</p><button class="btn okb big" data-act="habilitar">Dejar disponible</button></div>`;
+  else if(est==="mantencion") h+=`<div class="panel w"><h2>Mantención</h2><p class="small muted">Cuando esté reparada o revisada, déjala disponible otra vez.</p><button class="btn okb big" data-act="habilitar">Dejar disponible</button></div>`;
+  else h+=`<div class="panel w"><h2>¿Apareció?</h2><p class="small muted">Si la herramienta se recuperó, vuelve a dejarla disponible.</p><button class="btn okb big" data-act="recuperada">Marcar como recuperada</button></div>`;
+  if(est==="prestada"||est==="disponible"){
+    h+= S.extOpen ? `<form class="panel w" id="f-ext" autocomplete="off">${workersDl()}<h2>Marcar como extraviada</h2>
+      <label class="f">Responsable<input type="text" id="x-resp" list="dl-w" value="${esc(t.persona||"")}" placeholder="Quién la tenía"></label>
+      <label class="f">Detalle<textarea id="x-nota" placeholder="Dónde y cuándo se perdió"></textarea></label>
+      <div class="row"><button class="btn badf" type="submit">Confirmar extravío</button><button class="btn ghost" type="button" data-act="ext-toggle">Cancelar</button></div></form>`
+      : `<button class="btn badb w" data-act="ext-toggle">Marcar como extraviada</button>`;
+  }
   h+=`<div class="panel"><div class="qrbox"><div class="qr" id="qr-one"></div><div class="sec" style="gap:6px;min-width:0"><strong>QR de esta herramienta</strong><span class="small muted">Imprímelo desde Inventario → Imprimir etiquetas.</span></div></div>
-    <div class="row"><button class="btn" data-act="edit-toggle">${S.editOpen?"Cerrar edición":"Editar datos"}</button>
+    <div class="row w"><button class="btn" data-act="edit-toggle">${S.editOpen?"Cerrar edición":"Editar datos"}</button>
     <button class="btn badb${S.armed==="del:"+t.id?" armed":""}" data-act="del" data-code="${esc(t.id)}">${S.armed==="del:"+t.id?"Toca otra vez para eliminar":"Eliminar del inventario"}</button></div>`;
-  if(S.editOpen) h+=`<form class="sec" id="f-edit" autocomplete="off"><label class="f">Nombre<input type="text" id="e-nombre" value="${esc(t.nombre)}" required></label>
-    <label class="f">Categoría<input type="text" id="e-cat" list="dl-cat" value="${esc(t.categoria||"")}" placeholder="ej. Eléctrica, Izaje, Medición…"></label>${catList()}
-    <label class="f">N° de serie (opcional)<input type="text" id="e-serie" value="${esc(t.serie||"")}"></label><button class="btn pri" type="submit">Guardar cambios</button></form>`;
+  if(S.editOpen) h+=toolForm("e",t);
   h+=`</div>`;
   const ms=S.movs.filter(m=>m.code===t.id).slice(0,12);
   h+=`<div class="sec"><h3>Últimos movimientos</h3>${ms.length?`<div class="log">${ms.map(logItem).join("")}</div>`:`<p class="muted small">Sin movimientos todavía.</p>`}</div>
     <button class="btn ghost" data-act="close-sel">← Escanear otra herramienta</button>`;
   return h;
 }
+function toolForm(p,t){ t=t||{}; const add=p==="a";
+  return `<form class="${add?"panel w":"sec w"}" id="f-${add?"add":"edit"}" autocomplete="off">${dl("dl-cat",catsUsadas())}${dl("dl-ubi",ubisUsadas())}${add?"<h2>Nueva herramienta</h2>":""}
+    ${add?`<label class="f">Código *<input type="text" id="a-code" class="mono-in" value="${esc(S.addCode||nextCode())}" required></label>`:""}
+    <label class="f">Nombre *<input type="text" id="${p}-nombre" value="${esc(t.nombre||"")}" placeholder='ej. Esmeril angular 7"' required></label>
+    <div class="grid2"><label class="f">Categoría<input type="text" id="${p}-cat" list="dl-cat" value="${esc(t.categoria||"")}" placeholder="ej. Eléctrica"></label>
+    <label class="f">Ubicación en pañol<input type="text" id="${p}-ubi" list="dl-ubi" value="${esc(t.ubicacion||"")}" placeholder="ej. Estante A-3"></label></div>
+    <div class="grid2"><label class="f">N° de serie<input type="text" id="${p}-serie" value="${esc(t.serie||"")}"></label>
+    <label class="f">Vence calibración<input type="date" id="${p}-cal" value="${esc(t.calibVence||"")}"></label></div>
+    <span class="small muted">La fecha de calibración es solo para torquímetros, instrumentos de medición y equipos que la requieran.</span>
+    <div class="row"><button class="btn pri" type="submit">${add?"Guardar":"Guardar cambios"}</button>${add?`<button class="btn ghost" type="button" data-act="add-close">Cancelar</button>`:""}</div></form>`; }
 function logItem(m){ const t=toolBy(m.code);
   return `<div class="logi"><span class="t">${fmtT(m.ts)}</span><span><span class="what"><span class="dot ${esc(m.tipo)}"></span>${TIPO[m.tipo]||esc(m.tipo)} · <span class="mono">${esc(m.code)}</span></span>
-    <br><span class="small">${esc(m.nombre||t?.nombre||"")}${m.persona?" — "+esc(m.persona):""}${m.area?" · "+esc(m.area):""}${m.dur?` · ${fmtDur(m.dur)} fuera`:""}</span>${m.nota?`<br><span class="small muted">${esc(m.nota)}</span>`:""}</span></div>`; }
-function nextCode(){ let max=0; S.tools.forEach(t=>{ const m=/^H-(\d+)$/.exec(t.id); if(m) max=Math.max(max,+m[1]); }); return "H-"+String(max+1).padStart(3,"0"); }
+    <br><span class="small">${esc(m.nombre||t?.nombre||"")}${m.persona?" — "+esc(m.persona):""}${m.cuadrilla?" · "+esc(m.cuadrilla):""}${m.area?" · "+esc(m.area):""}${m.dur?` · ${fmtDur(m.dur)} fuera`:""}</span>${m.nota?`<br><span class="small muted">${esc(m.nota)}</span>`:""}
+    ${m.lote||m.fotoId?`<br><span class="row" style="gap:6px;margin-top:4px">${m.lote&&m.firma?`<button class="btn ghost" style="min-height:32px;padding:4px 8px" data-act="ver-firma" data-id="${esc(m.lote)}">Ver firma</button>`:""}${m.fotoId?`<button class="btn ghost" style="min-height:32px;padding:4px 8px" data-act="ver-foto" data-id="${esc(m.fotoId)}">Ver foto</button>`:""}</span>`:""}</span></div>`; }
+function nextCode(pre="H",list=S.tools){ let max=0; const re=new RegExp("^"+pre+"-(\\d+)$"); list.forEach(t=>{ const m=re.exec(t.id); if(m) max=Math.max(max,+m[1]); }); return pre+"-"+String(max+1).padStart(3,"0"); }
+
+/* ================= Inventario ================= */
+function matchF(t){ const e=t.estado||"disponible";
+  if(S.filter==="todos") return true; if(S.filter==="calib") { const c=calib(t); return c&&c.code!=="ok"; } return e===S.filter; }
 function visible(){ const q=S.q.trim().toLowerCase();
-  return S.tools.filter(t=>(S.filter==="todos"||(t.estado||"disponible")===S.filter)&&(!q||[t.id,t.nombre,t.categoria,t.persona,t.serie].join(" ").toLowerCase().includes(q))).sort((a,b)=>a.id.localeCompare(b.id,"es",{numeric:true})); }
+  return S.tools.filter(t=>matchF(t)&&(!q||[t.id,t.nombre,t.categoria,t.persona,t.serie,t.ubicacion,t.cuadrilla].join(" ").toLowerCase().includes(q))).sort((a,b)=>a.id.localeCompare(b.id,"es",{numeric:true})); }
 function vInventario(){
   if(!S.loaded) return `<h2>Inventario</h2>`+loadingBlock();
-  const c=counts(); let h=`<div class="row" style="justify-content:space-between"><h2>Inventario · ${S.tools.length}</h2><button class="btn pri" data-act="add-open">+ Agregar</button></div>`;
-  if(S.addOpen) h+=`<form class="panel" id="f-add" autocomplete="off"><h2>Nueva herramienta</h2>
-    <label class="f">Código *<input type="text" id="a-code" class="mono-in" value="${esc(S.addCode||nextCode())}" required></label>
-    <label class="f">Nombre *<input type="text" id="a-nombre" placeholder='ej. Esmeril angular 7"' required></label>
-    <label class="f">Categoría<input type="text" id="a-cat" list="dl-cat" placeholder="Escribe la categoría, ej. Eléctrica"></label>${catList()}
-    <label class="f">N° de serie (opcional)<input type="text" id="a-serie"></label>
-    <div class="row"><button class="btn pri" type="submit">Guardar</button><button class="btn ghost" type="button" data-act="add-close">Cancelar</button></div></form>`;
+  const c=counts(); const nc=S.tools.filter(t=>{ const x=calib(t); return x&&x.code!=="ok"; }).length;
+  let h=roBanner()+`<div class="row" style="justify-content:space-between"><h2>Inventario · ${S.tools.length}</h2><div class="row w"><button class="btn" data-act="go" data-v="importar">Desde Excel</button><button class="btn pri" data-act="add-open">+ Agregar</button></div></div>`;
+  if(S.addOpen) h+=toolForm("a");
   if(!S.tools.length) return h+(S.addOpen?"":emptyInv());
-  h+=`<div class="sec"><label class="vh" for="i-q">Buscar</label><input type="search" id="i-q" placeholder="Buscar por código, nombre, persona…" value="${esc(S.q)}">
-    <div class="chips" role="group" aria-label="Filtrar">${[["todos","Todas",S.tools.length],["disponible","Disponibles",c.disponible],["prestada","Prestadas",c.prestada],["mantencion","Mantención",c.mantencion]]
+  h+=`<div class="sec"><label class="vh" for="i-q">Buscar</label><input type="search" id="i-q" placeholder="Buscar por código, nombre, ubicación, persona…" value="${esc(S.q)}">
+    <div class="chips" role="group" aria-label="Filtrar">${[["todos","Todas",S.tools.length],["disponible","Disponibles",c.disponible],["prestada","Prestadas",c.prestada],["mantencion","Mantención",c.mantencion],["extraviada","Extraviadas",c.extraviada||0],["calib","Calibración",nc]]
     .map(([k,l,n])=>`<button class="chip" data-act="filter" data-f="${k}" aria-pressed="${S.filter===k}">${l} ${n}</button>`).join("")}</div></div>`;
   const list=visible();
-  h+= list.length?`<div class="list">${list.map(t=>{ const e=t.estado||"disponible"; return `<button class="item" data-act="open" data-code="${esc(t.id)}"><span class="code">${esc(t.id)}</span>
-    <span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${esc(t.categoria||"")}${e==="prestada"?" · "+esc(t.persona||""):""}${t.ejemplo?" · ejemplo":""}</span></span><span class="pill ${e}">${ESTADO[e]}</span></button>`; }).join("")}</div>`
+  h+= list.length?`<div class="list">${list.map(t=>{ const e=t.estado||"disponible", cal=calib(t); return `<button class="item" data-act="open" data-code="${esc(t.id)}"><span class="code">${esc(t.id)}</span>
+    <span class="main"><span class="name">${esc(t.nombre)}</span><br><span class="sub">${[t.categoria,t.ubicacion?"📍 "+t.ubicacion:"",e==="prestada"?t.persona:"",cal&&cal.code!=="ok"?(cal.code==="v"?"calibración vencida":"calibración por vencer"):"",t.ejemplo?"ejemplo":""].filter(Boolean).map(esc).join(" · ")}</span></span><span class="pill ${e}">${ESTADO[e]}</span></button>`; }).join("")}</div>`
     :`<div class="empty">Nada coincide con la búsqueda.</div>`;
   h+=`<div class="panel"><h2>Etiquetas QR</h2><p class="small muted">Imprime ${list.length} etiqueta${list.length===1?"":"s"} (las de la lista) en hoja carta o A4, escala 100 %. Recorta, protégelas con cinta transparente y pégalas.</p>
     <button class="btn pri" data-act="labels" ${list.length?"":"disabled"}>Imprimir etiquetas</button></div>`;
-  if(S.tools.some(t=>t.ejemplo)) h+=`<button class="btn badb${S.armed==="ej"?" armed":""}" data-act="del-ej">${S.armed==="ej"?"Toca otra vez para borrar los ejemplos":"Borrar herramientas de ejemplo"}</button>`;
+  if(S.tools.some(t=>t.ejemplo)) h+=`<button class="btn badb w${S.armed==="ej"?" armed":""}" data-act="del-ej">${S.armed==="ej"?"Toca otra vez para borrar los ejemplos":"Borrar herramientas de ejemplo"}</button>`;
   return h;
 }
+
+/* ================= Historial ================= */
 function vHistorial(){
   if(!S.loaded) return `<h2>Historial</h2>`+loadingBlock();
   let h=`<div class="row" style="justify-content:space-between"><h2>Historial</h2><button class="btn" data-act="csv" ${S.movs.length?"":"disabled"}>Exportar a Excel</button></div>`;
-  if(!S.movs.length) return h+`<div class="empty"><strong>Sin movimientos todavía.</strong><span class="small">Cada retiro, devolución y paso a mantención queda aquí con fecha y hora.</span></div>`;
-  let last="", rows=""; S.movs.forEach(m=>{ const d=new Date(m.ts).toDateString(); if(d!==last){ rows+=`<div class="daysep">${fmtD(m.ts)}</div>`; last=d; } rows+=logItem(m); });
-  return h+`<div class="log">${rows}</div><p class="small muted">Últimos ${S.movs.length} movimientos.</p>`;
+  if(!S.movs.length) return h+`<div class="empty"><strong>Sin movimientos todavía.</strong><span class="small">Cada retiro, devolución, extravío y paso a mantención queda aquí con fecha y hora.</span></div>`;
+  let last="", rows=""; S.movs.slice(0,300).forEach(m=>{ const d=new Date(m.ts).toDateString(); if(d!==last){ rows+=`<div class="daysep">${fmtD(m.ts)}</div>`; last=d; } rows+=logItem(m); });
+  return h+`<div class="log">${rows}</div><p class="small muted">Últimos ${Math.min(300,S.movs.length)} movimientos. El Excel incluye hasta ${S.movs.length}.</p>`;
 }
+
+/* ================= Más ================= */
+const ico = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+function vMas(){
+  const low=S.cons.filter(c=>num(c.stock)<=num(c.minimo)).length, izNo=S.iz.filter(i=>izEstado(i).code!=="apto").length;
+  return roBanner()+`<h2>Más</h2><div class="tiles">
+    <button class="tile" data-act="go" data-v="trabajadores">${ico('<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0114 0"/><path d="M17 11l2 2 4-4"/>')}<strong>Trabajadores</strong><span>${S.workers.length} registrados · credenciales QR</span></button>
+    <button class="tile" data-act="go" data-v="consumibles">${ico('<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/>')}<strong>Consumibles</strong><span>${S.cons.length} ítems con stock</span>${low?`<span class="badge">${low} bajo mínimo</span>`:""}</button>
+    <button class="tile" data-act="go" data-v="izaje">${ico('<path d="M12 2v6"/><path d="M12 8a3 3 0 013 3v2a5 5 0 11-10 0"/><circle cx="12" cy="3" r="1"/>')}<strong>Control de izaje</strong><span>${S.iz.length} elementos · inspección por color</span>${izNo?`<span class="badge">${izNo} no aptos</span>`:""}</button>
+    <button class="tile" data-act="go" data-v="stats">${ico('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>')}<strong>Estadísticas</strong><span>Uso, tiempos, daños y consumo</span></button>
+    <button class="tile w" data-act="go" data-v="importar">${ico('<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/>')}<strong>Carga masiva</strong><span>Desde Excel o CSV</span></button>
+    <button class="tile" data-act="go" data-v="ajustes">${ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>')}<strong>Ajustes</strong><span>Accesos, nombre, firma</span></button>
+  </div>`;
+}
+
+/* ================= Trabajadores ================= */
+function vTrabajadores(){
+  const q=S.wq.trim().toLowerCase(); const list=S.workers.filter(w=>!q||[w.nombre,w.rut,w.cuadrilla,w.cargo].join(" ").toLowerCase().includes(q)).sort((a,b)=>a.nombre.localeCompare(b.nombre,"es"));
+  const hold=id=>S.tools.filter(t=>t.estado==="prestada"&&t.workerId===id).length;
+  let h=roBanner()+backBar(`Trabajadores · ${S.workers.length}`,"mas")+`<div class="row w"><button class="btn pri" data-act="w-add">+ Agregar trabajador</button><button class="btn" data-act="go" data-v="importar" data-t="workers">Desde Excel</button></div>`;
+  if(S.wAdd) h+=workerForm("wa");
+  if(!S.workers.length) return h+`<div class="empty"><strong>Aún no hay trabajadores.</strong><span>Registra al personal con su cuadrilla para elegirlo al retirar, en vez de escribir el nombre cada vez. Puedes imprimir una credencial QR para cada uno.</span></div>`;
+  h+=`<input type="search" id="w-q" placeholder="Buscar por nombre, RUT o cuadrilla…" value="${esc(S.wq)}">`;
+  h+=`<div class="list">${list.map(w=>{ const n=hold(w.id); return `<button class="item" data-act="w-open" data-id="${esc(w.id)}"><span class="code">${esc((w.nombre.match(/\b\p{L}/gu)||["?"]).slice(0,2).join("").toUpperCase())}</span>
+    <span class="main"><span class="name">${esc(w.nombre)}</span><br><span class="sub">${[w.cuadrilla,w.cargo,w.rut].filter(Boolean).map(esc).join(" · ")||"Sin cuadrilla"}</span></span>${n?`<span class="pill prestada">${n} en mano</span>`:`<span class="pill disponible">Sin pendientes</span>`}</button>`; }).join("")}</div>`;
+  h+=`<div class="panel"><h2>Credenciales QR</h2><p class="small muted">Imprime una credencial por trabajador (los ${list.length} de la lista). Al escanearla, el retiro queda a su nombre sin escribir nada.</p><button class="btn pri" data-act="w-labels" ${list.length?"":"disabled"}>Imprimir credenciales</button></div>`;
+  return h;
+}
+function workerForm(p,w){ w=w||{}; const add=p==="wa";
+  return `<form class="${add?"panel":"sec"} w" id="f-${p}" autocomplete="off">${dl("dl-cuad",cuadrillas())}${add?"<h2>Nuevo trabajador</h2>":""}
+    <label class="f">Nombre y apellido *<input type="text" id="${p}-nombre" value="${esc(w.nombre||"")}" required></label>
+    <div class="grid2"><label class="f">RUT<input type="text" id="${p}-rut" value="${esc(w.rut||"")}" placeholder="12.345.678-9"></label>
+    <label class="f">Cuadrilla<input type="text" id="${p}-cuad" list="dl-cuad" value="${esc(w.cuadrilla||"")}" placeholder="ej. Montaje 1"></label></div>
+    <label class="f">Cargo<input type="text" id="${p}-cargo" value="${esc(w.cargo||"")}" placeholder="ej. Maestro primera"></label>
+    <div class="row"><button class="btn pri" type="submit">${add?"Guardar":"Guardar cambios"}</button>${add?`<button class="btn ghost" type="button" data-act="w-add">Cancelar</button>`:""}</div></form>`; }
+function vTrabajador(){
+  const w=workerBy(S.wsel); if(!w) return backBar("Trabajador","trabajadores")+`<div class="empty">No se encontró el trabajador.</div>`;
+  const tools=S.tools.filter(t=>t.estado==="prestada"&&(t.workerId===w.id||(!t.workerId&&t.persona===w.nombre)));
+  const ms=S.movs.filter(m=>m.workerId===w.id||m.persona===w.nombre).slice(0,15);
+  let h=roBanner()+backBar("Trabajador","trabajadores")+`<div class="tag"><div class="plate"><span class="code">${esc(w.cuadrilla||"Sin cuadrilla")}</span></div><div class="tname">${esc(w.nombre)}</div>
+    <dl class="kv"><dt>RUT</dt><dd>${esc(w.rut||"—")}</dd><dt>Cargo</dt><dd>${esc(w.cargo||"—")}</dd><dt>En su poder</dt><dd>${tools.length} herramienta${tools.length===1?"":"s"}</dd></dl></div>`;
+  h+=`<div class="sec"><h3>Herramientas en su poder</h3>`;
+  if(tools.length) h+=`<form class="panel" id="f-wret"><div class="checks" style="--bad:var(--ok);--bad-soft:var(--ok-soft)">${tools.map(t=>`<label><input type="checkbox" class="wr" value="${esc(t.id)}" checked> <span class="code">${esc(t.id)}</span> ${esc(t.nombre)} <span class="small muted">· ${fmtDur(Date.now()-(t.desde||Date.now()))}</span></label>`).join("")}</div>
+    <button class="btn okb big w" type="submit">Recibir seleccionadas en buen estado</button><span class="small muted">Si alguna viene con daño, ábrela por separado para registrar el daño y la foto.</span></form>`;
+  else h+=`<div class="empty"><strong>No tiene herramientas pendientes.</strong></div>`;
+  h+=`</div><div class="panel"><div class="qrbox"><div class="qr" id="qr-w"></div><div class="sec" style="gap:6px;min-width:0"><strong>Credencial QR</strong><span class="small muted">Al escanearla se abre el retiro múltiple a su nombre.</span><button class="btn" data-act="w-label1">Imprimir credencial</button></div></div>
+    <div class="row w"><button class="btn" data-act="w-edit">${S.wEdit?"Cerrar edición":"Editar datos"}</button><button class="btn badb${S.armed==="wdel"?" armed":""}" data-act="w-del">${S.armed==="wdel"?"Toca otra vez para eliminar":"Eliminar trabajador"}</button></div>
+    ${S.wEdit?workerForm("we",w):""}</div>
+    <button class="btn pri w" data-act="w-cart">Hacer retiro para ${esc(w.nombre.split(" ")[0])}</button>
+    <div class="sec"><h3>Últimos movimientos</h3>${ms.length?`<div class="log">${ms.map(logItem).join("")}</div>`:`<p class="small muted">Sin movimientos.</p>`}</div>`;
+  return h;
+}
+
+/* ================= Consumibles ================= */
+function vConsumibles(){
+  const q=S.cq.trim().toLowerCase(); const list=S.cons.filter(c=>!q||[c.codigo,c.nombre,c.ubicacion].join(" ").toLowerCase().includes(q)).sort((a,b)=>(num(a.stock)<=num(a.minimo)?0:1)-(num(b.stock)<=num(b.minimo)?0:1)||a.nombre.localeCompare(b.nombre,"es"));
+  let h=roBanner()+backBar(`Consumibles · ${S.cons.length}`,"mas")+`<div class="row w"><button class="btn pri" data-act="c-add">+ Agregar consumible</button><button class="btn" data-act="go" data-v="importar" data-t="cons">Desde Excel</button></div>`;
+  if(S.cAdd) h+=consForm("ca");
+  if(!S.cons.length) return h+`<div class="empty"><strong>Sin consumibles todavía.</strong><span>Registra discos, brocas, soldadura, EPP y otros insumos con su stock mínimo. La app te avisa cuando hay que reponer y registra el consumo por cuadrilla.</span></div>`;
+  h+=`<input type="search" id="c-q" placeholder="Buscar consumible…" value="${esc(S.cq)}"><div class="list">${list.map(c=>{ const low=num(c.stock)<=num(c.minimo);
+    return `<button class="item" data-act="c-open" data-id="${esc(c.id)}"><span class="code">${esc(c.codigo||"—")}</span><span class="main"><span class="name">${esc(c.nombre)}</span><br><span class="sub">${[c.ubicacion?"📍 "+c.ubicacion:"","mínimo "+fmtN(c.minimo)+" "+(c.unidad||"")].filter(Boolean).map(esc).join(" · ")}</span></span>
+    <span class="stock${low?" low":""}">${fmtN(c.stock)}<small>${esc(c.unidad||"un")}${low?" · reponer":""}</small></span></button>`; }).join("")}</div>
+    <button class="btn" data-act="ccsv" ${S.cmovs.length?"":"disabled"}>Exportar movimientos a Excel</button>`;
+  return h;
+}
+function consForm(p,c){ c=c||{}; const add=p==="ca";
+  return `<form class="${add?"panel":"sec"} w" id="f-${p}" autocomplete="off">${dl("dl-ubi",ubisUsadas())}${add?"<h2>Nuevo consumible</h2>":""}
+    <div class="grid2"><label class="f">Código<input type="text" id="${p}-cod" class="mono-in" value="${esc(c.codigo||(add?nextCode("C",S.cons.map(x=>({id:x.codigo||""}))):""))}"></label>
+    <label class="f">Unidad<input type="text" id="${p}-uni" value="${esc(c.unidad||"")}" placeholder="un, caja, kg, par"></label></div>
+    <label class="f">Nombre *<input type="text" id="${p}-nombre" value="${esc(c.nombre||"")}" placeholder='ej. Disco de corte 7"' required></label>
+    <div class="grid2">${add?`<label class="f">Stock inicial<input type="number" id="${p}-stock" inputmode="decimal" min="0" step="any" value="0"></label>`:""}
+    <label class="f">Stock mínimo<input type="number" id="${p}-min" inputmode="decimal" min="0" step="any" value="${esc(c.minimo??0)}"></label></div>
+    <label class="f">Ubicación<input type="text" id="${p}-ubi" list="dl-ubi" value="${esc(c.ubicacion||"")}"></label>
+    <div class="row"><button class="btn pri" type="submit">${add?"Guardar":"Guardar cambios"}</button>${add?`<button class="btn ghost" type="button" data-act="c-add">Cancelar</button>`:""}</div></form>`; }
+function vConsumible(){
+  const c=consBy(S.csel); if(!c) return backBar("Consumible","consumibles")+`<div class="empty">No se encontró.</div>`;
+  const low=num(c.stock)<=num(c.minimo); const ms=S.cmovs.filter(m=>m.cid===c.id).slice(0,15);
+  return roBanner()+backBar("Consumible","consumibles")+`<div class="tag"><div class="plate"><span class="code">${esc(c.codigo||"—")}</span>${low?`<span class="pill mantencion">Reponer</span>`:`<span class="pill disponible">Stock OK</span>`}</div><div class="tname">${esc(c.nombre)}</div>
+    <div class="row" style="align-items:baseline"><span class="bigstock${low?" low":""}">${fmtN(c.stock)}</span><span class="muted">${esc(c.unidad||"un")} · mínimo ${fmtN(c.minimo)}</span></div>
+    <dl class="kv"><dt>Ubicación</dt><dd>${esc(c.ubicacion||"—")}</dd></dl></div>
+    <form class="panel w" id="f-csal" autocomplete="off">${workersDl()}<h2>Entregar (salida)</h2>
+      <div class="grid2"><label class="f">Cantidad *<input type="number" id="cs-cant" inputmode="decimal" min="0" step="any" required></label><label class="f">Trabajador *<input type="text" id="cs-w" list="dl-w" required></label></div>
+      <button class="btn pri big" type="submit">Registrar entrega</button></form>
+    <form class="panel w" id="f-cent" autocomplete="off"><h2>Ingreso (entrada)</h2>
+      <div class="grid2"><label class="f">Cantidad *<input type="number" id="ce-cant" inputmode="decimal" min="0" step="any" required></label><label class="f">Detalle<input type="text" id="ce-det" placeholder="ej. Guía 4512, bodega central"></label></div>
+      <button class="btn okb" type="submit">Registrar ingreso</button></form>
+    <div class="panel"><div class="row w"><button class="btn" data-act="c-edit">${S.cEdit?"Cerrar edición":"Editar datos"}</button><button class="btn badb${S.armed==="cdel"?" armed":""}" data-act="c-del">${S.armed==="cdel"?"Toca otra vez para eliminar":"Eliminar"}</button></div>${S.cEdit?consForm("ce2",c):""}</div>
+    <div class="sec"><h3>Últimos movimientos</h3>${ms.length?`<div class="log">${ms.map(m=>`<div class="logi"><span class="t">${fmtT(m.ts)}</span><span><span class="what"><span class="dot ${m.tipo==="entrada"?"devolucion":"retiro"}"></span>${m.tipo==="entrada"?"Ingreso":"Entrega"} · ${fmtN(m.cant)} ${esc(m.unidad||"")}</span><br><span class="small">${fmtD(m.ts)}${m.persona?" · "+esc(m.persona):""}${m.cuadrilla?" · "+esc(m.cuadrilla):""}${m.detalle?" · "+esc(m.detalle):""}</span></span></div>`).join("")}</div>`:`<p class="small muted">Sin movimientos.</p>`}</div>`;
+}
+
+/* ================= Izaje ================= */
+function izRow(it){ const e=izEstado(it); return `<button class="item" data-act="z-open" data-id="${esc(it.id)}"><span class="code">${esc(it.id)}</span><span class="main"><span class="name">${esc(it.desc||it.tipo)}</span><br><span class="sub">${esc(it.tipo)} · ${fmtN(it.wll)} t${it.ejemplo?" · ejemplo":""}</span></span><span class="pill ${izPill(e)}">${IZ_LBL[e.code]}</span></button>`; }
+function izCfgPanel(){
+  const f=izFreq(), cols=izCols(); const labels=f==="mensual"?MESES:["Ene – Mar","Abr – Jun","Jul – Sep","Oct – Dic"];
+  return `<form class="panel w" id="f-izcfg"><h2>Código de colores</h2><p class="small muted">El elemento debe tener la cinta del color del período vigente para estar apto.</p>
+    <label class="f">Frecuencia<select id="zc-freq"><option value="trimestral"${f==="trimestral"?" selected":""}>Trimestral</option><option value="mensual"${f==="mensual"?" selected":""}>Mensual</option></select></label>
+    <div class="colors">${labels.map((l,i)=>`<div class="cr"><span><span class="swatch" style="background:${hex(cols[i])}"></span>${l}</span><select id="zc-col-${i}">${Object.keys(COLORES).map(c=>`<option${c===cols[i]?" selected":""}>${c}</option>`).join("")}</select></div>`).join("")}</div>
+    <div class="row"><button class="btn pri" type="submit">Guardar colores</button><button class="btn ghost" type="button" data-act="z-cfg">Cancelar</button></div></form>`; }
+function vIzaje(){
+  const P=periodo(); const q=S.zq.trim().toLowerCase();
+  const all=S.iz.map(it=>({it,e:izEstado(it)}));
+  const f=S.zfilter, list=all.filter(({e})=>f==="todos"||(f==="apto"&&e.code==="apto")||(f==="pend"&&(e.code==="sin"||e.code==="vencida"))||(f==="cert"&&(e.warn||e.code==="cert"))||(f==="fuera"&&e.code==="fuera"))
+    .filter(({it})=>!q||[it.id,it.tipo,it.desc,it.serie,it.cert].join(" ").toLowerCase().includes(q)).sort((a,b)=>a.it.id.localeCompare(b.it.id,"es",{numeric:true}));
+  const n=k=>all.filter(({e})=>k==="apto"?e.code==="apto":k==="pend"?(e.code==="sin"||e.code==="vencida"):k==="cert"?(e.warn||e.code==="cert"):k==="fuera"?e.code==="fuera":true).length;
+  let h=roBanner()+backBar("Control de izaje","mas")+`<div class="colorcall"><span class="sw" style="background:${hex(P.color)}"></span><span><span class="small muted">Período ${esc(P.label)} · color vigente</span><br><strong>${esc(P.color)}</strong></span><button class="btn ghost w" style="margin-left:auto" data-act="z-cfg">Cambiar colores</button></div>`;
+  if(!S.izcfg.coloresOk&&!S.cfgIz) h+=`<div class="banner"><strong>Confirma el código de colores de tu faena</strong><span class="small">Por ahora uso ${izCols().join(", ").toLowerCase()} por trimestre como ejemplo.</span></div>`;
+  if(S.cfgIz) h+=izCfgPanel();
+  h+=`<div class="row w"><button class="btn pri" data-act="z-add">+ Registrar elemento</button>${S.iz.length?"":`<button class="btn" data-act="z-seed">Cargar ejemplo</button>`}</div>`;
+  if(S.zAdd) h+=izForm("za");
+  if(!S.iz.length) return h+`<div class="empty"><strong>Sin elementos de izaje.</strong><span>Registra eslingas, estrobos, grilletes y tecles con su capacidad y certificado. Al escanearlos verás si están aptos para usar.</span></div>`;
+  h+=`<input type="search" id="z-q" placeholder="Buscar por código, tipo, serie…" value="${esc(S.zq)}"><div class="chips">${[["todos","Todos"],["apto","Aptos"],["pend","Por inspeccionar"],["cert","Certificados"],["fuera","Fuera de servicio"]].map(([k,l])=>`<button class="chip" data-act="z-filter" data-f="${k}" aria-pressed="${f===k}">${l} ${n(k)}</button>`).join("")}</div>`;
+  h+= list.length?`<div class="list">${list.map(({it})=>izRow(it)).join("")}</div>`:`<div class="empty">Nada coincide.</div>`;
+  h+=`<div class="panel"><h2>Etiquetas QR</h2><p class="small muted">Etiquetas con código y capacidad (WLL) para los ${list.length} elementos de la lista. Fíjalas con precinto o tag, nunca pegadas sobre la eslinga.</p><button class="btn pri" data-act="z-labels" ${list.length?"":"disabled"}>Imprimir etiquetas</button></div>`;
+  if(S.iz.some(i=>i.ejemplo)) h+=`<button class="btn badb w${S.armed==="zej"?" armed":""}" data-act="z-delej">${S.armed==="zej"?"Toca otra vez para borrar":"Borrar elementos de ejemplo"}</button>`;
+  return h;
+}
+function izForm(p,it){ it=it||{}; const add=p==="za";
+  return `<form class="${add?"panel":"sec"} w" id="f-${p}" autocomplete="off">${add?"<h2>Nuevo elemento</h2>":""}
+    ${add?`<label class="f">Código *<input type="text" id="za-code" class="mono-in" value="${esc(nextCode("IZ",S.iz))}" required></label>`:""}
+    <label class="f">Tipo *<select id="${p}-tipo">${Object.keys(TIPOS_IZ).map(t=>`<option${t===it.tipo?" selected":""}>${t}</option>`).join("")}</select></label>
+    <label class="f">Descripción<input type="text" id="${p}-desc" value="${esc(it.desc||"")}" placeholder="ej. Eslinga plana 2 capas 3 m"></label>
+    <div class="grid2"><label class="f">Capacidad WLL (t) *<input type="number" id="${p}-wll" step="0.01" min="0" inputmode="decimal" value="${esc(it.wll??"")}" required></label><label class="f">Largo (m)<input type="number" id="${p}-largo" step="0.1" min="0" inputmode="decimal" value="${esc(it.largo??"")}"></label></div>
+    <div class="grid2"><label class="f">N° serie<input type="text" id="${p}-serie" value="${esc(it.serie||"")}"></label><label class="f">N° certificado<input type="text" id="${p}-cert" value="${esc(it.cert||"")}"></label></div>
+    <label class="f">Vence certificado<input type="date" id="${p}-vence" value="${esc(it.certVence||"")}"></label>
+    <div class="row"><button class="btn pri" type="submit">${add?"Guardar":"Guardar cambios"}</button>${add?`<button class="btn ghost" type="button" data-act="z-add">Cancelar</button>`:""}</div></form>`; }
+function vIzItem(){
+  const it=izBy(S.zsel); if(!it) return backBar("Elemento","izaje")+`<div class="empty">No se encontró.</div>`;
+  const e=izEstado(it), P=periodo(), ok=e.code==="apto";
+  let h=roBanner()+backBar("Verificar elemento","izaje")+`<div class="verdict ${ok?"apto":"no"}"><span class="big2">${ok?"Apto para uso":"No usar"}</span><span class="why">${esc(e.why)}</span>${e.warn?`<span class="warnline">⚠ ${esc(e.warn)}</span>`:""}</div>
+    <div class="tag"><div class="plate"><span class="code">${esc(it.id)}</span><span class="pill ${izPill(e)}">${IZ_LBL[e.code]}</span>${it.ejemplo?'<span class="pill ej">Ejemplo</span>':""}</div>
+    <div class="tname">${esc(it.desc||it.tipo)}</div><div class="wll"><span><span class="k">Capacidad (WLL)</span><span class="v">${fmtN(it.wll)}</span> <span class="u">t</span></span></div>
+    <dl class="kv"><dt>Tipo</dt><dd>${esc(it.tipo)}</dd>${it.largo?`<dt>Largo</dt><dd>${fmtN(it.largo)} m</dd>`:""}${it.serie?`<dt>N° serie</dt><dd class="mono">${esc(it.serie)}</dd>`:""}
+    <dt>Certificado</dt><dd>${esc(it.cert||"—")}${it.certVence?" · vence "+fmtF(it.certVence):""}</dd>
+    <dt>Últ. inspección</dt><dd>${it.insp?`${fmtD(it.insp.ts)} · <span class="swatch" style="background:${hex(it.insp.color)}"></span>${esc(it.insp.color)} · ${esc(it.insp.inspector||"")}`:"—"}</dd>
+    <dt>Color vigente</dt><dd><span class="swatch" style="background:${hex(P.color)}"></span>${esc(P.color)} (${esc(P.label)})</dd></dl></div>`;
+  if(!it.fuera){
+    if(!S.zInsp) h+=`<button class="btn pri big w" data-act="z-insp">Registrar inspección</button>`;
+    else { const fallas=TIPOS_IZ[it.tipo]||TIPOS_IZ["Otro (cáncamo, tensor, barra)"];
+      h+=`<form class="panel w" id="f-zinsp" autocomplete="off">${workersDl()}<h2>Inspección ${esc(P.label)}</h2>
+        <div class="colorcall"><span class="sw" style="background:${hex(P.color)}"></span><span><span class="small muted">Si queda apto, marca con cinta</span><br><strong>${esc(P.color)}</strong></span></div>
+        <label class="f">Inspector *<input type="text" id="zi-insp" list="dl-w" required></label>
+        <span class="small muted">Marca las fallas que encuentres. Con una sola falla, el elemento queda fuera de servicio.</span>
+        <div class="checks">${fallas.map((f,i)=>`<label><input type="checkbox" class="zf" id="zi-f${i}" value="${esc(f)}"> ${esc(f)}</label>`).join("")}</div>
+        <label class="f">Observación<textarea id="zi-nota"></textarea></label>
+        <button class="btn okb big" type="submit" id="zi-submit">Registrar: apto</button><button class="btn ghost" type="button" data-act="z-insp">Cancelar</button></form>`; }
+  } else h+=`<div class="panel w"><h2>Fuera de servicio</h2><p class="small muted">Segrégalo y rotúlalo. Si fue reparado y recertificado, reintégralo: quedará pendiente de inspección.</p><button class="btn" data-act="z-reint">Reintegrar al servicio</button></div>`;
+  h+=`<div class="panel"><div class="qrbox"><div class="qr" id="qr-z"></div><div class="sec" style="gap:6px;min-width:0"><strong>QR del elemento</strong><span class="small muted">Imprímelo desde Control de izaje → Etiquetas.</span></div></div>
+    <div class="row w"><button class="btn" data-act="z-edit">${S.zEdit?"Cerrar edición":"Editar datos"}</button>${!it.fuera?`<button class="btn badb" data-act="z-fuera">Sacar de servicio</button>`:""}<button class="btn badb${S.armed==="zdel"?" armed":""}" data-act="z-del">${S.armed==="zdel"?"Toca otra vez para eliminar":"Eliminar"}</button></div>
+    ${S.zFuera&&!it.fuera?`<form class="sec w" id="f-zfuera"><label class="f">Motivo *<input type="text" id="zo-mot" required></label><button class="btn badf" type="submit">Confirmar fuera de servicio</button></form>`:""}
+    ${S.zEdit?izForm("ze",it):""}</div>`;
+  const ins=S.izi.filter(i=>i.code===it.id).slice(0,10);
+  h+=`<div class="sec"><h3>Inspecciones</h3>${ins.length?`<div class="log">${ins.map(i=>`<div class="logi"><span class="t">${fmtT(i.ts)}</span><span><span class="what"><span class="swatch" style="background:${hex(i.color)}"></span>${i.resultado==="apto"?"Apto":i.resultado==="fuera"?"Fuera de servicio":i.resultado==="reintegro"?"Reintegrado":"No apto"}</span><br><span class="small">${fmtD(i.ts)}${i.inspector?" — "+esc(i.inspector):""}</span>${i.fallas&&i.fallas.length?`<br><span class="small" style="color:var(--bad)">${i.fallas.map(esc).join(" · ")}</span>`:""}${i.nota?`<br><span class="small muted">${esc(i.nota)}</span>`:""}</span></div>`).join("")}</div>`:`<p class="small muted">Sin inspecciones.</p>`}</div>`;
+  return h;
+}
+
+/* ================= Estadísticas ================= */
+function bars(rows,cls=""){ if(!rows.length) return `<p class="small muted">Sin datos todavía.</p>`; const max=Math.max(...rows.map(r=>r[1]))||1;
+  return `<div class="bars">${rows.map(([l,v,txt])=>`<div class="bar ${cls}"><span class="lb2" title="${esc(l)}">${esc(l)}</span><span class="tr"><span class="fl" style="width:${Math.max(4,v/max*100)}%;display:block"></span></span><span class="vl">${esc(txt??v)}</span></div>`).join("")}</div>`; }
+function vStats(){
+  const ret=S.movs.filter(m=>m.tipo==="retiro"), dev=S.movs.filter(m=>m.tipo==="devolucion");
+  const top=Object.entries(ret.reduce((a,m)=>{ const k=m.code+" "+(m.nombre||""); a[k]=(a[k]||0)+1; return a; },{})).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const durs=dev.filter(m=>m.dur); const avgAll=durs.length?durs.reduce((s,m)=>s+m.dur,0)/durs.length:0;
+  const avgTool=Object.entries(durs.reduce((a,m)=>{ const k=m.code+" "+(m.nombre||""); (a[k]=a[k]||[]).push(m.dur); return a; },{})).map(([k,v])=>[k,v.reduce((s,x)=>s+x,0)/v.length]).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>[k,v,(v/3600e3).toFixed(1).replace(".",",")+" h"]);
+  const pend=Object.entries(S.tools.filter(t=>t.estado==="prestada").reduce((a,t)=>{ const k=t.persona||"—"; a[k]=(a[k]||0)+1; return a; },{})).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const dmg=dev.filter(m=>m.cond==="con daño"); const mes=Object.entries(dmg.reduce((a,m)=>{ const d=new Date(m.ts); const k=`${MESES[d.getMonth()]} ${d.getFullYear()}`; a[k]=(a[k]||0)+1; return a; },{})).slice(0,6);
+  const sal=S.cmovs.filter(m=>m.tipo==="salida");
+  const porCuad=Object.entries(sal.reduce((a,m)=>{ const k=m.cuadrilla||"Sin cuadrilla"; a[k]=(a[k]||0)+1; return a; },{})).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>[k,v,v+" entrega"+(v===1?"":"s")]);
+  const topCons=Object.entries(sal.reduce((a,m)=>{ const k=m.nombre+"|"+(m.unidad||""); a[k]=(a[k]||0)+num(m.cant); return a; },{})).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>{ const [n,u]=k.split("|"); return [n,v,fmtN(v)+" "+u]; });
+  const c=counts();
+  return backBar("Estadísticas","mas")+`<p class="small muted">Calculadas con los últimos ${S.movs.length} movimientos de herramientas y ${S.cmovs.length} de consumibles.</p>
+    <div class="kpis"><div class="kpi"><div class="n">${ret.length}</div><div class="l">Retiros registrados</div></div><div class="kpi"><div class="n">${avgAll?(avgAll/3600e3).toFixed(1).replace(".",","):"—"} h</div><div class="l">Tiempo promedio fuera</div></div>
+    <div class="kpi"><div class="n">${dmg.length}</div><div class="l">Devoluciones con daño</div></div><div class="kpi"><div class="n">${c.extraviada||0}</div><div class="l">Extraviadas</div></div></div>
+    <div class="panel"><h2>Herramientas más usadas</h2>${bars(top)}</div>
+    <div class="panel"><h2>Más tiempo fuera (promedio)</h2>${bars(avgTool)}</div>
+    <div class="panel"><h2>Pendientes por trabajador</h2>${bars(pend,"mar")}</div>
+    <div class="panel"><h2>Daños por mes</h2>${bars(mes,"mar")}</div>
+    <div class="panel"><h2>Consumo por cuadrilla</h2>${bars(porCuad)}</div>
+    <div class="panel"><h2>Consumibles más usados</h2>${bars(topCons)}</div>`;
+}
+
+/* ================= Carga masiva ================= */
+const IMP = {
+  tools:{label:"Herramientas", cols:["Código","Nombre","Categoría","Ubicación","N° serie","Vence calibración"], keys:["codigo","nombre","categoria","ubicacion","serie","calib"],
+    alias:{codigo:["codigo","cod","code","id"],nombre:["nombre","herramienta","descripcion","name"],categoria:["categoria","tipo","familia"],ubicacion:["ubicacion","estante","lugar"],serie:["serie","n serie","numero de serie","nserie"],calib:["calibracion","vence calibracion","vencimiento","calib"]}},
+  workers:{label:"Trabajadores", cols:["Nombre","RUT","Cuadrilla","Cargo"], keys:["nombre","rut","cuadrilla","cargo"],
+    alias:{nombre:["nombre","trabajador","nombre y apellido"],rut:["rut","run"],cuadrilla:["cuadrilla","grupo","equipo"],cargo:["cargo","especialidad","puesto"]}},
+  cons:{label:"Consumibles", cols:["Código","Nombre","Unidad","Stock","Stock mínimo","Ubicación"], keys:["codigo","nombre","unidad","stock","minimo","ubicacion"],
+    alias:{codigo:["codigo","cod"],nombre:["nombre","consumible","descripcion","insumo"],unidad:["unidad","um","u m"],stock:["stock","cantidad","existencia"],minimo:["minimo","stock minimo","min"],ubicacion:["ubicacion","estante","lugar"]}}};
+const normH = s => String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[°º.#]/g,"").replace(/\s+/g," ").trim();
+function toISO(v){ if(v==null||v==="") return null; if(v instanceof Date&&!isNaN(v)) return isoOf(v);
+  if(typeof v==="number"&&v>20000&&v<80000){ const d=new Date(Math.round((v-25569)*864e5)); return isoOf(new Date(d.getTime()+d.getTimezoneOffset()*6e4)); }
+  const s=String(v).trim(); let m=/^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s); if(m) return `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
+  m=/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/.exec(s); if(m){ const y=m[3].length===2?"20"+m[3]:m[3]; return `${y}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`; } return null; }
+function mapRows(aoa,tipo){
+  const def=IMP[tipo]; aoa=aoa.filter(r=>r&&r.some(c=>String(c??"").trim()!==""));
+  if(!aoa.length) return [];
+  const head=aoa[0].map(normH); const idx={}; let hits=0;
+  def.keys.forEach(k=>{ const i=head.findIndex(h=>def.alias[k].some(a=>h===a||h.startsWith(a))); if(i>=0){ idx[k]=i; hits++; } });
+  let body=aoa; if(hits>=1&&idx.nombre!==undefined) body=aoa.slice(1); else def.keys.forEach((k,i)=>idx[k]=i);
+  return body.map(r=>{ const o={}; def.keys.forEach(k=>{ const v=idx[k]!==undefined?r[idx[k]]:""; o[k]=v instanceof Date?v:String(v??"").trim(); }); return o; });
+}
+function parseText(txt){ const lines=txt.replace(/\r/g,"").split("\n").filter(l=>l.trim()); if(!lines.length) return [];
+  const sep=lines[0].includes("\t")?"\t":(lines[0].split(";").length>=lines[0].split(",").length?";":",");
+  return lines.map(l=>{ const out=[]; let cur="", q=false; for(let i=0;i<l.length;i++){ const ch=l[i]; if(ch==='"'){ if(q&&l[i+1]==='"'){ cur+='"'; i++; } else q=!q; } else if(ch===sep&&!q){ out.push(cur); cur=""; } else cur+=ch; } out.push(cur); return out; }); }
+function vImportar(){
+  const t=S.imp.tipo, def=IMP[t], rows=S.imp.rows;
+  let h=backBar("Carga masiva","mas")+`<div class="seg3">${Object.entries(IMP).map(([k,d])=>`<button class="chip" data-act="imp-tipo" data-t="${k}" aria-pressed="${t===k}">${d.label}</button>`).join("")}</div>
+    <div class="panel"><h2>1. Prepara tu Excel</h2><p class="small muted">Una fila por ${def.label.toLowerCase().replace(/s$/,"")}, con estas columnas en la primera fila (el orden da igual):</p>
+      <div class="tbl"><table><tr>${def.cols.map(c=>`<th>${c}</th>`).join("")}</tr></table></div>
+      <button class="btn" data-act="imp-plantilla">Descargar plantilla</button></div>
+    <div class="panel"><h2>2. Sube el archivo o pega las filas</h2>
+      <input type="file" id="imp-file" accept=".xlsx,.xls,.csv,.txt" class="vh"><button class="btn pri" data-act="imp-file">Elegir archivo Excel o CSV</button>
+      <label class="f">O copia las celdas en Excel y pégalas aquí<textarea id="imp-txt" placeholder="Pega aquí (incluye la fila de títulos)"></textarea></label>
+      <button class="btn" data-act="imp-paste">Leer lo pegado</button></div>`;
+  if(rows){ const prev=rows.slice(0,12); const bad=rows.filter(r=>!r.nombre).length;
+    h+=`<div class="panel"><h2>3. Revisa e importa</h2><p>${rows.length} fila${rows.length===1?"":"s"} leída${rows.length===1?"":"s"}${S.imp.name?" de "+esc(S.imp.name):""}.${bad?` <strong style="color:var(--bad)">${bad} sin nombre: se omitirán.</strong>`:""}</p>
+      <div class="tbl"><table><tr>${def.cols.map(c=>`<th>${c}</th>`).join("")}</tr>${prev.map(r=>`<tr>${def.keys.map(k=>`<td class="${k==="nombre"&&!r[k]?"err":""}">${esc(r[k] instanceof Date?isoOf(r[k]):r[k]||(k==="nombre"?"falta":""))}</td>`).join("")}</tr>`).join("")}</table></div>
+      ${rows.length>12?`<span class="small muted">Mostrando 12 de ${rows.length}.</span>`:""}
+      <span class="small muted">Si un código ya existe, se actualizan sus datos (no se cambia su estado ni a quién está prestada).</span>
+      <button class="btn pri big w" data-act="imp-go" ${rows.length-bad?"":"disabled"}>Importar ${rows.length-bad} ${def.label.toLowerCase()}</button></div>`; }
+  return h;
+}
+async function readImportFile(file){
+  const name=file.name.toLowerCase();
+  if(/\.(xlsx|xls)$/.test(name)){ if(!window.XLSX){ toast("No cargó el lector de Excel. Revisa la señal o guarda el archivo como CSV."); return; }
+    const wb=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true}); const ws=wb.Sheets[wb.SheetNames[0]];
+    return XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:""}); }
+  return parseText(await file.text());
+}
+function doImport(){
+  const t=S.imp.tipo, rows=(S.imp.rows||[]).filter(r=>r.nombre); if(!rows.length) return;
+  const ops=[]; let auto=0;
+  if(t==="tools"){ let n=0; const used=new Set(S.tools.map(x=>x.id));
+    const next=()=>{ do{ n++; }while(used.has("H-"+String(n).padStart(3,"0"))); const c="H-"+String(n).padStart(3,"0"); used.add(c); return c; };
+    rows.forEach(r=>{ let code=normCode(r.codigo); if(!code){ code=next(); auto++; } const ex=toolBy(code);
+      const d={nombre:clean(r.nombre),categoria:clean(r.categoria),ubicacion:clean(r.ubicacion),serie:clean(r.serie),calibVence:toISO(r.calib)};
+      if(!ex) Object.assign(d,{estado:"disponible",creado:Date.now()}); ops.push([col("tools").doc(code),d]); }); }
+  if(t==="workers") rows.forEach(r=>{ const nombre=clean(r.nombre); const ex=S.workers.find(w=>(r.rut&&w.rut===clean(r.rut))||w.nombre.toLowerCase()===nombre.toLowerCase());
+    ops.push([col("workers").doc(ex?ex.id:workerId(r.rut,nombre)),{nombre,rut:clean(r.rut),cuadrilla:clean(r.cuadrilla),cargo:clean(r.cargo),activo:true}]); });
+  if(t==="cons") rows.forEach(r=>{ const nombre=clean(r.nombre); const ex=S.cons.find(c=>(r.codigo&&(c.codigo||"").toUpperCase()===normCode(r.codigo))||c.nombre.toLowerCase()===nombre.toLowerCase());
+    const d={codigo:normCode(r.codigo)||(ex?.codigo||""),nombre,unidad:clean(r.unidad)||"un",minimo:num(r.minimo),ubicacion:clean(r.ubicacion)}; if(r.stock!==""&&r.stock!=null) d.stock=num(r.stock); else if(!ex) d.stock=0;
+    ops.push([col("cons").doc(ex?ex.id:"c"+uid()),d]); });
+  for(let i=0;i<ops.length;i+=400){ const chunk=ops.slice(i,i+400); commit(b=>chunk.forEach(([ref,d])=>b.set(ref,d,{merge:true}))); }
+  toast(`${ops.length} ${IMP[t].label.toLowerCase()} importados${auto?` (${auto} con código automático)`:""}.`);
+  S.imp.rows=null; S.noReset=true; go(t==="tools"?"inventario":t==="workers"?"trabajadores":"consumibles");
+}
+
+/* ================= Ajustes ================= */
 function vAjustes(){
-  const link=BASE+"?k="+encodeURIComponent(K);
-  return `<div class="row" style="justify-content:space-between"><h2>Ajustes</h2><button class="btn ghost" data-act="nav" data-v="panol">← Volver</button></div>
-  <div class="panel"><h2>Dar acceso a otro celular</h2>
-    <p class="small muted">El pañolero escanea este QR con la cámara normal de su celular, abre el enlace y queda dentro del pañol. Después toca "Instalar" para dejar el ícono en su pantalla.</p>
+  const link=BASE+"?k="+encodeURIComponent(K), linkSup=link+"&r=sup";
+  return backBar("Ajustes","mas")+roBanner()+`<div class="panel w"><h2>Dar acceso al pañolero</h2>
+    <p class="small muted">Escanea este QR con la cámara normal del celular, abre el enlace y queda dentro del pañol con acceso completo. Después toca "Instalar" para dejar el ícono.</p>
     <div class="qrbox"><div class="qr" id="qr-key"></div><div class="sec" style="gap:6px;min-width:0"><span class="small muted">Clave del pañol</span><div class="keybox">${esc(K)}</div></div></div>
-    <div class="row"><button class="btn pri" data-act="share-link">Enviar enlace de acceso</button><button class="btn" data-act="copy-link">Copiar enlace</button></div>
-    <p class="small muted">Comparte la clave solo con quien maneje el pañol. Quien la tenga puede ver y registrar movimientos.</p></div>
-  <form class="panel" id="f-name" autocomplete="off"><h2>Nombre del pañol</h2><label class="f">Aparece bajo el título<input type="text" id="s-name" value="${esc(S.config.nombre||"")}" placeholder="ej. Pañol Acopio Fino"></label><button class="btn" type="submit">Guardar nombre</button></form>
+    <div class="row"><button class="btn pri" data-act="share-link" data-l="full">Enviar enlace de acceso</button><button class="btn" data-act="copy-link" data-l="full">Copiar enlace</button></div></div>
+  <div class="panel w"><h2>Acceso para supervisores</h2>
+    <p class="small muted">Con este enlace pueden ver el pañol, el historial y las estadísticas, pero sin botones para registrar. Es una comodidad, no una barrera de seguridad: quien tenga la clave puede volver a entrar con acceso completo.</p>
+    <div class="qrbox"><div class="qr" id="qr-sup"></div><div class="row"><button class="btn" data-act="share-link" data-l="sup">Enviar enlace de supervisor</button></div></div></div>
+  <form class="panel w" id="f-name" autocomplete="off"><h2>Nombre del pañol</h2><label class="f">Aparece bajo el título<input type="text" id="s-name" value="${esc(S.config.nombre||"")}" placeholder="ej. Pañol Acopio Fino"></label>
+    <label class="switch"><input type="checkbox" id="s-firma" ${S.config.firmaObligatoria?"checked":""}> Firma obligatoria al retirar</label>
+    <button class="btn" type="submit">Guardar</button></form>
   ${installEvt?`<button class="btn" data-act="install">Instalar app en este celular</button>`:""}
-  <div class="panel"><h2>Salir de este pañol</h2><p class="small muted">Este celular olvida la clave. Los datos no se borran; para volver a entrar necesitas la clave.</p>
+  <div class="panel"><h2>Salir de este pañol</h2><p class="small muted">Este equipo olvida la clave. Los datos no se borran; para volver a entrar necesitas la clave.</p>
     <button class="btn badb${S.armed==="logout"?" armed":""}" data-act="logout">${S.armed==="logout"?"Toca otra vez para salir":"Salir del pañol"}</button></div>`;
 }
-const VIEWS={panol:vPanol,mover:vMover,inventario:vInventario,historial:vHistorial,ajustes:vAjustes};
 
+/* ================= Render ================= */
+const VIEWS={panol:vPanol,mover:vMover,inventario:vInventario,historial:vHistorial,mas:vMas,trabajadores:vTrabajadores,trabajador:vTrabajador,
+  consumibles:vConsumibles,consumible:vConsumible,izaje:vIzaje,izitem:vIzItem,stats:vStats,importar:vImportar,ajustes:vAjustes};
+const TAB_OF = v => ["panol","mover","inventario","historial"].includes(v)?v:"mas";
 function render(){
   const main=$("#main"), drafts={};
-  if(!S.noReset) main.querySelectorAll("input,select,textarea").forEach(el=>{ if(el.id) drafts[el.id]=(el.type==="radio")?el.checked:el.value; });
+  if(!S.noReset) main.querySelectorAll("input,select,textarea").forEach(el=>{ if(el.id&&el.type!=="file") drafts[el.id]=(el.type==="radio"||el.type==="checkbox")?el.checked:el.value; });
   S.noReset=false; const act=document.activeElement&&document.activeElement.id;
   const inApp=S.phase==="app";
+  document.body.classList.toggle("ro",S.ro&&inApp);
   $("#tabs").hidden=!inApp; $("#gearBtn").hidden=!inApp; $("#pname").textContent=inApp?(S.config.nombre||""):"";
-  main.innerHTML = S.phase==="setup"?vSetup() : S.phase==="login"?vLogin() : S.phase==="app"?VIEWS[S.view]() : `<div class="empty">Abriendo…</div>`;
-  for(const id in drafts){ const el=document.getElementById(id); if(!el) continue; if(el.type==="radio") el.checked=drafts[id]; else el.value=drafts[id]; }
-  if(act){ const a=document.getElementById(act); if(a&&a.tagName!=="BUTTON"){ a.focus(); try{ const L=a.value.length; a.setSelectionRange&&a.setSelectionRange(L,L);}catch(e){} } }
-  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.v===S.view?"page":"false"));
-  if(window.QRCode){ const q1=$("#qr-one"); if(q1&&S.sel) new QRCode(q1,{text:qrText(S.sel),width:84,height:84,correctLevel:QRCode.CorrectLevel.M});
-    const q2=$("#qr-key"); if(q2) new QRCode(q2,{text:BASE+"?k="+encodeURIComponent(K),width:120,height:120,correctLevel:QRCode.CorrectLevel.M}); }
-  setSync();
+  main.innerHTML = S.phase==="setup"?vSetup() : S.phase==="login"?vLogin() : inApp?VIEWS[S.view]() : `<div class="empty">Abriendo…</div>`;
+  for(const id in drafts){ const el=document.getElementById(id); if(!el) continue; if(el.type==="radio"||el.type==="checkbox") el.checked=drafts[id]; else el.value=drafts[id]; }
+  if(act){ const a=document.getElementById(act); if(a&&a.tagName!=="BUTTON"&&a.type!=="checkbox"&&a.type!=="radio"){ a.focus(); try{ const L=a.value.length; a.setSelectionRange&&a.setSelectionRange(L,L);}catch(e){} } }
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.v===TAB_OF(S.view)?"page":"false"));
+  main.querySelectorAll(".sig canvas").forEach(c=>initSig(c.id));
+  if(window.QRCode){
+    const q=(id,text,s)=>{ const el=document.getElementById(id); if(el) new QRCode(el,{text,width:s,height:s,correctLevel:QRCode.CorrectLevel.M}); };
+    if(S.sel) q("qr-one",qrText(S.sel),84); if(S.wsel) q("qr-w",BASE+"?w="+encodeURIComponent(S.wsel),96); if(S.zsel) q("qr-z",BASE+"?z="+encodeURIComponent(S.zsel),84);
+    q("qr-key",BASE+"?k="+encodeURIComponent(K),120); q("qr-sup",BASE+"?k="+encodeURIComponent(K)+"&r=sup",96);
+  }
+  syncInspBtn(); setSync();
 }
 function go(v){ if(S.view!==v){ S.view=v; S.armed=null; window.scrollTo(0,0); } render(); }
+function syncInspBtn(){ const b=$("#zi-submit"); if(!b) return; const any=[...document.querySelectorAll("#f-zinsp .zf")].some(x=>x.checked);
+  b.textContent=any?"Registrar: no apto → fuera de servicio":"Registrar: apto"; b.className="btn big "+(any?"badf":"okb"); }
 
-/* ---------- QR ---------- */
+/* ================= QR y escáner ================= */
 const qrText = code => BASE+"?h="+encodeURIComponent(code);
-function qrDataUrl(code,size){ const box=$("#hidden-qr"); box.innerHTML=""; new QRCode(box,{text:qrText(code),width:size,height:size,correctLevel:QRCode.CorrectLevel.M});
+function qrDataUrl(text,size){ const box=$("#hidden-qr"); box.innerHTML=""; new QRCode(box,{text,width:size,height:size,correctLevel:QRCode.CorrectLevel.M});
   const c=box.querySelector("canvas"); return c?c.toDataURL("image/png"):(box.querySelector("img")||{}).src; }
 function parseScan(txt){
   let s=String(txt||"").trim();
-  try{ const u=new URL(s); const k=u.searchParams.get("k"); if(k) return {key:normKey(k)}; const h=u.searchParams.get("h"); if(h) return {code:normCode(h)}; if(u.hash) return {code:normCode(decodeURIComponent(u.hash.slice(1)))}; }catch(e){}
+  try{ const u=new URL(s); const p=u.searchParams; if(p.get("k")) return {key:normKey(p.get("k"))}; if(p.get("w")) return {worker:p.get("w")}; if(p.get("z")) return {iz:normCode(p.get("z"))}; if(p.get("h")) return {code:normCode(p.get("h"))}; if(u.hash) return {code:normCode(decodeURIComponent(u.hash.slice(1)))}; }catch(e){}
   if(s.includes("#")) s=s.slice(s.lastIndexOf("#")+1);
-  return {code:normCode(s)};
+  const c=normCode(s); return /^IZ-/.test(c)?{iz:c}:{code:c};
 }
-
-/* ---------- escáner en vivo ---------- */
-let stream=null, scanning=false, detector=null, cv=null, torchOn=false;
-async function startScan(){
+let stream=null, scanning=false, detector=null, cv=null, torchOn=false, lastHit={v:"",t:0};
+async function startScan(mode){
+  S.scanMode=mode||"single";
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ toast("Este navegador no permite usar la cámara. Escribe el código a mano."); return; }
-  $("#scan").hidden=false; $("#scanMsg").textContent="Se lee solo. Mantén el código dentro del recuadro.";
+  $("#scan").hidden=false; $("#scanMsg").textContent=S.scanMode==="multi"?`Escanea las herramientas una tras otra. Llevas ${S.cart.items.length}. Toca "Listo" al terminar.`:(S.scanMsg||"Se lee solo. Mantén el código dentro del recuadro."); S.scanMsg="";
+  $("#scanClose").textContent=S.scanMode==="multi"?"Listo":"Cerrar";
   try{ stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"},width:{ideal:1280},height:{ideal:720}},audio:false}); }
-  catch(e){ stopScan(); toast(e&&e.name==="NotAllowedError"?"Diste permiso denegado a la cámara. Actívalo en los ajustes del navegador.":"No se pudo abrir la cámara."); return; }
+  catch(e){ stopScan(); toast(e&&e.name==="NotAllowedError"?"La cámara está bloqueada. Actívala en los ajustes del navegador.":"No se pudo abrir la cámara."); return; }
   const v=$("#video"); v.srcObject=stream; try{ await v.play(); }catch(e){}
   const track=stream.getVideoTracks()[0]; const caps=track.getCapabilities?track.getCapabilities():{};
   $("#torchBtn").hidden=!caps.torch; torchOn=false; $("#torchBtn").setAttribute("aria-pressed","false");
@@ -482,108 +1043,198 @@ async function startScan(){
   if("BarcodeDetector" in window){ try{ const f=await BarcodeDetector.getSupportedFormats(); if(f.includes("qr_code")) detector=new BarcodeDetector({formats:["qr_code"]}); }catch(e){} }
   scanning=true; loop();
 }
-function stopScan(){ scanning=false; if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } $("#video").srcObject=null; $("#scan").hidden=true; }
+function stopScan(){ scanning=false; if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } $("#video").srcObject=null; $("#scan").hidden=true; if(S.scanMode==="multi"){ S.scanMode="single"; render(); } }
 async function loop(){
   if(!scanning) return; const v=$("#video"); let txt=null;
-  if(v.readyState>=2 && v.videoWidth){
+  if(v.readyState>=2&&v.videoWidth){
     if(detector){ try{ const r=await detector.detect(v); if(r&&r.length) txt=r[0].rawValue; }catch(e){ detector=null; } }
     else if(window.jsQR){ cv=cv||document.createElement("canvas"); const sc=Math.min(1,720/Math.max(v.videoWidth,v.videoHeight));
       const w=cv.width=Math.round(v.videoWidth*sc), h=cv.height=Math.round(v.videoHeight*sc); const ctx=cv.getContext("2d",{willReadFrequently:true}); ctx.drawImage(v,0,0,w,h);
       const r=jsQR(ctx.getImageData(0,0,w,h).data,w,h,{inversionAttempts:"dontInvert"}); if(r&&r.data) txt=r.data; }
   }
-  if(txt){ if(navigator.vibrate) navigator.vibrate(80); stopScan(); handleScan(txt); return; }
+  if(txt){ const now=Date.now();
+    if(S.scanMode==="multi"){ if(txt!==lastHit.v||now-lastHit.t>2500){ lastHit={v:txt,t:now}; if(navigator.vibrate) navigator.vibrate(60); handleMulti(txt); } }
+    else { if(navigator.vibrate) navigator.vibrate(80); stopScan(); handleScan(txt); return; } }
   setTimeout(loop,140);
 }
 async function toggleTorch(){ if(!stream) return; const track=stream.getVideoTracks()[0]; torchOn=!torchOn;
   try{ await track.applyConstraints({advanced:[{torch:torchOn}]}); $("#torchBtn").setAttribute("aria-pressed",String(torchOn)); }catch(e){ torchOn=false; toast("La linterna no está disponible."); } }
+function cartAdd(code){
+  const t=toolBy(code); if(!t){ toast(code+" no está en el inventario."); return false; }
+  if(S.cart.items.includes(code)){ toast(code+" ya está en la lista."); return false; }
+  if((t.estado||"disponible")!=="disponible"){ toast(`${code} no está disponible (${ESTADO[t.estado].toLowerCase()}${t.persona?" · "+t.persona:""}).`); return false; }
+  const c=calib(t); if(c&&c.code==="v"){ toast(`${code} tiene la calibración vencida. No se puede entregar.`); return false; }
+  S.cart.items.push(code); return true;
+}
+function handleMulti(txt){ const r=parseScan(txt);
+  if(r.worker){ const w=workerBy(r.worker); if(w){ S.cart.worker=wLabel(w); toast("Trabajador: "+w.nombre); } else toast("Credencial no registrada."); }
+  else if(r.code){ if(cartAdd(r.code)) toast(`${r.code} agregada · ${S.cart.items.length} en la lista`); }
+  $("#scanMsg").textContent=`Escanea las herramientas una tras otra. Llevas ${S.cart.items.length}. Toca "Listo" al terminar.`;
+}
 function handleScan(txt){ const r=parseScan(txt);
-  if(r.key){ if(r.key!==K){ toast("Ese es un QR de acceso a un pañol."); } return; }
-  openCode(r.code); }
-
+  if(r.key){ if(r.key!==K) toast("Ese es un QR de acceso a un pañol."); return; }
+  if(r.worker){ const w=workerBy(r.worker); if(!w){ toast("Credencial no registrada en este pañol."); return; } S.cart.worker=wLabel(w); S.sel=null; S.noReset=true; go("mover"); toast("Retiro para "+w.nombre+": escanea las herramientas."); return; }
+  if(r.iz){ openIz(r.iz); return; }
+  openCode(r.code);
+}
+function openIz(code){ if(!S.loaded){ S.pending="z:"+code; return; } if(izBy(code)){ S.zsel=code; S.zInsp=S.zEdit=S.zFuera=false; S.noReset=true; go("izitem"); } else toast(code+" no está registrado en izaje."); }
 function openCode(raw){
   const code=normCode(raw); if(!code){ toast("Escribe un código."); return; }
   if(!S.loaded){ S.pending=code; toast("Cargando… abriendo "+code+" apenas conecte."); return; }
-  if(toolBy(code)){ S.sel=code; S.editOpen=false; S.armed=null; S.noReset=true; go("mover"); }
+  if(toolBy(code)){ S.sel=code; S.editOpen=false; S.extOpen=false; S.armed=null; S.noReset=true; go("mover"); }
+  else if(izBy(code)) openIz(code);
   else { toast(code+" no está en el inventario. Puedes agregarla ahora."); S.addOpen=true; S.addCode=code; S.noReset=true; go("inventario"); }
 }
 
-/* ---------- datos ---------- */
+/* ================= Escrituras ================= */
 const col = n => fs.collection(`panoles/${K}/${n}`);
+const inc = n => firebase.firestore.FieldValue.increment(n);
 function commit(fill, okMsg){
+  if(S.ro){ toast("Modo supervisor: solo lectura."); return false; }
   const b=fs.batch(); fill(b);
   b.commit().catch(e=>{ console.error(e); toast(e&&e.code==="permission-denied"?"Sin permiso para guardar. Revisa la clave del pañol.":"No se pudo guardar: "+(e&&e.message||"error")); });
-  if(okMsg) toast(okMsg + (navigator.onLine?"":" (se subirá al volver la señal)"));
+  if(okMsg) toast(okMsg+(navigator.onLine?"":" (se subirá al volver la señal)"));
+  return true;
 }
-function doRetiro(){
-  const t=toolBy(S.sel); const persona=$("#r-persona").value.trim().replace(/\s+/g," "), area=$("#r-area").value.trim();
-  if(!persona){ toast("Indica quién retira la herramienta."); $("#r-persona").focus(); return; }
-  const ts=Date.now();
-  commit(b=>{ b.update(col("tools").doc(t.id),{estado:"prestada",persona,area,desde:ts}); b.set(col("movs").doc(),{ts,tipo:"retiro",code:t.id,nombre:t.nombre,persona,area}); }, `${t.id} entregada a ${persona}.`);
-  S.sel=null; S.noReset=true; go("panol");
+async function retirar(codes, whoTxt, area, sigId){
+  const who=resolveWorker(whoTxt); if(!who){ toast("Indica quién retira."); return false; }
+  const firma=await sigData(sigId); if(S.config.firmaObligatoria&&!firma){ toast("Falta la firma de quien retira."); return false; }
+  const ts=Date.now(), lote="L"+uid(); const tools=codes.map(toolBy).filter(t=>t&&(t.estado||"disponible")==="disponible");
+  if(!tools.length){ toast("No hay herramientas disponibles para entregar."); return false; }
+  const ok=commit(b=>{ if(firma) b.set(col("firmas").doc(lote),{ts,persona:who.persona,workerId:who.workerId,codes:tools.map(t=>t.id),data:firma});
+    tools.forEach((t,i)=>{ b.update(col("tools").doc(t.id),{estado:"prestada",persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,area,desde:ts});
+      b.set(col("movs").doc(),{ts:ts+i,tipo:"retiro",code:t.id,nombre:t.nombre,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,area,lote,firma:!!firma}); }); },
+    tools.length===1?`${tools[0].id} entregada a ${who.persona}.`:`${tools.length} herramientas entregadas a ${who.persona}.`);
+  if(ok) delete S.sig[sigId]; return ok;
 }
-function doDevol(){
-  const t=toolBy(S.sel); const dano=$("#d-dano").checked, nota=$("#d-nota").value.trim();
+async function doRetiro(){ const ok=await retirar([S.sel],$("#r-persona").value,clean($("#r-area").value),"sig-one"); if(ok){ S.sel=null; S.noReset=true; go("panol"); } }
+async function doCart(){ S.cart.worker=$("#c-worker").value; S.cart.area=$("#c-area").value;
+  if(!S.cart.items.length){ toast("Agrega al menos una herramienta."); return; }
+  const ok=await retirar(S.cart.items,S.cart.worker,clean(S.cart.area),"sig-cart"); if(ok){ S.cart={worker:"",items:[],area:""}; S.noReset=true; go("panol"); } }
+function devolver(tools,dano,nota,foto){
+  const ts=Date.now(); const fotoId=foto?"F"+uid():null;
+  return commit(b=>{ if(foto) b.set(col("fotos").doc(fotoId),{ts,code:tools[0].id,data:foto});
+    tools.forEach((t,i)=>{ b.update(col("tools").doc(t.id),{estado:dano?"mantencion":"disponible",persona:null,workerId:null,cuadrilla:null,area:null,desde:null,nota:dano?nota:null});
+      b.set(col("movs").doc(),{ts:ts+i,tipo:"devolucion",code:t.id,nombre:t.nombre,persona:t.persona||"",workerId:t.workerId||null,cuadrilla:t.cuadrilla||"",area:t.area||"",dur:t.desde?ts-t.desde:null,cond:dano?"con daño":"buena",nota:nota||"",fotoId});
+      if(dano) b.set(col("movs").doc(),{ts:ts+i+1,tipo:"mantencion",code:t.id,nombre:t.nombre,nota}); }); },
+    tools.length>1?`${tools.length} herramientas recibidas.`:dano?`${tools[0].id} recibida y enviada a mantención.`:`${tools[0].id} recibida en pañol.`);
+}
+function doDevol(){ const t=toolBy(S.sel); const dano=$("#d-dano").checked, nota=clean($("#d-nota").value);
   if(dano&&!nota){ toast("Describe el daño para dejarlo registrado."); $("#d-nota").focus(); return; }
-  const ts=Date.now(), dur=t.desde?ts-t.desde:null;
-  commit(b=>{ b.update(col("tools").doc(t.id),{estado:dano?"mantencion":"disponible",persona:null,area:null,desde:null,nota:dano?nota:null});
-    b.set(col("movs").doc(),{ts,tipo:"devolucion",code:t.id,nombre:t.nombre,persona:t.persona||"",area:t.area||"",dur,cond:dano?"con daño":"buena",nota});
-    if(dano) b.set(col("movs").doc(),{ts:ts+1,tipo:"mantencion",code:t.id,nombre:t.nombre,nota}); }, dano?`${t.id} recibida y enviada a mantención.`:`${t.id} recibida en pañol.`);
-  S.sel=null; S.noReset=true; go("panol");
-}
-function doHabilitar(){ const t=toolBy(S.sel);
-  commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",nota:null}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"habilitada",code:t.id,nombre:t.nombre}); }, `${t.id} disponible otra vez.`); }
-function doAdd(){
-  const code=normCode($("#a-code").value), nombre=$("#a-nombre").value.trim(), categoria=$("#a-cat").value.trim().replace(/\s+/g," "), serie=$("#a-serie").value.trim();
-  if(!code||!nombre){ toast("Completa código y nombre."); return; }
-  if(toolBy(code)){ toast(code+" ya existe. Usa otro código."); return; }
-  commit(b=>{ b.set(col("tools").doc(code),{nombre,categoria,serie,estado:"disponible",creado:Date.now()}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"alta",code,nombre}); }, `${code} agregada.`);
-  S.addOpen=false; S.addCode=""; S.noReset=true; render();
-}
-function doEdit(){ const nombre=$("#e-nombre").value.trim(); if(!nombre){ toast("El nombre no puede quedar vacío."); return; }
-  commit(b=>b.update(col("tools").doc(S.sel),{nombre,categoria:$("#e-cat").value.trim().replace(/\s+/g," "),serie:$("#e-serie").value.trim()}),"Cambios guardados."); S.editOpen=false; S.noReset=true; render(); }
-function doDelete(code){ commit(b=>b.delete(col("tools").doc(code)), code+" eliminada."); S.sel=null; S.armed=null; S.noReset=true; go("inventario"); }
-const EJEMPLO=[["H-001","Esmeril angular 7\"","Eléctrica"],["H-002","Esmeril angular 4½\"","Eléctrica"],["H-003","Taladro percutor","Eléctrica"],["H-004","Llave de torque 1/2\"","Manual"],
-  ["H-005","Llave de impacto neumática 1\"","Neumática"],["H-006","Tecle de palanca 1,5 t","Izaje"],["H-007","Tecle de cadena 3 t","Izaje"],["H-008","Nivel digital 60 cm","Medición"],
-  ["H-009","Huincha de medir 8 m","Medición"],["H-010","Equipo oxicorte","Corte y soldadura"],["H-011","Juego de llaves combinadas","Manual"],["H-012","Galletera inalámbrica","Eléctrica"]];
-function doSeed(){ commit(b=>{ for(const [code,nombre,categoria] of EJEMPLO) if(!toolBy(code)) b.set(col("tools").doc(code),{nombre,categoria,serie:"",estado:"disponible",ejemplo:true,creado:Date.now()}); },"Ejemplo cargado: 12 herramientas."); }
-function doDelEj(){ commit(b=>{ S.tools.filter(t=>t.ejemplo).forEach(t=>b.delete(col("tools").doc(t.id))); },"Ejemplos borrados."); S.armed=null; render(); }
+  if(devolver([t],dano,nota,S.photo["ph-devol"])){ delete S.photo["ph-devol"]; S.sel=null; S.noReset=true; go("panol"); } }
+function doHabilitar(){ const t=toolBy(S.sel); commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",nota:null}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"habilitada",code:t.id,nombre:t.nombre}); }, `${t.id} disponible otra vez.`); }
+function doExt(){ const t=toolBy(S.sel); const who=resolveWorker($("#x-resp").value)||{persona:"",workerId:null,cuadrilla:""}; const nota=clean($("#x-nota").value);
+  if(commit(b=>{ b.update(col("tools").doc(t.id),{estado:"extraviada",persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,area:null,desde:Date.now(),nota});
+    b.set(col("movs").doc(),{ts:Date.now(),tipo:"extraviada",code:t.id,nombre:t.nombre,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,nota}); }, `${t.id} marcada como extraviada.`)){ S.extOpen=false; S.noReset=true; render(); } }
+function doRecup(){ const t=toolBy(S.sel); commit(b=>{ b.update(col("tools").doc(t.id),{estado:"disponible",persona:null,workerId:null,cuadrilla:null,desde:null,nota:null}); b.set(col("movs").doc(),{ts:Date.now(),tipo:"recuperada",code:t.id,nombre:t.nombre}); }, `${t.id} recuperada.`); }
+function readTool(p){ return {nombre:clean($("#"+p+"-nombre").value),categoria:clean($("#"+p+"-cat").value),ubicacion:clean($("#"+p+"-ubi").value),serie:clean($("#"+p+"-serie").value),calibVence:$("#"+p+"-cal").value||null}; }
+function doAdd(){ const code=normCode($("#a-code").value), d=readTool("a");
+  if(!code||!d.nombre){ toast("Completa código y nombre."); return; } if(toolBy(code)){ toast(code+" ya existe. Usa otro código."); return; }
+  if(commit(b=>{ b.set(col("tools").doc(code),Object.assign(d,{estado:"disponible",creado:Date.now()})); b.set(col("movs").doc(),{ts:Date.now(),tipo:"alta",code,nombre:d.nombre}); }, `${code} agregada.`)){ S.addOpen=false; S.addCode=""; S.noReset=true; render(); } }
+function doEdit(){ const d=readTool("e"); if(!d.nombre){ toast("El nombre no puede quedar vacío."); return; }
+  if(commit(b=>b.update(col("tools").doc(S.sel),d),"Cambios guardados.")){ S.editOpen=false; S.noReset=true; render(); } }
+function doDelete(code){ if(commit(b=>b.delete(col("tools").doc(code)), code+" eliminada.")){ S.sel=null; S.armed=null; S.noReset=true; go("inventario"); } }
+const EJEMPLO=[["H-001","Esmeril angular 7\"","Eléctrica","Estante A-1"],["H-002","Esmeril angular 4½\"","Eléctrica","Estante A-1"],["H-003","Taladro percutor","Eléctrica","Estante A-2"],["H-004","Llave de torque 1/2\"","Medición","Gabinete B"],
+  ["H-005","Llave de impacto neumática 1\"","Neumática","Estante A-3"],["H-006","Tecle de palanca 1,5 t","Izaje","Estante C-1"],["H-007","Tecle de cadena 3 t","Izaje","Estante C-1"],["H-008","Nivel digital 60 cm","Medición","Gabinete B"],
+  ["H-009","Huincha de medir 8 m","Medición","Gabinete B"],["H-010","Equipo oxicorte","Corte y soldadura","Zona D"],["H-011","Juego de llaves combinadas","Manual","Estante A-4"],["H-012","Galletera inalámbrica","Eléctrica","Estante A-2"]];
+function doSeed(){ const plus=d=>{ const x=new Date(); x.setDate(x.getDate()+d); return isoOf(x); };
+  commit(b=>{ for(const [code,nombre,categoria,ubicacion] of EJEMPLO) if(!toolBy(code)) b.set(col("tools").doc(code),{nombre,categoria,ubicacion,serie:"",estado:"disponible",ejemplo:true,creado:Date.now(),calibVence:code==="H-004"?plus(12):code==="H-008"?plus(200):null}); },"Ejemplo cargado: 12 herramientas."); }
+function doDelEj(){ if(commit(b=>{ S.tools.filter(t=>t.ejemplo).forEach(t=>b.delete(col("tools").doc(t.id))); },"Ejemplos borrados.")){ S.armed=null; render(); } }
 
-/* ---------- salidas ---------- */
+function readWorker(p){ return {nombre:clean($("#"+p+"-nombre").value),rut:clean($("#"+p+"-rut").value),cuadrilla:clean($("#"+p+"-cuad").value),cargo:clean($("#"+p+"-cargo").value)}; }
+function doWAdd(){ const d=readWorker("wa"); if(!d.nombre){ toast("Escribe el nombre."); return; }
+  if(S.workers.some(w=>w.nombre.toLowerCase()===d.nombre.toLowerCase()&&(!d.rut||w.rut===d.rut))){ toast("Ese trabajador ya está registrado."); return; }
+  const id=workerId(d.rut,d.nombre); if(workerBy(id)){ toast("Ya existe un trabajador con ese RUT."); return; }
+  if(commit(b=>b.set(col("workers").doc(id),Object.assign(d,{activo:true,creado:Date.now()})),d.nombre+" registrado.")){ S.wAdd=false; S.noReset=true; render(); } }
+function doWEdit(){ const d=readWorker("we"); if(!d.nombre){ toast("Escribe el nombre."); return; } if(commit(b=>b.update(col("workers").doc(S.wsel),d),"Cambios guardados.")){ S.wEdit=false; S.noReset=true; render(); } }
+function doWRet(){ const codes=[...document.querySelectorAll("#f-wret .wr:checked")].map(x=>x.value); const tools=codes.map(toolBy).filter(Boolean);
+  if(!tools.length){ toast("Selecciona al menos una."); return; } if(devolver(tools,false,"",null)){ S.noReset=true; render(); } }
+
+function readCons(p,add){ const d={codigo:normCode($("#"+p+"-cod").value),nombre:clean($("#"+p+"-nombre").value),unidad:clean($("#"+p+"-uni").value)||"un",minimo:num($("#"+p+"-min").value),ubicacion:clean($("#"+p+"-ubi").value)};
+  if(add) d.stock=num($("#"+p+"-stock").value); return d; }
+function doCAdd(){ const d=readCons("ca",true); if(!d.nombre){ toast("Escribe el nombre."); return; }
+  if(commit(b=>b.set(col("cons").doc("c"+uid()),Object.assign(d,{creado:Date.now()})),d.nombre+" agregado.")){ S.cAdd=false; S.noReset=true; render(); } }
+function doCEdit(){ const d=readCons("ce2",false); if(!d.nombre){ toast("Escribe el nombre."); return; } if(commit(b=>b.update(col("cons").doc(S.csel),d),"Cambios guardados.")){ S.cEdit=false; S.noReset=true; render(); } }
+function doCMov(tipo){ const c=consBy(S.csel); const cant=num($(tipo==="salida"?"#cs-cant":"#ce-cant").value);
+  if(!(cant>0)){ toast("Indica una cantidad mayor que cero."); return; }
+  let who={persona:"",workerId:null,cuadrilla:""}, det="";
+  if(tipo==="salida"){ who=resolveWorker($("#cs-w").value); if(!who){ toast("Indica a quién se entrega."); return; } if(cant>num(c.stock)){ toast(`Solo hay ${fmtN(c.stock)} ${c.unidad||""} en stock.`); return; } }
+  else det=clean($("#ce-det").value);
+  if(commit(b=>{ b.update(col("cons").doc(c.id),{stock:inc(tipo==="salida"?-cant:cant)}); b.set(col("cmovs").doc(),{ts:Date.now(),tipo,cid:c.id,nombre:c.nombre,unidad:c.unidad||"",cant,persona:who.persona,workerId:who.workerId,cuadrilla:who.cuadrilla,detalle:det}); },
+    tipo==="salida"?`Entregado: ${fmtN(cant)} ${c.unidad||""} a ${who.persona}.`:`Ingreso de ${fmtN(cant)} ${c.unidad||""} registrado.`)){ S.noReset=true; render(); } }
+
+function readIz(p){ const n=id=>{ const v=$("#"+id).value; return v===""?null:num(v); };
+  return {tipo:$("#"+p+"-tipo").value,desc:clean($("#"+p+"-desc").value),wll:n(p+"-wll"),largo:n(p+"-largo"),serie:clean($("#"+p+"-serie").value),cert:clean($("#"+p+"-cert").value),certVence:$("#"+p+"-vence").value||null}; }
+function doZAdd(){ const code=normCode($("#za-code").value), d=readIz("za"); if(!code||d.wll==null){ toast("Completa código y capacidad WLL."); return; } if(izBy(code)){ toast(code+" ya existe."); return; }
+  if(commit(b=>b.set(col("izaje").doc(code),Object.assign(d,{insp:null,fuera:false,creado:Date.now()})),`${code} registrado. Inspecciónalo para dejarlo apto.`)){ S.zAdd=false; openIz(code); } }
+function doZEdit(){ const d=readIz("ze"); if(d.wll==null){ toast("La capacidad WLL es obligatoria."); return; } if(commit(b=>b.update(col("izaje").doc(S.zsel),d),"Cambios guardados.")){ S.zEdit=false; S.noReset=true; render(); } }
+function doZInsp(){ const it=izBy(S.zsel), P=periodo(); const inspector=clean($("#zi-insp").value); if(!inspector){ toast("Indica quién inspecciona."); return; }
+  const fallas=[...document.querySelectorAll("#f-zinsp .zf:checked")].map(x=>x.value), nota=clean($("#zi-nota").value), apto=!fallas.length, ts=Date.now();
+  if(commit(b=>{ b.update(col("izaje").doc(it.id),apto?{insp:{ts,periodo:P.key,color:P.color,inspector,resultado:"apto"}}:{insp:null,fuera:true,motivo:fallas.join(", ")});
+    b.set(col("izinsps").doc(),{ts,code:it.id,tipo:it.tipo,desc:it.desc||"",periodo:P.key,color:P.color,inspector,resultado:apto?"apto":"no_apto",fallas,nota}); },
+    apto?`${it.id} apto. Márcalo con cinta ${P.color.toLowerCase()}.`:`${it.id} fuera de servicio. Segrégalo y rotúlalo.`)){ S.zInsp=false; S.noReset=true; render(); window.scrollTo(0,0); } }
+function doZFuera(){ const it=izBy(S.zsel), m=clean($("#zo-mot").value); if(!m){ toast("Escribe el motivo."); return; }
+  if(commit(b=>{ b.update(col("izaje").doc(it.id),{fuera:true,motivo:m,insp:null}); b.set(col("izinsps").doc(),{ts:Date.now(),code:it.id,tipo:it.tipo,desc:it.desc||"",color:"Gris",resultado:"fuera",nota:m}); },`${it.id} fuera de servicio.`)){ S.zFuera=false; S.noReset=true; render(); } }
+function doZReint(){ const it=izBy(S.zsel); commit(b=>{ b.update(col("izaje").doc(it.id),{fuera:false,motivo:null,insp:null}); b.set(col("izinsps").doc(),{ts:Date.now(),code:it.id,tipo:it.tipo,desc:it.desc||"",color:"Gris",resultado:"reintegro",nota:"Reintegrado, pendiente de inspección"}); },`${it.id} reintegrado. Falta inspeccionarlo.`); }
+function doZCfg(){ const f=$("#zc-freq").value, n=f==="mensual"?12:4, cols=[]; for(let i=0;i<n;i++){ const el=$("#zc-col-"+i); cols.push(el?el.value:(f==="mensual"?DEF_MES:DEF_TRIM)[i]); }
+  if(commit(b=>b.set(col("config").doc("izaje"),{freq:f,colores:cols,coloresOk:true},{merge:true}),"Código de colores guardado.")){ S.cfgIz=false; S.noReset=true; render(); } }
+const EJ_IZ=[["IZ-001","Eslinga sintética","Eslinga plana 2 capas 3 m",3,3,60],["IZ-002","Eslinga sintética","Eslinga tubular 6 m",5,6,20],["IZ-003","Estrobo de cable","Estrobo 1/2\" ojo-ojo 4 m",1.8,4,200],
+  ["IZ-004","Grillete","Grillete lira 3/4\"",4.75,null,300],["IZ-005","Grillete","Grillete lira 1\"",8.5,null,-5],["IZ-006","Tecle de cadena","Tecle de cadena 3 t",3,null,90]];
+function doZSeed(){ const P=periodo(), plus=d=>{ const x=new Date(); x.setDate(x.getDate()+d); return isoOf(x); };
+  commit(b=>EJ_IZ.forEach(([code,tipo,desc,wll,largo,dv],i)=>b.set(col("izaje").doc(code),{tipo,desc,wll,largo,serie:"",cert:"CERT-"+(1001+i),certVence:plus(dv),insp:i%3===2?null:{ts:Date.now(),periodo:P.key,color:P.color,inspector:"(ejemplo)",resultado:"apto"},fuera:false,ejemplo:true,creado:Date.now()})),"Ejemplo de izaje cargado."); }
+function doZDelEj(){ if(commit(b=>S.iz.filter(i=>i.ejemplo).forEach(i=>b.delete(col("izaje").doc(i.id))),"Ejemplos borrados.")){ S.armed=null; render(); } }
+
+/* ================= Salidas ================= */
 function summaryText(){
   const now=Date.now(), c=counts(), n=new Date();
-  const prest=S.tools.filter(t=>t.estado==="prestada").sort((a,b)=>(a.desde||0)-(b.desde||0)), mant=S.tools.filter(t=>t.estado==="mantencion");
-  let s=`*${(S.config.nombre||"PAÑOL").toUpperCase()} — ENTREGA DE TURNO*\n${n.toLocaleDateString("es-CL")} ${fmtT(n)}\n\nDisponibles: ${c.disponible} · Prestadas: ${c.prestada} · Mantención: ${c.mantencion}\n`;
-  s+= prest.length?`\n*PRESTADAS (${prest.length}):*\n`+prest.map(t=>`• ${t.id} ${t.nombre} — ${t.persona||"?"}${t.area?" ("+t.area+")":""}, desde ${fmtT(t.desde)}, ${fmtDur(now-t.desde)}${now-t.desde>SHIFT_H*3600e3?" ⚠ PASÓ EL TURNO":""}`).join("\n")+"\n":"\nNo hay herramientas prestadas.\n";
+  const prest=S.tools.filter(t=>t.estado==="prestada").sort((a,b)=>(a.desde||0)-(b.desde||0)), mant=S.tools.filter(t=>t.estado==="mantencion"), ext=S.tools.filter(t=>t.estado==="extraviada");
+  let s=`*${(S.config.nombre||"PAÑOL").toUpperCase()} — ENTREGA DE TURNO*\n${n.toLocaleDateString("es-CL")} ${fmtT(n)}\n\nDisponibles: ${c.disponible} · Prestadas: ${c.prestada} · Mantención: ${c.mantencion} · Extraviadas: ${c.extraviada||0}\n`;
+  s+= prest.length?`\n*PRESTADAS (${prest.length}):*\n`+prest.map(t=>`• ${t.id} ${t.nombre} — ${t.persona||"?"}${t.cuadrilla?" ["+t.cuadrilla+"]":""}${t.area?" ("+t.area+")":""}, desde ${fmtT(t.desde)}, ${fmtDur(now-t.desde)}${now-t.desde>SHIFT_H*3600e3?" ⚠ PASÓ EL TURNO":""}`).join("\n")+"\n":"\nNo hay herramientas prestadas.\n";
   if(mant.length) s+=`\n*EN MANTENCIÓN (${mant.length}):*\n`+mant.map(t=>`• ${t.id} ${t.nombre}${t.nota?" — "+t.nota:""}`).join("\n")+"\n";
+  if(ext.length) s+=`\n*EXTRAVIADAS (${ext.length}):*\n`+ext.map(t=>`• ${t.id} ${t.nombre}${t.persona?" — resp. "+t.persona:""}`).join("\n")+"\n";
+  const cal=S.tools.filter(t=>{ const x=calib(t); return x&&x.code!=="ok"; }); if(cal.length) s+=`\n*CALIBRACIONES:*\n`+cal.map(t=>`• ${t.id} ${t.nombre} — ${calib(t).txt}`).join("\n")+"\n";
+  const low=S.cons.filter(x=>num(x.stock)<=num(x.minimo)); if(low.length) s+=`\n*STOCK BAJO:*\n`+low.map(x=>`• ${x.nombre}: ${fmtN(x.stock)} ${x.unidad||""} (mín. ${fmtN(x.minimo)})`).join("\n")+"\n";
   return s;
 }
-async function shareText(text, okMsg){
-  if(navigator.share){ try{ await navigator.share({text}); return; }catch(e){ if(e&&e.name==="AbortError") return; } }
-  try{ await navigator.clipboard.writeText(text); toast(okMsg); }catch(e){ toast("No se pudo copiar."); }
-}
-function labels(){
-  if(!window.QRCode){ toast("No cargó el generador de QR. Revisa la señal y recarga."); return; }
-  $("#print").innerHTML=visible().map(t=>`<div class="lb"><img src="${qrDataUrl(t.id,300)}" alt=""><div class="tx"><div class="cd">${esc(t.id)}</div><div class="nm">${esc(t.nombre)}</div><img class="lgo" src="${LOGO}" alt=""></div></div>`).join("");
-  setTimeout(()=>window.print(),150);
-}
-async function csv(){
-  const cell=v=>{ const s=String(v??""); return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
-  const rows=[["Fecha","Hora","Movimiento","Código","Herramienta","Persona","Área","Condición","Observación","Horas fuera"]];
-  S.movs.forEach(m=>rows.push([new Date(m.ts).toLocaleDateString("es-CL"),fmtT(m.ts),TIPO[m.tipo]||m.tipo,m.code,m.nombre||"",m.persona||"",m.area||"",m.cond||"",m.nota||"",m.dur?(m.dur/3600e3).toFixed(1).replace(".",","):""]));
-  const name=`historial-panol-${new Date().toISOString().slice(0,10)}.csv`;
-  const file=new File(["﻿"+rows.map(r=>r.map(cell).join(";")).join("\r\n")],name,{type:"text/csv"});
+async function shareText(text,okMsg){ if(navigator.share){ try{ await navigator.share({text}); return; }catch(e){ if(e&&e.name==="AbortError") return; } }
+  try{ await navigator.clipboard.writeText(text); toast(okMsg); }catch(e){ toast("No se pudo copiar."); } }
+function printCards(html){ if(!window.QRCode){ toast("No cargó el generador de QR. Revisa la señal y recarga."); return; } $("#print").innerHTML=html; setTimeout(()=>window.print(),150); }
+function labels(){ printCards(visible().map(t=>`<div class="lb"><img src="${qrDataUrl(qrText(t.id),300)}" alt=""><div class="tx"><div class="cd">${esc(t.id)}</div><div class="nm">${esc(t.nombre)}</div><img class="lgo" src="${LOGO}" alt=""></div></div>`).join("")); }
+function wLabels(list){ printCards(list.map(w=>`<div class="lb"><img src="${qrDataUrl(BASE+"?w="+encodeURIComponent(w.id),300)}" alt=""><div class="tx"><div class="nm" style="font-size:3.6mm">${esc(w.nombre)}</div><div class="cq">${esc([w.cuadrilla,w.cargo].filter(Boolean).join(" · "))}</div><div class="cq">${esc(w.rut||"")}</div><img class="lgo" src="${LOGO}" alt=""></div></div>`).join("")); }
+function zLabels(){ const q=S.zq.trim().toLowerCase(); const list=S.iz.filter(it=>!q||[it.id,it.tipo,it.desc].join(" ").toLowerCase().includes(q)).sort((a,b)=>a.id.localeCompare(b.id,"es",{numeric:true}));
+  printCards(list.map(it=>`<div class="lb"><img src="${qrDataUrl(BASE+"?z="+encodeURIComponent(it.id),300)}" alt=""><div class="tx"><div class="cd">${esc(it.id)}</div><div class="wl">WLL ${fmtN(it.wll)} t</div><div class="nm">${esc(it.desc||it.tipo)}</div><img class="lgo" src="${LOGO}" alt=""></div></div>`).join("")); }
+async function saveFile(name,content,type){
+  const file=new File([content],name,{type});
   if(navigator.canShare&&navigator.canShare({files:[file]})&&/android|iphone|ipad/i.test(navigator.userAgent)){ try{ await navigator.share({files:[file],title:name}); return; }catch(e){ if(e&&e.name==="AbortError") return; } }
-  const a=document.createElement("a"); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1000);
-}
+  const a=document.createElement("a"); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1000); }
+const cell=v=>{ const s=String(v??""); return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+const toCsv=rows=>"﻿"+rows.map(r=>r.map(cell).join(";")).join("\r\n");
+function csv(){ const rows=[["Fecha","Hora","Movimiento","Código","Herramienta","Persona","Cuadrilla","Área","Condición","Observación","Horas fuera","Firma"]];
+  S.movs.forEach(m=>rows.push([new Date(m.ts).toLocaleDateString("es-CL"),fmtT(m.ts),TIPO[m.tipo]||m.tipo,m.code,m.nombre||"",m.persona||"",m.cuadrilla||"",m.area||"",m.cond||"",m.nota||"",m.dur?(m.dur/3600e3).toFixed(1).replace(".",","):"",m.firma?"Sí":""]));
+  saveFile(`historial-panol-${todayISO()}.csv`,toCsv(rows),"text/csv"); }
+function ccsv(){ const rows=[["Fecha","Hora","Movimiento","Consumible","Cantidad","Unidad","Persona","Cuadrilla","Detalle"]];
+  S.cmovs.forEach(m=>rows.push([new Date(m.ts).toLocaleDateString("es-CL"),fmtT(m.ts),m.tipo==="entrada"?"Ingreso":"Entrega",m.nombre,String(m.cant).replace(".",","),m.unidad||"",m.persona||"",m.cuadrilla||"",m.detalle||""]));
+  saveFile(`consumibles-${todayISO()}.csv`,toCsv(rows),"text/csv"); }
+async function showDoc(colName,id,title){
+  try{ const d=await col(colName).doc(id).get(); if(!d.exists){ toast("No se encontró."); return; }
+    const box=document.createElement("div"); box.className="panel"; box.innerHTML=`<div class="backbar"><h2>${title}</h2><button class="btn ghost" type="button">Cerrar</button></div><img class="${colName==="firmas"?"sigimg":"fullphoto"}" src="${d.data().data}" alt="${title}">`;
+    box.querySelector("button").onclick=()=>box.remove(); $("#main").prepend(box); window.scrollTo(0,0);
+  }catch(e){ toast("No se pudo cargar (¿sin señal?)."); } }
 
-/* ---------- eventos ---------- */
+/* ================= Eventos ================= */
 function arm(k){ S.armed=k; render(); clearTimeout(armT); armT=setTimeout(()=>{ if(S.armed===k){ S.armed=null; render(); } },5000); }
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]"); if(!b) return; const a=b.dataset.act;
-  if(!["del","del-ej","logout"].includes(a)&&S.armed) S.armed=null;
+  if(!["del","del-ej","logout","w-del","c-del","z-del","z-delej"].includes(a)&&S.armed) S.armed=null;
+  const V=b.dataset.v;
   switch(a){
-    case "nav": if(b.dataset.v==="mover"&&S.view==="mover") S.sel=null; S.noReset=true; go(b.dataset.v); break;
-    case "scan": startScan(); break;
+    case "nav": if(V==="mover"&&S.view==="mover") S.sel=null; S.noReset=true; go(V); break;
+    case "go": if(V==="importar"&&b.dataset.t){ S.imp={tipo:b.dataset.t,rows:null,name:""}; } S.noReset=true; go(V); break;
+    case "scan": startScan("single"); break;
+    case "nueva": S.sel=null; S.noReset=true; go("mover"); setTimeout(()=>{ const w=$("#c-worker"); w&&w.focus(); },50); break;
+    case "devol-scan": S.scanMsg="Escanea la herramienta que están devolviendo."; startScan("single"); break;
+    case "pend": { if(S.tools.some(t=>t.estado==="prestada"&&Date.now()-(t.desde||0)>SHIFT_H*3600e3)){ S.filter="prestada"; } else if(S.tools.some(t=>t.estado==="mantencion")) S.filter="mantencion"; else if(S.tools.some(t=>t.estado==="extraviada")) S.filter="extraviada"; else { toast("No hay pendientes."); break; } S.noReset=true; go("inventario"); break; }
+    case "scan-multi": S.cart.worker=$("#c-worker").value; S.cart.area=$("#c-area").value; startScan("multi"); break;
     case "scan-close": stopScan(); break;
     case "torch": toggleTorch(); break;
     case "open": openCode(b.dataset.code); break;
@@ -593,75 +1244,129 @@ document.addEventListener("click",e=>{
     case "add-open": S.addOpen=true; S.addCode=""; S.noReset=true; go("inventario"); setTimeout(()=>{ const n=$("#a-nombre"); n&&n.focus(); },30); break;
     case "add-close": S.addOpen=false; S.noReset=true; render(); break;
     case "edit-toggle": S.editOpen=!S.editOpen; S.noReset=true; render(); break;
+    case "ext-toggle": S.extOpen=!S.extOpen; S.noReset=true; render(); break;
     case "habilitar": doHabilitar(); break;
+    case "recuperada": doRecup(); break;
     case "seed": doSeed(); break;
     case "del": { const k="del:"+b.dataset.code; if(S.armed===k) doDelete(b.dataset.code); else arm(k); break; }
     case "del-ej": if(S.armed==="ej") doDelEj(); else arm("ej"); break;
+    case "cart-add": { const c=normCode($("#c-add").value); S.cart.worker=$("#c-worker").value; S.cart.area=$("#c-area").value; if(c&&cartAdd(c)){ $("#c-add").value=""; render(); } break; }
+    case "cart-del": S.cart.items=S.cart.items.filter(x=>x!==b.dataset.code); S.cart.worker=$("#c-worker").value; S.cart.area=$("#c-area").value; render(); break;
+    case "cart-clear": S.cart={worker:"",items:[],area:""}; delete S.sig["sig-cart"]; S.noReset=true; render(); break;
+    case "sig-clear": delete S.sig[b.dataset.id]; { const c=document.getElementById(b.dataset.id); if(c) c.getContext("2d").clearRect(0,0,c.width,c.height); } break;
+    case "photo": document.getElementById(b.dataset.id).click(); break;
+    case "photo-del": delete S.photo[b.dataset.id]; render(); break;
+    case "ver-firma": showDoc("firmas",b.dataset.id,"Firma"); break;
+    case "ver-foto": showDoc("fotos",b.dataset.id,"Foto del daño"); break;
     case "summary": shareText(summaryText(),"Resumen copiado. Pégalo en WhatsApp."); break;
     case "labels": labels(); break;
     case "csv": csv(); break;
-    case "share-link": shareText(`Acceso al ${S.config.nombre||"Pañol Digital"}: ${BASE}?k=${encodeURIComponent(K)}`,"Enlace copiado."); break;
+    case "ccsv": ccsv(); break;
+    /* trabajadores */
+    case "w-add": S.wAdd=!S.wAdd; S.noReset=true; if(S.view!=="trabajadores") go("trabajadores"); else render(); break;
+    case "w-open": S.wsel=b.dataset.id; S.wEdit=false; S.noReset=true; go("trabajador"); break;
+    case "w-edit": S.wEdit=!S.wEdit; S.noReset=true; render(); break;
+    case "w-del": if(S.armed==="wdel"){ if(commit(bb=>bb.delete(col("workers").doc(S.wsel)),"Trabajador eliminado.")){ S.armed=null; S.noReset=true; go("trabajadores"); } } else arm("wdel"); break;
+    case "w-labels": { const q=S.wq.trim().toLowerCase(); wLabels(S.workers.filter(w=>!q||[w.nombre,w.rut,w.cuadrilla,w.cargo].join(" ").toLowerCase().includes(q)).sort((x,y)=>x.nombre.localeCompare(y.nombre,"es"))); break; }
+    case "w-label1": wLabels([workerBy(S.wsel)]); break;
+    case "w-cart": { const w=workerBy(S.wsel); S.cart.worker=wLabel(w); S.sel=null; S.noReset=true; go("mover"); break; }
+    /* consumibles */
+    case "c-add": S.cAdd=!S.cAdd; S.noReset=true; render(); break;
+    case "c-open": S.csel=b.dataset.id; S.cEdit=false; S.noReset=true; go("consumible"); break;
+    case "c-edit": S.cEdit=!S.cEdit; S.noReset=true; render(); break;
+    case "c-del": if(S.armed==="cdel"){ if(commit(bb=>bb.delete(col("cons").doc(S.csel)),"Consumible eliminado.")){ S.armed=null; S.noReset=true; go("consumibles"); } } else arm("cdel"); break;
+    /* izaje */
+    case "z-open": openIz(b.dataset.id); break;
+    case "z-add": S.zAdd=!S.zAdd; S.noReset=true; render(); break;
+    case "z-cfg": S.cfgIz=!S.cfgIz; S.noReset=true; render(); break;
+    case "z-filter": S.zfilter=b.dataset.f; render(); break;
+    case "z-insp": S.zInsp=!S.zInsp; S.noReset=true; render(); break;
+    case "z-edit": S.zEdit=!S.zEdit; S.zFuera=false; S.noReset=true; render(); break;
+    case "z-fuera": S.zFuera=!S.zFuera; S.zEdit=false; S.noReset=true; render(); break;
+    case "z-reint": doZReint(); break;
+    case "z-seed": doZSeed(); break;
+    case "z-labels": zLabels(); break;
+    case "z-del": if(S.armed==="zdel"){ if(commit(bb=>bb.delete(col("izaje").doc(S.zsel)),"Elemento eliminado.")){ S.armed=null; S.noReset=true; go("izaje"); } } else arm("zdel"); break;
+    case "z-delej": if(S.armed==="zej") doZDelEj(); else arm("zej"); break;
+    /* importar */
+    case "imp-tipo": S.imp={tipo:b.dataset.t,rows:null,name:""}; render(); break;
+    case "imp-file": $("#imp-file").click(); break;
+    case "imp-paste": { const t=$("#imp-txt").value; if(!t.trim()){ toast("Pega primero las filas desde Excel."); break; } S.imp.rows=mapRows(parseText(t),S.imp.tipo); S.imp.name=""; render(); break; }
+    case "imp-go": doImport(); break;
+    case "imp-plantilla": { const d=IMP[S.imp.tipo]; saveFile(`plantilla-${d.label.toLowerCase()}.csv`,toCsv([d.cols]),"text/csv"); break; }
+    /* ajustes */
+    case "share-link": { const sup=b.dataset.l==="sup"; const l=BASE+"?k="+encodeURIComponent(K)+(sup?"&r=sup":""); shareText(`${sup?"Acceso de supervisor (solo lectura) al":"Acceso al"} ${S.config.nombre||"Pañol Digital"}: ${l}`,"Enlace copiado."); break; }
     case "copy-link": navigator.clipboard.writeText(BASE+"?k="+encodeURIComponent(K)).then(()=>toast("Enlace copiado."),()=>toast("No se pudo copiar.")); break;
     case "install": if(installEvt){ installEvt.prompt(); installEvt.userChoice.finally(()=>{ installEvt=null; render(); }); } break;
     case "no-install": lsSet("panol.noInstall","1"); render(); break;
-    case "logout": if(S.armed==="logout"){ lsSet(LS_KEY,null); location.href=BASE; } else arm("logout"); break;
+    case "logout": if(S.armed==="logout"){ lsSet(LS_KEY,null); lsSet(LS_ROL,null); location.href=BASE; } else arm("logout"); break;
   }
 });
 document.addEventListener("submit",e=>{ e.preventDefault(); const id=e.target.id;
-  if(id==="f-code") openCode($("#m-code").value);
-  else if(id==="f-retiro") doRetiro(); else if(id==="f-devol") doDevol(); else if(id==="f-add") doAdd(); else if(id==="f-edit") doEdit();
-  else if(id==="f-key") enterKey($("#k-in").value);
-  else if(id==="f-new") createPanol($("#n-name").value);
-  else if(id==="f-name"){ const nombre=$("#s-name").value.trim(); commit(b=>b.set(col("config").doc("app"),{nombre},{merge:true}),"Nombre guardado."); }
+  const F={"f-code":()=>openCode($("#m-code").value),"f-retiro":doRetiro,"f-cart":doCart,"f-devol":doDevol,"f-add":doAdd,"f-edit":doEdit,"f-ext":doExt,
+    "f-key":()=>enterKey($("#k-in").value),"f-new":()=>createPanol($("#n-name").value),
+    "f-name":()=>commit(b=>b.set(col("config").doc("app"),{nombre:clean($("#s-name").value),firmaObligatoria:$("#s-firma").checked},{merge:true}),"Ajustes guardados."),
+    "f-wa":doWAdd,"f-we":doWEdit,"f-wret":doWRet,"f-ca":doCAdd,"f-ce2":doCEdit,"f-csal":()=>doCMov("salida"),"f-cent":()=>doCMov("entrada"),
+    "f-za":doZAdd,"f-ze":doZEdit,"f-zinsp":doZInsp,"f-zfuera":doZFuera,"f-izcfg":doZCfg};
+  (F[id]||(()=>{}))(); });
+document.addEventListener("input",e=>{ const id=e.target.id;
+  if(id==="i-q"){ S.q=e.target.value; render(); } else if(id==="w-q"){ S.wq=e.target.value; render(); } else if(id==="c-q"){ S.cq=e.target.value; render(); } else if(id==="z-q"){ S.zq=e.target.value; render(); } });
+document.addEventListener("change",async e=>{ const el=e.target;
+  if(el.classList&&el.classList.contains("zf")) syncInspBtn();
+  if(el.id==="zc-freq"){ const prev=S.izcfg; S.izcfg=Object.assign({},prev,{freq:el.value,colores:null}); S.noReset=true; render(); S.izcfg=prev; $("#zc-freq").value=el.value; }
+  if(el.id==="imp-file"&&el.files&&el.files[0]){ const f=el.files[0]; try{ const aoa=await readImportFile(f); if(!aoa) return; S.imp.rows=mapRows(aoa,S.imp.tipo); S.imp.name=f.name; render(); }catch(err){ toast("No se pudo leer el archivo."); } }
+  if(el.type==="file"&&el.id&&el.id.startsWith("ph-")&&el.files&&el.files[0]){ try{ S.photo[el.id]=await compressPhoto(el.files[0]); render(); }catch(err){ toast("No se pudo leer la foto."); } }
 });
-document.addEventListener("input",e=>{ if(e.target.id==="i-q"){ S.q=e.target.value; render(); } });
 window.addEventListener("online",setSync); window.addEventListener("offline",setSync);
 window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); installEvt=e; if(S.phase==="app") render(); });
 
-/* ---------- arranque ---------- */
+/* ================= Arranque ================= */
 function makeKey(){ const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789"; const r=crypto.getRandomValues(new Uint32Array(8)); let s=""; for(let i=0;i<8;i++){ s+=A[r[i]%A.length]; if(i===3) s+="-"; } return "PV2-"+s; }
-function createPanol(nombre){
-  const k=makeKey(); K=k; lsSet(LS_KEY,k);
-  fs.collection(`panoles/${k}/config`).doc("app").set({nombre:(nombre||"").trim()||"Pañol",creado:Date.now()}).catch(()=>{});
-  startApp(); S.view="ajustes"; toast("Pañol creado. Guarda la clave que aparece aquí."); render();
-}
+function createPanol(nombre){ const k=makeKey(); K=k; lsSet(LS_KEY,k); lsSet(LS_ROL,null); S.ro=false;
+  fs.collection(`panoles/${k}/config`).doc("app").set({nombre:clean(nombre)||"Pañol",creado:Date.now()}).catch(()=>{});
+  startApp(); S.view="ajustes"; toast("Pañol creado. Guarda la clave que aparece aquí."); render(); }
 function enterKey(raw){ const k=normKey(raw); if(k.length<12){ S.err="Revisa la clave: tiene el formato PV2-XXXX-XXXX."; render(); return; } S.err=""; K=k; lsSet(LS_KEY,k); startApp(); }
+function listen(name,fn,q){ unsubs.push((q||col(name)).onSnapshot(fn,err=>console.error(name,err))); }
 function startApp(){
-  unsubs.forEach(u=>u()); unsubs=[]; S.phase="app"; S.loaded=false; S.view=S.view==="ajustes"?"ajustes":"panol"; render();
+  unsubs.forEach(u=>u()); unsubs=[]; S.phase="app"; S.loaded=false; S.ro=lsGet(LS_ROL)==="sup"; if(S.view!=="ajustes") S.view="panol"; render();
   unsubs.push(col("tools").onSnapshot({includeMetadataChanges:true},snap=>{
     S.tools=snap.docs.map(d=>Object.assign({id:d.id},d.data())); S.pendingWrites=snap.metadata.hasPendingWrites;
     const first=!S.loaded; S.loaded=true; if(S.sel&&!toolBy(S.sel)) S.sel=null;
-    if(first&&S.pending){ const p=S.pending; S.pending=null; openCode(p); } else render();
+    if(first&&S.pending){ const p=S.pending; S.pending=null; if(p.startsWith("w:")) handleScan(BASE+"?w="+encodeURIComponent(p.slice(2))); else if(p.startsWith("z:")) setTimeout(()=>openIz(p.slice(2)),600); else openCode(p); } else render();
   },err=>{ console.error(err); toast(err.code==="permission-denied"?"Sin permiso. Revisa las reglas de Firestore.":"Error de conexión con la base de datos."); }));
-  unsubs.push(col("movs").orderBy("ts","desc").limit(300).onSnapshot(snap=>{ S.movs=snap.docs.map(d=>d.data()); if(S.loaded) render(); },()=>{}));
+  listen("movs",s=>{ S.movs=s.docs.map(d=>d.data()); if(S.loaded) render(); },col("movs").orderBy("ts","desc").limit(1000));
+  listen("workers",s=>{ S.workers=s.docs.map(d=>Object.assign({id:d.id},d.data())); if(S.loaded) render(); });
+  listen("cons",s=>{ S.cons=s.docs.map(d=>Object.assign({id:d.id},d.data())); if(S.loaded) render(); });
+  listen("cmovs",s=>{ S.cmovs=s.docs.map(d=>d.data()); if(S.loaded) render(); },col("cmovs").orderBy("ts","desc").limit(1000));
+  listen("izaje",s=>{ S.iz=s.docs.map(d=>Object.assign({id:d.id},d.data())); if(S.loaded) render(); });
+  listen("izinsps",s=>{ S.izi=s.docs.map(d=>d.data()); if(S.loaded) render(); },col("izinsps").orderBy("ts","desc").limit(500));
   unsubs.push(col("config").doc("app").onSnapshot(s=>{ S.config=s.exists?s.data():{}; render(); },()=>{}));
+  unsubs.push(col("config").doc("izaje").onSnapshot(s=>{ S.izcfg=s.exists?s.data():{}; if(S.loaded) render(); },()=>{}));
 }
 
-tick(); setInterval(()=>{ tick(); if(S.phase==="app"&&S.loaded&&(S.view==="panol"||S.view==="mover")&&!document.activeElement?.matches("input,textarea,select")&&$("#scan").hidden) render(); },60000);
+tick(); setInterval(()=>{ tick(); if(S.phase==="app"&&S.loaded&&(S.view==="panol"||S.view==="mover")&&!document.activeElement?.matches("input,textarea,select")&&$("#scan").hidden&&!$(".sig canvas")) render(); },60000);
 render();
 
 (async()=>{
   const params=new URLSearchParams(location.search);
-  const pk=params.get("k"), ph=params.get("h");
-  if(pk) lsSet(LS_KEY,normKey(pk));
-  if(ph) S.pending=normCode(ph);
-  if(pk||ph) history.replaceState(null,"",BASE);
+  const pk=params.get("k"), ph=params.get("h"), pw=params.get("w"), pz=params.get("z"), pr=params.get("r");
+  if(pk){ lsSet(LS_KEY,normKey(pk)); lsSet(LS_ROL,pr==="sup"?"sup":null); }
+  if(ph) S.pending=normCode(ph); if(pw) S.pending="w:"+pw; if(pz) S.pending="z:"+normCode(pz);
+  if(pk||ph||pw||pz) history.replaceState(null,"",BASE);
   else if(location.hash.length>1) S.pending=normCode(decodeURIComponent(location.hash.slice(1)));
-
   const cfg=window.FIREBASE_CONFIG||{};
-  if(!window.firebase||!cfg.apiKey||cfg.apiKey==="PEGAR_AQUI"){ S.phase=window.firebase?"setup":"setup"; if(!window.firebase) toast("No cargó Firebase. Revisa la señal."); render(); return; }
-  firebase.initializeApp(cfg);
-  fs=firebase.firestore();
+  if(!window.firebase||!cfg.apiKey||cfg.apiKey==="PEGAR_AQUI"){ S.phase="setup"; if(!window.firebase) toast("No cargó Firebase. Revisa la señal."); render(); return; }
+  firebase.initializeApp(cfg); fs=firebase.firestore();
   try{ await fs.enablePersistence({synchronizeTabs:true}); }catch(e){}
   firebase.auth().onAuthStateChanged(user=>{
-    if(!user){ firebase.auth().signInAnonymously().catch(e=>{ S.phase="login"; S.err=navigator.onLine?"No se pudo iniciar sesión: activa el acceso Anónimo en Firebase → Authentication.":"Necesitas señal la primera vez que abres la app."; render(); }); return; }
+    if(!user){ firebase.auth().signInAnonymously().catch(()=>{ S.phase="login"; S.err=navigator.onLine?"No se pudo iniciar sesión: activa el acceso Anónimo en Firebase → Authentication.":"Necesitas señal la primera vez que abres la app."; render(); }); return; }
     if(S.phase==="app") return;
-    const k=lsGet(LS_KEY);
-    if(k){ K=k; startApp(); } else { S.phase="login"; render(); }
+    const k=lsGet(LS_KEY); if(k){ K=k; startApp(); } else { S.phase="login"; render(); }
   });
   if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 })();
 })();
+
 </script>
 </body>
 </html>
